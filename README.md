@@ -8,6 +8,16 @@ Create and restyle cabinet fronts from reusable cross-sections, then prepare a c
 
 The interface defaults to **English**. Choose **English / Polski** in the profile library or order-list header. The choice is remembered independently of the profile database. User profile names, materials, manufacturers, tags and existing component names are not translated.
 
+
+## Modules and downloads
+
+| Module | Version | Download | Documentation |
+| --- | --- | --- | --- |
+| ELFIS Doors | 2.9.1 | [RBZ installer](public/2.9.1/ELFIS_Profile_Library_2.9.1.rbz) | [English guide](elfis_bastille_podmien_front/docs/USER_GUIDE.en.md) |
+| ELFIS Handles | 1.0.0 — public test | [RBZ installer](public/handles/1.0.0/ELFIS_Handles_1.0.0.rbz) | [English](ELFIS_Handles_README.en.md) / [Polski](ELFIS_Handles_README.md) |
+
+**ELFIS Handles requires ELFIS Door Studio 2.9.1.** It adds a separate toolbar icon, a library of user-imported SKP handles, click placement, batch replacement with saved positions, and its own consolidated handle order list. Door profile definitions remain unchanged. The handle library starts empty; imported models appear in a dropdown. See the handle guide for component axes and current limitations.
+
 ## Install or update
 
 1. In SketchUp, choose **Extensions → Extension Manager → Install Extension**.

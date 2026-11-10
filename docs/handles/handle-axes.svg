@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="650" viewBox="0 0 1080 650" role="img" aria-labelledby="title desc">
+<title id="title">ELFIS Handles — component mounting axes</title><desc id="desc">Standard handle: origin at the first fixing screw on the surface touching the door; red X points to the second screw and blue Z points out from the door. Edge pull: origin midway along the pull at the rear top corner of the door; green Y points up and blue Z forward. The red axis completes the right-handed frame.</desc>
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0 0L6 3 0 6" fill="none" stroke="context-stroke" stroke-width="1.4"/></marker></defs>
+<rect width="1080" height="650" fill="#ffffff"/>
+<g font-family="Arial,sans-serif" fill="#25343b">
+<text x="38" y="42" font-size="25" font-weight="bold">ELFIS Handles — where to place the component axes</text>
+<text x="38" y="74" font-size="17">Orange dot = component origin. Models must be saved at their actual size (1:1).</text>
+<path d="M540 104V562" stroke="#dce3e6"/>
+<text x="38" y="120" font-size="22" font-weight="bold">Standard handle / knob</text>
+<text x="38" y="148" font-size="16">Front view — fixing screws shown through handle</text>
+<rect x="90" y="173" width="370" height="290" rx="3" fill="#edf3f4" stroke="#82979e" stroke-width="2"/>
+<text x="112" y="440" font-size="16" fill="#62777e">DOOR FRONT</text>
+<rect x="140" y="286" width="270" height="28" rx="10" fill="#b8c4c9" stroke="#4c626a" stroke-width="2"/>
+<circle cx="164" cy="300" r="7" fill="white" stroke="#4c626a" stroke-width="2"/>
+<circle cx="385" cy="300" r="7" fill="white" stroke="#4c626a" stroke-width="2"/>
+<path d="M164 300H440" stroke="#d43636" stroke-width="3" marker-end="url(#arrow)"/><text x="420" y="282" font-size="18" fill="#b92424">X</text>
+<path d="M164 300V203" stroke="#16894b" stroke-width="3" marker-end="url(#arrow)"/><text x="178" y="213" font-size="18" fill="#087a3b">Y</text>
+<circle cx="164" cy="300" r="17" fill="none" stroke="#246bd0" stroke-width="3"/>
+<circle cx="164" cy="300" r="7" fill="#ffbf45" stroke="#394a51" stroke-width="2"/>
+<path d="M164 322V360H110" fill="none" stroke="#6d7e85" stroke-width="1.5"/>
+<text x="111" y="382" font-size="16" font-weight="bold">ORIGIN: first screw</text>
+<path d="M385 320V350H400" fill="none" stroke="#6d7e85" stroke-width="1.5"/>
+<text x="325" y="375" font-size="15">second screw</text>
+<text x="38" y="500" font-size="17">X → from the first screw towards the second</text>
+<text x="38" y="528" font-size="17">Z ⊙ towards you, out from the door</text>
+<text x="38" y="555" font-size="16">Origin depth: on the handle-to-door contact surface.</text>
+<text x="574" y="120" font-size="22" font-weight="bold">Rear-fixed edge pull</text>
+<text x="574" y="148" font-size="16">Side section — pull mounted on the top edge</text>
+<rect x="790" y="270" width="100" height="190" fill="#edf3f4" stroke="#82979e" stroke-width="2"/>
+<path d="M771 351V244H939V299H924V260H787V351Z" fill="#b8c4c9" stroke="#4c626a" stroke-width="2"/>
+<path d="M751 328H807" stroke="#4c626a" stroke-width="3"/><path d="M751 320V336" stroke="#4c626a" stroke-width="3"/>
+<text x="693" y="393" font-size="17">REAR</text><text x="943" y="393" font-size="17">FRONT</text>
+<text x="814" y="431" font-size="17">DOOR</text>
+<path d="M790 270V184" stroke="#16894b" stroke-width="3" marker-end="url(#arrow)"/><text x="806" y="199" font-size="18" fill="#087a3b">Y · up</text>
+<path d="M790 270H1005" stroke="#246bd0" stroke-width="3" marker-end="url(#arrow)"/><text x="962" y="251" font-size="18" fill="#246bd0">Z · front</text>
+<circle cx="790" cy="270" r="17" fill="none" stroke="#d43636" stroke-width="3"/>
+<path d="M780 260L800 280M780 280L800 260" stroke="#d43636" stroke-width="2"/>
+<circle cx="790" cy="270" r="7" fill="#ffbf45" stroke="#394a51" stroke-width="2"/>
+<path d="M771 244L702 210H599" fill="none" stroke="#6d7e85" stroke-width="1.5"/><text x="599" y="199" font-size="16">edge pull</text>
+<path d="M780 284L718 303H580" fill="none" stroke="#6d7e85" stroke-width="1.5"/><text x="580" y="327" font-size="16" font-weight="bold">ORIGIN</text><text x="580" y="350" font-size="15">rear top corner</text>
+<text x="574" y="500" font-size="17">Origin: halfway along the pull, at the rear edge.</text>
+<text x="574" y="528" font-size="17">X ⊗ runs along the pull, into this side view.</text>
+<text x="574" y="555" font-size="16">The mounting flange stays behind the door.</text>
+<path d="M38 583H1040" stroke="#dce3e6"/>
+<text x="38" y="613" font-size="16">SketchUp: right-click the component → Change Axes → set origin, red direction, then green direction.</text>
+</g></svg>
