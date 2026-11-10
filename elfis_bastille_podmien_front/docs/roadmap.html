@@ -1,0 +1,45 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ELFIS — ROADMAP</title><style>body{max-width:1080px;margin:28px auto;padding:0 26px;color:#213b3d;background:#f4f5f2;font:15px/1.6 Segoe UI,sans-serif}h1,h2,h3{line-height:1.25}h2{margin-top:36px}table{border-collapse:collapse;width:100%;background:#fff}td,th{border:1px solid #cbd7d0;padding:9px 12px;text-align:left;vertical-align:top}th{background:#e7eee9}code{background:#e5e9e5;padding:2px 4px;overflow-wrap:anywhere}a{color:#185c76}nav{position:sticky;top:0;background:#fff;padding:12px;border-bottom:2px solid #285b59;z-index:1}nav a{margin-right:18px}@media print{nav{position:static}body{max-width:none;background:white}tr{break-inside:avoid}thead{display:table-header-group}}</style></head><body><nav><strong>ELFIS 2.9.1</strong> · <a href="guide.en.html">English</a><a href="guide.pl.html">Polski</a><a href="changelog.html">Changelog</a><a href="roadmap.html">Roadmap / Plany</a></nav><h1>Roadmap / Plan rozwoju</h1>
+<p>The items below are <strong>planned</strong>, not implemented features or promised delivery dates. The current-function inventory is in USER_GUIDE.en.md and USER_GUIDE.pl.md.</p>
+<h2>Next: hardware-handle order list / Lista uchwytów</h2>
+<ul>
+<li>Identify existing handle components through explicit metadata and/or a configurable tag; avoid requiring users to import a geometry profile.</li>
+<li>Record manufacturer, model/name, product code, finish/colour, hole spacing and quantity when supplied.</li>
+<li>Consolidate identical products into a separate Handles sublist in the order window.</li>
+<li>Click to highlight all occurrences; double-click to zoom; copy the filtered handle list.</li>
+<li>Mark unrecognised/missing product information for review instead of inferring a purchasable product from geometry alone.</li>
+<li>Do not count the integrated J-pull recess as a separate purchased handle. Handle-side information already exists for J-pull doors.</li>
+</ul>
+<p>Proposed workflow: select a handle component, mark it as a handle product, enter its order details once, then count occurrences in the model. The final recognition rule/tag name remains to be chosen; no new tag is assumed in the current release.</p>
+<h2>Next: PDF order export / Eksport zamówienia PDF</h2>
+<ul>
+<li>Export the currently filtered list, with separate Fronts / End Panels / future Handles sections.</li>
+<li>Project title, issue date, dimensions and units, quantities, profile/product, manufacturer and finish names.</li>
+<li>Colour swatches alongside text colour/material names.</li>
+<li>Include review flags and skipped-item warnings; make the scope (visible filtered rows versus selected rows) explicit.</li>
+<li>Stable multi-page tables with repeated headers and readable print layout.</li>
+<li>Keep clipboard copying as the quick alternative.</li>
+</ul>
+<h2>Public-release preparation / Wydanie publiczne</h2>
+<ul>
+<li>Verify installation/update/uninstall and language persistence on a clean SketchUp 2026 Windows profile.</li>
+<li>Review translation completeness, long-label layouts, screenshots and keyboard navigation with external testers.</li>
+<li>Publish the supported environment and known limitations; test additional SketchUp versions/macOS before claiming support.</li>
+<li>Decide the public licence, distribution channel, support contact and permissions for bundled product-specific profile assets.</li>
+<li>Provide a small neutral sample model and section files, separate from private project models and personal libraries.</li>
+<li>Register release metadata with SketchUp&#39;s extension system and complete signing/distribution requirements for the chosen channel before a public store submission.</li>
+</ul>
+<h2>Later candidates / Późniejsze propozycje</h2>
+<ul>
+<li>Profile-library import/export and manufacturer packs, with explicit version/compatibility handling.</li>
+<li>More ordered product sublists: plinths, pelmets, crowns and other accessories. Currently only Fronts and End Panels are implemented.</li>
+<li>Product-specific drawing variants, richer T&amp;G/panel metadata, more automated catalogue rules.</li>
+<li>Additional machining/CNC integration and cutter-radius treatment, tested independently from visual geometry generation.</li>
+</ul>
+<h2>Already completed in 2.9.0</h2>
+<ul>
+<li>English default, selectable Polish, persisted preference.</li>
+<li>English and Polish user instructions, controls/shortcuts and current features.</li>
+<li>Version history from the original numbered packages; preserved previous archives.</li>
+<li>In-app documentation entry and a separate list of future work.</li>
+</ul>
+</body></html>
