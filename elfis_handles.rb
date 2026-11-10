@@ -6,7 +6,7 @@ module Elfis
     unless file_loaded?(__FILE__)
       extension = SketchupExtension.new('ELFIS — Handles', 'elfis_handles/main')
       extension.description = 'Independent handle library, click placement, replacement and ordering. Requires ELFIS Door Studio 2.9.1.'
-      extension.version = '1.0.0'
+      extension.version = '1.0.0-beta'
       extension.creator = 'ELFIS'
       Sketchup.register_extension(extension, true)
       file_loaded(__FILE__)

@@ -1,12 +1,14 @@
-# ELFIS Handles 1.0.0
+# ELFIS Handles 1.0.0-beta
+
+> **BETA — Standard handles are not working properly. Use on test models only and verify every placement. This version is not recommended for production use.**
 
 An optional handle module for **ELFIS Door Studio 2.9.1**, with its own toolbar icon and installer. This is a first public test version. It uses Door Studio's front measurement and replacement routines; it is not a standalone extension.
 
-[Download ELFIS Handles 1.0.0](https://github.com/elfis/ELFIS-Door-Studio/raw/refs/heads/main/public/handles/1.0.0/ELFIS_Handles_1.0.0.rbz) · [Polska instrukcja](ELFIS_Handles_README.md)
+[Download ELFIS Handles 1.0.0-beta](https://github.com/elfis/ELFIS-Door-Studio/raw/refs/heads/main/public/handles/1.0.0-beta/ELFIS_Handles_1.0.0-beta.rbz) · [Polska instrukcja](ELFIS_Handles_README.md)
 
 ## Install
 
-Install Door Studio first. In SketchUp, choose **Extensions → Extension Manager → Install Extension**, select `ELFIS_Handles_1.0.0.rbz`, and restart SketchUp. Enable **View → Toolbars → ELFIS — Handles** if necessary. The same command is available in the Extensions menu.
+Install Door Studio first. In SketchUp, choose **Extensions → Extension Manager → Install Extension**, select `ELFIS_Handles_1.0.0-beta.rbz`, and restart SketchUp. Enable **View → Toolbars → ELFIS — Handles** if necessary. The same command is available in the Extensions menu.
 
 ## Import a handle
 

@@ -7,7 +7,7 @@ require 'securerandom'
 module Elfis
   module Handles
     extend self
-    VERSION = '1.0.0'
+    VERSION = '1.0.0-beta'
     DICT = 'ElfisHandles'
     POSITIONS = %w[tl tc tr ml mr bl bc br].freeze
     DEFAULTS = {model_id:nil, position:'tr', orientation:'vertical', mode:'auto', offset:45.0, along:45.0, edge_shift:0.0, preserve:true}.freeze

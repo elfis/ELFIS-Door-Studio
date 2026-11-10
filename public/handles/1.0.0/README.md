@@ -1,7 +1,7 @@
-# ELFIS Handles 1.0.0 — public test
+# ELFIS Handles 1.0.0 — archived test package
 
-Optional handle module for ELFIS Door Studio 2.9.1. Install Door Studio first, then install the RBZ through SketchUp Extension Manager and restart SketchUp.
+**This package is experimental. Standard handles are not working properly.**
+
+Use the explicitly labelled [1.0.0-beta package](../1.0.0-beta/) for testing. The original archive is retained for version history.
 
 [English instructions](../../../ELFIS_Handles_README.en.md) · [Polska instrukcja](../../../ELFIS_Handles_README.md)
-
-The SHA-256 file verifies the installer. No handle models are bundled; import your own SKP components through Add .skp.

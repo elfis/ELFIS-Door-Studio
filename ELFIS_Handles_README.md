@@ -1,10 +1,12 @@
-# ELFIS Handles 1.0.0 — wersja testowa
+# ELFIS Handles 1.0.0-beta — wersja testowa
+
+> **BETA — Uchwyty standardowe nie działają poprawnie. Używaj na modelach testowych i sprawdzaj każde wstawienie. Ta wersja nie jest zalecana do pracy produkcyjnej.**
 
 Osobny dodatek do ELFIS Door Studio 2.9.1, z własną ikoną i menu **Extensions → ELFIS — Handles**. Nie zmienia plików ani zapisanych profili biblioteki drzwi. W czasie działania rozszerza odczyt wymiarów i przenoszenie elementów, aby obsłużyć uchwyty.
 
 ## Instalacja
 
-W SketchUp wybierz **Extensions → Extension Manager → Install Extension**, wskaż `ELFIS_Handles_1.0.0.rbz` i uruchom ponownie SketchUp. Pasek włączysz przez **View → Toolbars → ELFIS — Handles**.
+W SketchUp wybierz **Extensions → Extension Manager → Install Extension**, wskaż `ELFIS_Handles_1.0.0-beta.rbz` i uruchom ponownie SketchUp. Pasek włączysz przez **View → Toolbars → ELFIS — Handles**.
 
 ## Dodawanie uchwytu
 
