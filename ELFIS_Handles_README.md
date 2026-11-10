@@ -1,12 +1,12 @@
-# ELFIS Handles 1.0.0-beta — wersja testowa
+# ELFIS Handles 1.1.0-beta — wersja testowa
 
-> **BETA — Uchwyty standardowe nie działają poprawnie. Używaj na modelach testowych i sprawdzaj każde wstawienie. Ta wersja nie jest zalecana do pracy produkcyjnej.**
+> **BETA — Poprawiono import i montaż uchwytów standardowych. Ustaw punkty mocowania i sprawdź rezultat na froncie testowym przed użyciem produkcyjnym.**
 
 Osobny dodatek do ELFIS Door Studio 2.9.1, z własną ikoną i menu **Extensions → ELFIS — Handles**. Nie zmienia plików ani zapisanych profili biblioteki drzwi. W czasie działania rozszerza odczyt wymiarów i przenoszenie elementów, aby obsłużyć uchwyty.
 
 ## Instalacja
 
-W SketchUp wybierz **Extensions → Extension Manager → Install Extension**, wskaż `ELFIS_Handles_1.0.0-beta.rbz` i uruchom ponownie SketchUp. Pasek włączysz przez **View → Toolbars → ELFIS — Handles**.
+W SketchUp wybierz **Extensions → Extension Manager → Install Extension**, wskaż `ELFIS_Handles_1.1.0-beta.rbz` i uruchom ponownie SketchUp. Pasek włączysz przez **View → Toolbars → ELFIS — Handles**.
 
 ## Dodawanie uchwytu
 
@@ -18,7 +18,17 @@ W SketchUp wybierz **Extensions → Extension Manager → Install Extension**, w
 
 Model jest kopiowany do `%APPDATA%\ELFIS\HandleLibrary\models`. Baza i ustawienia znajdują się w `handles.json` obok folderu `models`. Kopia całego tego katalogu stanowi kopię biblioteki.
 
-## Osie modeli
+## Zmiany w 1.1.0-beta
+
+- Zmiana pozycji, orientacji lub odstępów odświeża aktywne narzędzie bez ponownego klikania **Click fronts in model**. Sam front zmienia się dopiero po kliknięciu wstawienia lub podmianie zbiorczej.
+- **Shift zamienia lewo/prawo dla uchwytów standardowych**, bez zmiany wysokości ani orientacji. Po zwolnieniu wraca pozycja wybrana w oknie. Skróty i zasady montażu pochwytów krawędziowych pozostają bez zmian.
+- Osobne odstępy od boku i od góry/dołu. Jawna zmiana pozycji lub orientacji wyłącza zachowywanie starego położenia. Przy samej zmianie modelu nadal można zachować ustawienia poszczególnych frontów.
+- Podgląd pokazuje punkty mocowania, w tym pierwszą śrubę. Po najechaniu na front dostaje jego rzeczywiste wymiary i korzysta z tego samego obliczenia co wstawianie.
+- Po imporcie zwykłego uchwytu uruchamia się kalibracja. Dla modelu już w bibliotece wybierz **Set fixing points / Ustaw punkty mocowania**. Wskaż środek pierwszej śruby, środek drugiej i płaską powierzchnię styku z drzwiami. Przy gałce drugi punkt wyznacza kierunek czerwonej osi. Rozstaw zostanie zmierzony automatycznie.
+- Tymczasowy uchwyt jest pokazywany poza zabudową. Możesz orbitować, aby odsłonić powierzchnię mocowania. W ostatnim kroku niebieska linia ma wskazywać od frontu w stronę uchwytu; **Tab** odwraca kierunek. **Anuluj kalibrację** lub **Esc przy aktywnym widoku modelu** usuwa podgląd i przywraca widok. Podczas kalibracji nie edytuj innych elementów.
+- Oryginalny SKP i jego osie pozostają zachowane; zapisujemy osobną transformację mocowania. Starsze modele bez kalibracji nadal korzystają z ich dotychczasowych osi.
+
+## Dotychczasowy sposób ustawiania osi
 
 ![Osie montażowe uchwytu standardowego i pochwytu krawędziowego](docs/handles/handle-axes.svg)
 
@@ -52,4 +62,4 @@ Podczas klikania pochwytu: **Ctrl — prawa, Alt — lewa, Shift — dół**. Be
 
 Dodatek nie generuje wierceń. Biblioteka nie zawiera modeli producentów. Obsługiwane są prostokątne komponenty frontów; kliknięcie grupy nie zastępuje wskazania komponentu frontu. Nie rozpoznaje dowolnych ramek spoza ELFIS ani kierunku przodu surowych modeli na podstawie ich nazwy. Przy pierwszym montażu na zwykłym froncie najlepiej kliknąć jego przednią powierzchnię. Samodzielne skalowanie frontu po wstawieniu uchwytu skaluje również zagnieżdżony uchwyt — ponowne zastosowanie narzędzia przywraca jego rzeczywisty rozmiar. Nie dodano obserwatora automatycznej korekty po ręcznej edycji geometrii.
 
-Przetestowano w SketchUp Pro 2026 na Windows na syntetycznych modelach. Własne modele uchwytów wymagają sprawdzenia osi i dopasowania do frontów.
+Przeszło 36 testów geometrii w SketchUp Pro 2026 na Windows oraz 4 kontrole uruchamiania i anulowania kalibracji na zaimportowanym modelu. Przeszły również testy okna: natychmiastowe aktualizacje, przyciski pozycji, tłumaczenia i wąski układ. Własne modele uchwytów wymagają sprawdzenia osi i dopasowania do frontów.

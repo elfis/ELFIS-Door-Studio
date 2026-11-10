@@ -7,10 +7,12 @@ require 'securerandom'
 module Elfis
   module Handles
     extend self
-    VERSION = '1.0.0-beta'
+    remove_const(:VERSION) if const_defined?(:VERSION,false)
+    VERSION = '1.1.0-beta'
     DICT = 'ElfisHandles'
     POSITIONS = %w[tl tc tr ml mr bl bc br].freeze
-    DEFAULTS = {model_id:nil, position:'tr', orientation:'vertical', mode:'auto', offset:45.0, along:45.0, edge_shift:0.0, preserve:true}.freeze
+    remove_const(:DEFAULTS) if const_defined?(:DEFAULTS,false)
+    DEFAULTS = {model_id:nil, position:'tr', orientation:'vertical', mode:'auto', offset:45.0, offset_x:nil, offset_y:nil, along:45.0, edge_shift:0.0, preserve:true}.freeze
 
     def api
       unless defined?(Elfis::BastillePodmienFront) && Elfis::BastillePodmienFront.respond_to?(:measure)
@@ -68,6 +70,10 @@ module Elfis
       %i[offset along edge_shift].each do |key|
         s[key]=Float(s[key]); raise 'Offsets must be finite and nonnegative.' unless s[key].finite? && s[key]>=0 && s[key]<=3000
       end
+      %i[offset_x offset_y].each do |key|
+        next if s[key].nil?
+        s[key]=Float(s[key]);raise 'Invalid fixing offset.' unless s[key].finite? && s[key]>=0 && s[key]<=3000
+      end
       s[:preserve]=s[:preserve]==true
       s
     end
@@ -89,6 +95,7 @@ module Elfis
       database[:models]<<{id:id,name:name.strip,kind:kind,pitch:pitch,length:length,finish:finish.to_s,supplier:supplier.to_s,code:code.to_s,file:"#{id}.skp"}
       settings[:model_id]=id
       persist
+      calibrate(id) unless kind=='edge'
     end
 
     def edit_record(id)
@@ -110,6 +117,40 @@ module Elfis
         raise 'Unable to load the handle model.' unless d
         d.set_attribute(DICT,'library_id',record[:id]);d
       end
+    end
+
+    def mount_inverse(record)
+      raw=record[:mount_frame]
+      return IDENTITY unless raw
+      raise 'Invalid mounting calibration.' unless raw.is_a?(Array) && raw.length==16 && raw.all? { |v| v.is_a?(Numeric) && v.finite? }
+      Geom::Transformation.new(raw).inverse
+    end
+
+    def resolved_settings(front,chosen)
+      s=chosen.dup
+      previous=children(front).first
+      if s[:preserve] && previous
+        saved=JSON.parse(previous.get_attribute(DICT,'settings'),symbolize_names:true)
+        s=saved.merge(model_id:s[:model_id],preserve:s[:preserve],mirror_horizontal:s[:mirror_horizontal])
+      end
+      if s.delete(:mirror_horizontal)
+        s[:position]={'tl'=>'tr','tr'=>'tl','ml'=>'mr','mr'=>'ml','bl'=>'br','br'=>'bl'}.fetch(s[:position],s[:position])
+      end
+      record=model_record(s[:model_id])
+      s[:position]={'tl'=>'ml','tr'=>'mr','bl'=>'ml','br'=>'mr'}.fetch(s[:position],s[:position]) if record[:kind]=='edge'
+      config(s)
+    end
+
+    def mount_transform(front,info,record,s)
+      placement(info[:width],info[:height],info[:source_thickness],record,s,frame_offset(front))*mount_inverse(record)
+    end
+
+    def update_settings(raw)
+      next_settings=config(raw)
+      settings.replace(next_settings)
+      UI.stop_timer(@save_timer) if @save_timer
+      @save_timer=UI.start_timer(0.5,false) { @save_timer=nil;persist }
+      @click_tool.settings_changed if @click_tool
     end
 
     def frame_offset(front)
@@ -141,6 +182,8 @@ module Elfis
     def placement(w,h,t,record,s,auto_offset=nil)
       p=s[:position]; edge=record[:kind]=='edge'
       d=s[:mode]=='auto' ? (auto_offset || s[:offset]) : s[:offset]
+      dx=s[:mode]=='auto' && auto_offset ? auto_offset : (s[:offset_x] || d)
+      dy=s[:mode]=='auto' && auto_offset ? auto_offset : (s[:offset_y] || d)
       pitch=record[:kind]=='knob' ? 0.0 : record[:pitch].to_f
       if edge
         raise 'Choose an edge midpoint for an edge pull.' unless %w[tc bc ml mr].include?(p)
@@ -155,8 +198,8 @@ module Elfis
         end
         depth=0 # Rear fixing: handle origin is the rear edge, never the front.
       else
-        x=p.end_with?('l') ? d : p.end_with?('r') ? w-d : w/2
-        z=p.start_with?('t') ? h-d : p.start_with?('b') ? d : h/2
+        x=p.end_with?('l') ? dx : p.end_with?('r') ? w-dx : w/2
+        z=p.start_with?('t') ? h-dy : p.start_with?('b') ? dy : h/2
         if s[:orientation]=='vertical'
           ax=p.start_with?('b') ? [0,0,1] : [0,0,-1]
           z-=ax[2]*pitch/2 if p.start_with?('m')
@@ -177,16 +220,9 @@ module Elfis
       raise 'The front no longer exists.' unless path && path.all?(&:valid?)
       front=path.last
       info=measure(front,path,normal)
-      previous=children(front).first
-      s=chosen.dup
-      if s[:preserve] && previous
-        saved=JSON.parse(previous.get_attribute(DICT,'settings'),symbolize_names:true)
-        s=saved.merge(model_id:s[:model_id],preserve:s[:preserve])
-      end
-      record=model_record(s[:model_id]);s=config(s)
-      # Switching between standard and edge handles needs a compatible position.
-      s[:position]={'tl'=>'ml','tr'=>'mr','bl'=>'ml','br'=>'mr'}.fetch(s[:position],s[:position]) if record[:kind]=='edge'
-      transform=placement(info[:width],info[:height],info[:source_thickness],record,s,frame_offset(front))
+      s=resolved_settings(front,chosen)
+      record=model_record(s[:model_id])
+      transform=mount_transform(front,info,record,s)
       definition=definition(model,record)
       model.start_operation('ELFIS — Handle',true) if operation
       begin
@@ -220,7 +256,7 @@ module Elfis
       children(front).each do |child|
         s=JSON.parse(child.get_attribute(DICT,'settings'),symbolize_names:true)
         record=JSON.parse(child.get_attribute(DICT,'record'),symbolize_names:true)
-        child.transformation=placement(w,h,t,record,s,frame_offset(front))
+        child.transformation=placement(w,h,t,record,s,frame_offset(front))*mount_inverse(record)
         child.set_attribute(DICT,'front_sign',1.0)
       end
     end
@@ -325,6 +361,27 @@ module Elfis
       @dialog.execute_script("notice(#{JSON.generate(message.to_s)})") if @dialog && message
     end
 
+    def preview_payload(front,info,record,s)
+      tr=placement(info[:width],info[:height],info[:source_thickness],record,s,frame_offset(front))
+      if record[:kind]=='edge'
+        half=record[:length].mm/2
+        a=Geom::Point3d.new(-half,0,0).transform(tr)
+        b=Geom::Point3d.new(half,0,0).transform(tr)
+      else
+        a=ORIGIN.transform(tr)
+        b=Geom::Point3d.new((record[:kind]=='knob' ? 0 : record[:pitch]).mm,0,0).transform(tr)
+      end
+      {width:info[:width],height:info[:height],frame_offset:frame_offset(front),position:s[:position],placement:{a:[a.x.to_mm,a.z.to_mm],b:[b.x.to_mm,b.z.to_mm],edge:record[:kind]=='edge'}}
+    end
+
+    def publish_preview(value)
+      return unless @dialog
+      encoded=JSON.generate(value)
+      return if encoded==@last_preview
+      @last_preview=encoded
+      @dialog.execute_script("hoverPlacement(#{encoded})")
+    end
+
     def show
       api
       return @dialog.bring_to_front if @dialog && @dialog.visible?
@@ -333,19 +390,26 @@ module Elfis
       @dialog.add_action_callback('action') do |_,raw|
         begin
           request=JSON.parse(raw,symbolize_names:true)
+          raise l('Dokończ kalibrację lub naciśnij Esc.','Complete calibration or press Esc first.') if @calibrating && !%w[ready refresh cancel_calibration].include?(request[:action])
+          if request[:action]=='update'
+            update_settings(request.fetch(:settings))
+            next
+          end
           settings.replace(config(request[:settings])) if request[:settings]
           persist if request[:settings]
           case request[:action]
           when 'ready','refresh' then refresh
           when 'import' then record_import;refresh
           when 'edit' then edit_record(settings[:model_id]);refresh
+          when 'calibrate' then calibrate(settings[:model_id])
+          when 'cancel_calibration' then Sketchup.active_model.select_tool(nil);refresh(l('Kalibracja anulowana.','Calibration cancelled.'))
           when 'delete'
             r=model_record(settings[:model_id])
             if UI.messagebox("Remove #{r[:name]} from the library? Existing handles will remain in the model.",MB_YESNO)==IDYES
               database[:models].delete(r);settings[:model_id]=database[:models].first&.dig(:id);persist
             end
         refresh
-          when 'click' then model_record(settings[:model_id]);Sketchup.active_model.select_tool(ClickTool.new);refresh(l('Kliknij front w modelu.','Click a front in the model.'))
+          when 'click' then model_record(settings[:model_id]);@click_tool=ClickTool.new;Sketchup.active_model.select_tool(@click_tool);refresh(l('Kliknij front w modelu.','Click a front in the model.'))
           when 'selected','all' then n=batch(request[:action]);refresh("#{n} — OK")
           when 'copy'
             rows=order_rows
@@ -366,7 +430,8 @@ module Elfis
     class ClickTool
       def activate
         @held={}
-        Sketchup.set_status_text('ELFIS Handles — click a front. Ctrl: right, Alt: left, Shift: bottom. Esc: exit.')
+        Handles.instance_variable_set(:@click_tool,self)
+        Sketchup.set_status_text('ELFIS Handles — Standard: Shift swaps left/right. Edge: Ctrl right, Alt left, Shift bottom. Esc: exit.')
       end
       def chosen
         s=Handles.settings.dup;r=Handles.model_record(s[:model_id])
@@ -377,8 +442,13 @@ module Elfis
           elsif @held[ALT_MODIFIER_KEY] then 'ml'
           else %w[tc bc ml mr].include?(s[:position]) ? s[:position] : 'tc'
           end
+        else
+          s[:mirror_horizontal]=!!@held[CONSTRAIN_MODIFIER_KEY]
         end
         s
+      end
+      def settings_changed
+        onMouseMove(0,*@xy,Sketchup.active_model.active_view) if @xy
       end
       def pick(x,y,view)
         ph=view.pick_helper;ph.do_pick(x,y)
@@ -398,18 +468,15 @@ module Elfis
       end
       def onMouseMove(flags,x,y,view)
         @xy=[x,y];@path,@normal=pick(x,y,view)
-        info=Handles.measure(@path.last,@path,@normal);s=chosen;r=Handles.model_record(s[:model_id])
-        if s[:preserve] && (old=Handles.children(@path.last).first)
-          s=JSON.parse(old.get_attribute(DICT,'settings'),symbolize_names:true).merge(model_id:s[:model_id])
-        end
-        s[:position]='tc' if r[:kind]=='edge' && !%w[tc bc ml mr].include?(s[:position])
-        tr=info[:world_placement]*Handles.placement(info[:width],info[:height],info[:source_thickness],r,s,Handles.frame_offset(@path.last))
+        info=Handles.measure(@path.last,@path,@normal);s=Handles.resolved_settings(@path.last,chosen);r=Handles.model_record(s[:model_id])
+        tr=info[:world_placement]*Handles.mount_transform(@path.last,info,r,s)
         definition=Handles.definition(Sketchup.active_model,r)
         @points=(0..7).map { |i| definition.bounds.corner(i).transform(tr) }
         @box=(0..7).map { |i| Handles.api.door_bounds(@path.last).corner(i).transform(info[:world]) }
+        Handles.publish_preview(Handles.preview_payload(@path.last,info,r,s))
         view.tooltip=r[:name];view.invalidate
       rescue => error
-        @points=@box=nil;view.tooltip=error.message;view.invalidate
+        @points=@box=nil;Handles.publish_preview(nil);view.tooltip=error.message;view.invalidate
       end
       def draw(view)
         inverse=Sketchup.active_model.edit_transform.inverse
@@ -431,18 +498,23 @@ module Elfis
       def onKeyDown(key,repeat,flags,view)
         @held[key]=true
         onMouseMove(flags,*@xy,view) if @xy
+        true if [CONSTRAIN_MODIFIER_KEY,COPY_MODIFIER_KEY,ALT_MODIFIER_KEY].include?(key)
       end
       def onKeyUp(key,repeat,flags,view)
         @held.delete(key)
         onMouseMove(flags,*@xy,view) if @xy
+        true if [CONSTRAIN_MODIFIER_KEY,COPY_MODIFIER_KEY,ALT_MODIFIER_KEY].include?(key)
       end
       def onCancel(reason,view)
         @points=@box=nil;view.invalidate;Sketchup.active_model.select_tool(nil)
       end
       def deactivate(view)
+        Handles.instance_variable_set(:@click_tool,nil)
         view.invalidate
       end
     end
+
+    require File.join(__dir__,'calibration.rb')
 
     unless file_loaded?(__FILE__)
       command=UI::Command.new('ELFIS — Handles') { show }

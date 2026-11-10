@@ -1,14 +1,14 @@
-# ELFIS Handles 1.0.0-beta
+# ELFIS Handles 1.1.0-beta
 
-> **BETA — Standard handles are not working properly. Use on test models only and verify every placement. This version is not recommended for production use.**
+> **BETA — Standard-handle import and placement have been revised. Calibrate fixing points and check placement on a test front before production use.**
 
 An optional handle module for **ELFIS Door Studio 2.9.1**, with its own toolbar icon and installer. This is a first public test version. It uses Door Studio's front measurement and replacement routines; it is not a standalone extension.
 
-[Download ELFIS Handles 1.0.0-beta](https://github.com/elfis/ELFIS-Door-Studio/raw/refs/heads/main/public/handles/1.0.0-beta/ELFIS_Handles_1.0.0-beta.rbz) · [Polska instrukcja](ELFIS_Handles_README.md)
+[Download ELFIS Handles 1.1.0-beta](https://github.com/elfis/ELFIS-Door-Studio/raw/refs/heads/main/public/handles/1.1.0-beta/ELFIS_Handles_1.1.0-beta.rbz) · [Polska instrukcja](ELFIS_Handles_README.md)
 
 ## Install
 
-Install Door Studio first. In SketchUp, choose **Extensions → Extension Manager → Install Extension**, select `ELFIS_Handles_1.0.0-beta.rbz`, and restart SketchUp. Enable **View → Toolbars → ELFIS — Handles** if necessary. The same command is available in the Extensions menu.
+Install Door Studio first. In SketchUp, choose **Extensions → Extension Manager → Install Extension**, select `ELFIS_Handles_1.1.0-beta.rbz`, and restart SketchUp. Enable **View → Toolbars → ELFIS — Handles** if necessary. The same command is available in the Extensions menu.
 
 ## Import a handle
 
@@ -20,7 +20,17 @@ Install Door Studio first. In SketchUp, choose **Extensions → Extension Manage
 
 The library starts empty. Imported handles appear in the **Handle model dropdown**; this version does not have a thumbnail gallery. No manufacturer models are bundled.
 
-## Component axes
+## New in 1.1.0-beta
+
+- Changing position, orientation or offsets updates the active tool automatically, without pressing **Click fronts in model** again. Existing front geometry changes only after a placement or batch command.
+- **Shift swaps left/right for standard handles**, preserving height and vertical/horizontal orientation. Releasing Shift restores the selected base position. Edge-pull shortcuts and mounting rules are unchanged.
+- Side and top/bottom fixing offsets are independent. Explicit layout edits turn off preservation of an old placement; choosing a different model can still preserve per-front settings.
+- The dialog shows fixing points, including the first screw, rather than centring a decorative bar on a placement point. Hovering a front supplies its actual dimensions and uses the same placement calculation as insertion.
+- Standard-handle import starts mounting-point calibration. Existing library models can use **Set fixing points** without reimporting. Pick the first screw, the second screw, then the flat surface touching the door. For a knob the second point sets the red-axis direction. The pitch is measured from the selected points.
+- The calibration sample is placed away from existing furniture. Orbit the view if needed to reach the contact face. On the last step the blue line should point from the door into the handle; **Tab** reverses it. **Cancel calibration** or **Esc with the model viewport focused** discards the temporary sample and restores the view. Do not change model geometry while calibrating.
+- The original SKP and its axes are retained. Calibration is stored separately in the library and applied as a mounting transform. Uncalibrated legacy models still use their original axes.
+
+## Legacy component axes
 
 ![Component mounting axes for a standard handle and rear-fixed edge pull](docs/handles/handle-axes.svg)
 
@@ -59,7 +69,7 @@ This version does not create drilling operations. It targets rectangular front c
 
 Manually scaling a front also scales its nested handle. Reapplying the tool restores the handle's actual size; there is no automatic geometry-change observer in this version.
 
-27 native checks passed in **SketchUp Pro 2026 on Windows**, using synthetic handle and cabinet fixtures. These covered screw offsets, pitch changes, edge mounting, copied cabinets, batch replacement, thickness changes, scaling/mirroring and order quantities. Imported production models still require an axes and fit check. Other SketchUp versions and macOS have not been verified.
+36 native geometry checks and 4 calibration-workflow checks passed in **SketchUp Pro 2026 on Windows**, using synthetic handle and cabinet fixtures. These covered screw offsets, pitch changes, point calibration, Shift placement, edge mounting, copied cabinets, batch replacement, thickness changes, scaling/mirroring, preview fixing points and order quantities. Browser checks also cover live settings, position buttons, translations and narrow layouts. Imported production models still require an axes and fit check. Other SketchUp versions and macOS have not been verified.
 
 ## License and support
 
