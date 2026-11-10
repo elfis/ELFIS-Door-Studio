@@ -14,7 +14,7 @@ The interface defaults to **English**. Choose **English / Polski** in the profil
 | Module | Version | Download | Documentation |
 | --- | --- | --- | --- |
 | ELFIS Doors | 2.9.1 | [RBZ installer](public/2.9.1/ELFIS_Profile_Library_2.9.1.rbz) | [English guide](elfis_bastille_podmien_front/docs/USER_GUIDE.en.md) |
-| ELFIS Handles | 1.1.0-beta | [RBZ installer](public/handles/1.1.0-beta/ELFIS_Handles_1.1.0-beta.rbz) | [English](ELFIS_Handles_README.en.md) / [Polski](ELFIS_Handles_README.md) |
+| ELFIS Handles | 1.1.1-beta | [RBZ installer](public/handles/1.1.1-beta/ELFIS_Handles_1.1.1-beta.rbz) | [English](ELFIS_Handles_README.en.md) / [Polski](ELFIS_Handles_README.md) |
 
 **BETA — ELFIS Handles 1.1 adds standard-handle fixing-point calibration, live settings and Shift left/right placement. Calibrate imported standard handles and verify their placement on a test front.**
 

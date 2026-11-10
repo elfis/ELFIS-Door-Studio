@@ -1,4 +1,4 @@
-# ELFIS Handles 1.1.0-beta — wersja testowa
+# ELFIS Handles 1.1.1-beta — wersja testowa
 
 > **BETA — Poprawiono import i montaż uchwytów standardowych. Ustaw punkty mocowania i sprawdź rezultat na froncie testowym przed użyciem produkcyjnym.**
 
@@ -6,7 +6,7 @@ Osobny dodatek do ELFIS Door Studio 2.9.1, z własną ikoną i menu **Extensions
 
 ## Instalacja
 
-W SketchUp wybierz **Extensions → Extension Manager → Install Extension**, wskaż `ELFIS_Handles_1.1.0-beta.rbz` i uruchom ponownie SketchUp. Pasek włączysz przez **View → Toolbars → ELFIS — Handles**.
+W SketchUp wybierz **Extensions → Extension Manager → Install Extension**, wskaż `ELFIS_Handles_1.1.1-beta.rbz` i uruchom ponownie SketchUp. Pasek włączysz przez **View → Toolbars → ELFIS — Handles**.
 
 ## Dodawanie uchwytu
 
@@ -18,7 +18,11 @@ W SketchUp wybierz **Extensions → Extension Manager → Install Extension**, w
 
 Model jest kopiowany do `%APPDATA%\ELFIS\HandleLibrary\models`. Baza i ustawienia znajdują się w `handles.json` obok folderu `models`. Kopia całego tego katalogu stanowi kopię biblioteki.
 
-## Zmiany w 1.1.0-beta
+## Zmiany w 1.1.1-beta
+
+Dla standardowych uchwytów **klik Ctrl** przełącza: poziomo na środku u góry / pionowo u góry po prawej. **Klik Shift** przełącza górę/dół na środku w poziomie, albo prawą/lewą stronę u góry w pionie. Zwolnienie klawisza zachowuje pozycję; przytrzymanie nie powtarza zmiany. Odstępy pozostają zachowane. Skrót zastępuje dotychczasową pozycję uchwytu na froncie. Edycja ustawień okna lub ponowne uruchomienie narzędzia zeruje pozycję wybraną klawiaturą. Pochwyty krawędziowe zachowują dotychczasowe skróty przytrzymywane.
+
+## Zmiany w 1.1.0-beta (poprzednie działanie)
 
 - Zmiana pozycji, orientacji lub odstępów odświeża aktywne narzędzie bez ponownego klikania **Click fronts in model**. Sam front zmienia się dopiero po kliknięciu wstawienia lub podmianie zbiorczej.
 - **Shift zamienia lewo/prawo dla uchwytów standardowych**, bez zmiany wysokości ani orientacji. Po zwolnieniu wraca pozycja wybrana w oknie. Skróty i zasady montażu pochwytów krawędziowych pozostają bez zmian.
@@ -62,4 +66,4 @@ Podczas klikania pochwytu: **Ctrl — prawa, Alt — lewa, Shift — dół**. Be
 
 Dodatek nie generuje wierceń. Biblioteka nie zawiera modeli producentów. Obsługiwane są prostokątne komponenty frontów; kliknięcie grupy nie zastępuje wskazania komponentu frontu. Nie rozpoznaje dowolnych ramek spoza ELFIS ani kierunku przodu surowych modeli na podstawie ich nazwy. Przy pierwszym montażu na zwykłym froncie najlepiej kliknąć jego przednią powierzchnię. Samodzielne skalowanie frontu po wstawieniu uchwytu skaluje również zagnieżdżony uchwyt — ponowne zastosowanie narzędzia przywraca jego rzeczywisty rozmiar. Nie dodano obserwatora automatycznej korekty po ręcznej edycji geometrii.
 
-Przeszło 36 testów geometrii w SketchUp Pro 2026 na Windows oraz 4 kontrole uruchamiania i anulowania kalibracji na zaimportowanym modelu. Przeszły również testy okna: natychmiastowe aktualizacje, przyciski pozycji, tłumaczenia i wąski układ. Własne modele uchwytów wymagają sprawdzenia osi i dopasowania do frontów.
+Przeszło 46 testów geometrii w SketchUp Pro 2026 na Windows oraz 4 kontrole uruchamiania i anulowania kalibracji na zaimportowanym modelu. Przeszły również testy okna: natychmiastowe aktualizacje, przyciski pozycji, tłumaczenia i wąski układ. Własne modele uchwytów wymagają sprawdzenia osi i dopasowania do frontów.

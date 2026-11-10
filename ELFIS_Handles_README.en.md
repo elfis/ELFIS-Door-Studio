@@ -1,14 +1,14 @@
-# ELFIS Handles 1.1.0-beta
+# ELFIS Handles 1.1.1-beta
 
 > **BETA — Standard-handle import and placement have been revised. Calibrate fixing points and check placement on a test front before production use.**
 
 An optional handle module for **ELFIS Door Studio 2.9.1**, with its own toolbar icon and installer. This is a first public test version. It uses Door Studio's front measurement and replacement routines; it is not a standalone extension.
 
-[Download ELFIS Handles 1.1.0-beta](https://github.com/elfis/ELFIS-Door-Studio/raw/refs/heads/main/public/handles/1.1.0-beta/ELFIS_Handles_1.1.0-beta.rbz) · [Polska instrukcja](ELFIS_Handles_README.md)
+[Download ELFIS Handles 1.1.1-beta](https://github.com/elfis/ELFIS-Door-Studio/raw/refs/heads/main/public/handles/1.1.1-beta/ELFIS_Handles_1.1.1-beta.rbz) · [Polska instrukcja](ELFIS_Handles_README.md)
 
 ## Install
 
-Install Door Studio first. In SketchUp, choose **Extensions → Extension Manager → Install Extension**, select `ELFIS_Handles_1.1.0-beta.rbz`, and restart SketchUp. Enable **View → Toolbars → ELFIS — Handles** if necessary. The same command is available in the Extensions menu.
+Install Door Studio first. In SketchUp, choose **Extensions → Extension Manager → Install Extension**, select `ELFIS_Handles_1.1.1-beta.rbz`, and restart SketchUp. Enable **View → Toolbars → ELFIS — Handles** if necessary. The same command is available in the Extensions menu.
 
 ## Import a handle
 
@@ -20,7 +20,11 @@ Install Door Studio first. In SketchUp, choose **Extensions → Extension Manage
 
 The library starts empty. Imported handles appear in the **Handle model dropdown**; this version does not have a thumbnail gallery. No manufacturer models are bundled.
 
-## New in 1.1.0-beta
+## New in 1.1.1-beta
+
+For standard handles, **tap Ctrl** to toggle horizontal at top centre / vertical at top right. **Tap Shift** to toggle top/bottom centre when horizontal, or top right/left when vertical. Release keeps the new position; holding a key does not cycle repeatedly. Offsets are retained. These explicit choices override the old position of an equipped front. Editing dialog settings or restarting the placement tool resets the shortcut position. Edge pulls keep their existing held-key shortcuts.
+
+## New in 1.1.0-beta (previous behaviour)
 
 - Changing position, orientation or offsets updates the active tool automatically, without pressing **Click fronts in model** again. Existing front geometry changes only after a placement or batch command.
 - **Shift swaps left/right for standard handles**, preserving height and vertical/horizontal orientation. Releasing Shift restores the selected base position. Edge-pull shortcuts and mounting rules are unchanged.
@@ -69,7 +73,7 @@ This version does not create drilling operations. It targets rectangular front c
 
 Manually scaling a front also scales its nested handle. Reapplying the tool restores the handle's actual size; there is no automatic geometry-change observer in this version.
 
-36 native geometry checks and 4 calibration-workflow checks passed in **SketchUp Pro 2026 on Windows**, using synthetic handle and cabinet fixtures. These covered screw offsets, pitch changes, point calibration, Shift placement, edge mounting, copied cabinets, batch replacement, thickness changes, scaling/mirroring, preview fixing points and order quantities. Browser checks also cover live settings, position buttons, translations and narrow layouts. Imported production models still require an axes and fit check. Other SketchUp versions and macOS have not been verified.
+46 native geometry checks and 4 calibration-workflow checks passed in **SketchUp Pro 2026 on Windows**, using synthetic handle and cabinet fixtures. These covered screw offsets, pitch changes, point calibration, Shift placement, edge mounting, copied cabinets, batch replacement, thickness changes, scaling/mirroring, preview fixing points and order quantities. Browser checks also cover live settings, position buttons, translations and narrow layouts. Imported production models still require an axes and fit check. Other SketchUp versions and macOS have not been verified.
 
 ## License and support
 

@@ -8,7 +8,7 @@ module Elfis
   module Handles
     extend self
     remove_const(:VERSION) if const_defined?(:VERSION,false)
-    VERSION = '1.1.0-beta'
+    VERSION = '1.1.1-beta'
     DICT = 'ElfisHandles'
     POSITIONS = %w[tl tc tr ml mr bl bc br].freeze
     remove_const(:DEFAULTS) if const_defined?(:DEFAULTS,false)
@@ -131,10 +131,7 @@ module Elfis
       previous=children(front).first
       if s[:preserve] && previous
         saved=JSON.parse(previous.get_attribute(DICT,'settings'),symbolize_names:true)
-        s=saved.merge(model_id:s[:model_id],preserve:s[:preserve],mirror_horizontal:s[:mirror_horizontal])
-      end
-      if s.delete(:mirror_horizontal)
-        s[:position]={'tl'=>'tr','tr'=>'tl','ml'=>'mr','mr'=>'ml','bl'=>'br','br'=>'bl'}.fetch(s[:position],s[:position])
+        s=saved.merge(model_id:s[:model_id],preserve:s[:preserve])
       end
       record=model_record(s[:model_id])
       s[:position]={'tl'=>'ml','tr'=>'mr','bl'=>'ml','br'=>'mr'}.fetch(s[:position],s[:position]) if record[:kind]=='edge'
@@ -430,8 +427,9 @@ module Elfis
     class ClickTool
       def activate
         @held={}
+        @standard_position=nil
         Handles.instance_variable_set(:@click_tool,self)
-        Sketchup.set_status_text('ELFIS Handles — Standard: Shift swaps left/right. Edge: Ctrl right, Alt left, Shift bottom. Esc: exit.')
+        Sketchup.set_status_text('ELFIS Handles — Standard: tap Ctrl: horizontal top centre / vertical top right. Tap Shift: horizontal top/bottom; vertical right/left. Edge: hold Ctrl right, Alt left, Shift bottom. Esc: exit.')
       end
       def chosen
         s=Handles.settings.dup;r=Handles.model_record(s[:model_id])
@@ -443,11 +441,12 @@ module Elfis
           else %w[tc bc ml mr].include?(s[:position]) ? s[:position] : 'tc'
           end
         else
-          s[:mirror_horizontal]=!!@held[CONSTRAIN_MODIFIER_KEY]
+          s.merge!(@standard_position).merge!(preserve:false) if @standard_position
         end
         s
       end
       def settings_changed
+        @standard_position=nil
         onMouseMove(0,*@xy,Sketchup.active_model.active_view) if @xy
       end
       def pick(x,y,view)
@@ -496,6 +495,21 @@ module Elfis
         UI.messagebox(error.message)
       end
       def onKeyDown(key,repeat,flags,view)
+        unless @held[key]
+          s=chosen
+          if Handles.model_record(s[:model_id])[:kind]!='edge'
+            if key==COPY_MODIFIER_KEY
+              @standard_position=s[:orientation]=='horizontal' ? {orientation:'vertical',position:'tr'} : {orientation:'horizontal',position:'tc'}
+            elsif key==CONSTRAIN_MODIFIER_KEY
+              position=if s[:orientation]=='horizontal'
+                s[:position]=='bc' ? 'tc' : 'bc'
+              else
+                s[:position]=='tl' ? 'tr' : 'tl'
+              end
+              @standard_position={orientation:s[:orientation],position:position}
+            end
+          end
+        end
         @held[key]=true
         onMouseMove(flags,*@xy,view) if @xy
         true if [CONSTRAIN_MODIFIER_KEY,COPY_MODIFIER_KEY,ALT_MODIFIER_KEY].include?(key)
