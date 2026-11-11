@@ -5,7 +5,7 @@ from io import BytesIO
 root = Path(__file__).resolve().parent
 entry = root / 'elfis_bastille_podmien_front.rb'
 files = [entry] + sorted(p for p in (root / 'elfis_bastille_podmien_front').rglob('*') if p.is_file())
-target = root / 'ELFIS_Profile_Library_2.9.1.rbz'
+target = root / 'ELFIS_Profile_Library_2.9.3.rbz'
 buffer = BytesIO()
 with ZipFile(buffer, 'w', ZIP_DEFLATED) as package:
     for file in files:

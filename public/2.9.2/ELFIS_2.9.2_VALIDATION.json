@@ -1,0 +1,26 @@
+{
+  "version": "2.9.2",
+  "native_order_integration": {
+    "passed": true,
+    "checks": [
+      "Shared nested cabinets count once per visible occurrence",
+      "Include hidden counts hidden cabinet occurrences",
+      "Hidden nested handles are excluded",
+      "Hidden ancestor tag excludes its handles",
+      "Different finishes remain separate order items",
+      "Invalid handle records generate warnings without stopping the order",
+      "Door order payload includes mounted handles",
+      "Handles can be disabled independently",
+      "Clipboard text includes product details and finish",
+      "Saved mounting records supply supplier and pitch",
+      "Handles-only orders can be copied with no front rows",
+      "Excluding handles leaves an empty order guarded"
+    ]
+  },
+  "ui_languages": [
+    "en",
+    "pl"
+  ],
+  "existing_multiselect_filters_panels": "passed",
+  "platform": "SketchUp 2026 Windows"
+}

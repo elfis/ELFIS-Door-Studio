@@ -1,6 +1,6 @@
 # ELFIS Door Profile Library — User Guide
 
-Applies to 2.9.1. Dimensions are in millimetres; examples use **height × width**, such as **715 × 596**.
+Applies to 2.9.3. Dimensions are in millimetres; examples use **height × width**, such as **715 × 596**.
 
 ## Start here
 
@@ -161,4 +161,16 @@ User library: `%APPDATA%\ELFIS\DoorProfileLibrary\profiles.json`. It contains sa
 | Stale list or geometry changed | Refresh before highlight, zoom, copy or replacement. |
 | Profile bin unavailable | Save/discard edits first; the last available profile cannot be deleted. |
 
-PDF export, a separate hardware-handle list, and general accessory ordering beyond End Panels are not implemented. See ROADMAP.md.
+Complete PDF export and a separate ELFIS handle table are implemented. General accessory ordering beyond Fronts, End Panels and ELFIS handles remains planned; see ROADMAP.md.
+
+
+## Handles in the order window
+
+The door order window now includes a separate **Handles** section for models placed by ELFIS Handles. **Refresh list** updates both sections, **Copy visible list** copies visible front/panel rows plus the complete enabled handle table, and **Copy handles** copies only hardware. Front profile/colour/source filters affect fronts and panels only; the hidden-elements option also applies to handles. Handles are consolidated by product and finish, including occurrences in nested cabinet copies. The source handle library is not required. Unmarked manual handles are excluded.
+
+
+## PDF export and Slab materials
+
+**Export complete order to PDF** in the order-window header saves one landscape A4 PDF with separate Doors/fronts, End panels and Handles sections. Each section starts on a new page; long tables repeat column headings. The export refreshes the model data and includes all sections regardless of table selection, filters or section checkboxes. The hidden-elements and Facade settings still apply. Choose a destination in Save As; cancel leaves files unchanged. The interface language controls the PDF language. Arial is loaded from the Windows system fonts and embedded for selectable Unicode text; no separate PDF software is needed.
+
+When replacing a front with **Slab**, its large-surface materials and each edge material are transferred by surface position. This preserves an existing OpenCutList edge-band material assignment. Previously lost material assignments cannot be reconstructed without an original front or backup.

@@ -8,7 +8,7 @@ module Elfis
   module Handles
     extend self
     remove_const(:VERSION) if const_defined?(:VERSION,false)
-    VERSION = '1.1.1-beta'
+    VERSION = '1.1.4-beta'
     DICT = 'ElfisHandles'
     POSITIONS = %w[tl tc tr ml mr bl bc br].freeze
     remove_const(:DEFAULTS) if const_defined?(:DEFAULTS,false)
@@ -243,6 +243,26 @@ module Elfis
       end
     end
 
+    def remove_from_front(path,operation:true)
+      model=Sketchup.active_model
+      raise l('Front już nie istnieje.','The front no longer exists.') unless path && path.all?(&:valid?)
+      raise l('Front lub szafka są zablokowane.','The front or cabinet is locked.') if path.any?(&:locked?)
+      return 0 if children(path.last).empty?
+      raise l('Uchwyt jest zablokowany.','A handle is locked.') if children(path.last).any?(&:locked?)
+      model.start_operation('ELFIS — Remove handles',true) if operation
+      begin
+        front=api.unique_path(path).last
+        front.make_unique if front.definition.instances.length>1
+        handles=children(front);count=handles.length
+        front.definition.entities.erase_entities(handles)
+        model.commit_operation if operation
+        count
+      rescue
+        model.abort_operation if operation
+        raise
+      end
+    end
+
     def reflow(front)
       return if children(front).empty?
       front.make_unique if front.definition.instances.length>1
@@ -407,6 +427,7 @@ module Elfis
             end
         refresh
           when 'click' then model_record(settings[:model_id]);@click_tool=ClickTool.new;Sketchup.active_model.select_tool(@click_tool);refresh(l('Kliknij front w modelu.','Click a front in the model.'))
+          when 'remove_click' then @click_tool=RemoveTool.new;Sketchup.active_model.select_tool(@click_tool);refresh(l('Klikaj fronty, aby usunąć uchwyty ELFIS. Esc kończy.','Click fronts to remove their ELFIS handles. Esc exits.'))
           when 'selected','all' then n=batch(request[:action]);refresh("#{n} — OK")
           when 'copy'
             rows=order_rows
@@ -526,6 +547,42 @@ module Elfis
         Handles.instance_variable_set(:@click_tool,nil)
         view.invalidate
       end
+    end
+
+    class RemoveTool < ClickTool
+      def activate
+        @held={}
+        Handles.instance_variable_set(:@click_tool,self)
+        Sketchup.set_status_text(Handles.l('ELFIS — kliknij front, aby usunąć uchwyt. Ctrl+Z: cofnij. Esc: zakończ.','ELFIS — click a front to remove its handle. Ctrl+Z: undo. Esc: exit.'))
+      end
+      def onMouseMove(flags,x,y,view)
+        @xy=[x,y];@path,_=pick(x,y,view)
+        info=Handles.measure(@path.last,@path)
+        @box=nil
+        @points=(0..7).map { |i| Handles.api.door_bounds(@path.last).corner(i).transform(info[:world]) }
+        view.tooltip=Handles.l('Usuń uchwyty ELFIS','Remove ELFIS handles')+" (#{Handles.children(@path.last).length})"
+        view.invalidate
+      rescue => error
+        @points=@box=nil;view.tooltip=error.message;view.invalidate
+      end
+      def draw(view)
+        return unless @points
+        inverse=Sketchup.active_model.edit_transform.inverse
+        edges=[[0,1],[0,2],[1,3],[2,3],[4,5],[4,6],[5,7],[6,7],[0,4],[1,5],[2,6],[3,7]]
+        screen=@points.map { |p| view.screen_coords(p.transform(inverse)) }
+        view.drawing_color=Sketchup::Color.new(205,70,60);view.line_width=3
+        view.draw2d(GL_LINES,edges.flat_map { |a,b| [screen[a],screen[b]] })
+      end
+      def onLButtonDown(flags,x,y,view)
+        path,_=pick(x,y,view)
+        count=Handles.remove_from_front(path)
+        Handles.refresh(Handles.l("Usunięto: #{count}. Kliknij kolejny front.","Removed: #{count}. Click another front."))
+        onMouseMove(flags,x,y,view)
+      rescue => error
+        UI.messagebox(error.message)
+      end
+      def onKeyDown(key,repeat,flags,view);end
+      def onKeyUp(key,repeat,flags,view);end
     end
 
     require File.join(__dir__,'calibration.rb')

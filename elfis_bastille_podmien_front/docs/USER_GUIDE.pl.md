@@ -1,4 +1,4 @@
-# ELFIS — instrukcja 2.9.1
+# ELFIS — instrukcja 2.9.3
 
 Interfejs domyślnie jest po angielsku. W nagłówku biblioteki lub zamówienia wybierz **Language / Język → Polski**. Wybór jest zapamiętywany. Nazwy własnych profili, materiałów, tagów, producentów i komponentów nie są tłumaczone. Zmiana języka otwiera ponownie to okno; drugie otwarte okno zachowuje wpisane dane i zmieni język przy kolejnym otwarciu. Niezapisane ustawienia profilu wymagają potwierdzenia odrzucenia.
 
@@ -107,4 +107,16 @@ Biblioteka: `%APPDATA%\ELFIS\DoorProfileLibrary\profiles.json`. Zawiera przekroj
 
 Pusta lista: odśwież, włącz Facade dla zwykłych frontów lub przypisz End Panels całemu panelowi. Za mały front: sprawdź wariant szuflady i ograniczenia rodziny. Zła strona J-pull: sprawdź krawędź, klawisz i odwrócenia przekroju. Nieaktualna lista: odśwież przed działaniem. Nieaktywny kosz: zapisz/odrzuć zmiany i pozostaw przynajmniej jeden profil.
 
-Eksport PDF, osobna lista uchwytów meblowych i inne akcesoria poza Endpanels są planowane, nie są gotowymi funkcjami. Historia: CHANGELOG.md. Plany: ROADMAP.md.
+Eksport całego zamówienia do PDF i osobna tabela uchwytów ELFIS są dostępne. Inne akcesoria poza frontami, Endpanels i uchwytami ELFIS pozostają planowane. Historia: CHANGELOG.md. Plany: ROADMAP.md.
+
+
+## Uchwyty w oknie zamówień
+
+Okno zamówień drzwi zawiera teraz osobną sekcję **Uchwyty** dla modeli wstawionych przez ELFIS Handles. **Odśwież listę** aktualizuje obie sekcje. Wspólne kopiowanie obejmuje widoczne fronty/panele oraz całą włączoną tabelę uchwytów; **Kopiuj uchwyty** kopiuje tylko osprzęt. Filtry profilu/koloru/producenta dotyczą frontów i paneli, a opcja elementów ukrytych również uchwytów. Identyczne produkty i wykończenia są sumowane, także w kopiach zagnieżdżonych szafek. Biblioteka źródłowa uchwytów nie jest wymagana. Uchwyty ręczne bez oznaczenia ELFIS są pomijane.
+
+
+## Eksport PDF i materiały Slab
+
+**Eksportuj całość do PDF** w nagłówku zamówienia zapisuje jeden plik A4 poziomo, z osobnymi sekcjami: Drzwi/fronty, Panele kończące i Uchwyty. Każda zaczyna się na nowej stronie; długie tabele powtarzają nagłówki. Eksport odświeża dane modelu i obejmuje wszystkie sekcje niezależnie od zaznaczenia, filtrów tabel oraz przełączników sekcji. Nadal obowiązują opcje elementów ukrytych i Facade. Miejsce zapisu wybierasz w oknie Zapisz jako; anulowanie nie zmienia plików. Język okna steruje językiem PDF. Czcionka Arial jest pobierana z Windows i osadzana dla polskich znaków oraz zaznaczania tekstu; nie potrzeba dodatkowego programu PDF.
+
+Przy podmianie na **Slab** materiały dużych powierzchni i każdej krawędzi są przenoszone według położenia powierzchni. Zachowuje to istniejący materiał okleiny używany przez OpenCutList. Wcześniej utraconych przypisań nie można odtworzyć bez oryginalnego frontu lub kopii.

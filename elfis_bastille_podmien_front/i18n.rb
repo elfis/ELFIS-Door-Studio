@@ -3,8 +3,8 @@ require 'json'
 module Elfis
   module BastillePodmienFront
     extend self
-    remove_const(:VERSION) if const_defined?(:VERSION,false) && const_get(:VERSION)!='2.9.1'
-    VERSION='2.9.1' unless const_defined?(:VERSION,false)
+    remove_const(:VERSION) if const_defined?(:VERSION,false) && const_get(:VERSION)!='2.9.3'
+    VERSION='2.9.3' unless const_defined?(:VERSION,false)
 
     def language
       return @language if @language

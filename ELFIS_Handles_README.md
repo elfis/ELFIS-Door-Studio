@@ -1,12 +1,24 @@
-# ELFIS Handles 1.1.1-beta — wersja testowa
+# ELFIS Handles 1.1.4-beta — wersja testowa
 
 > **BETA — Poprawiono import i montaż uchwytów standardowych. Ustaw punkty mocowania i sprawdź rezultat na froncie testowym przed użyciem produkcyjnym.**
 
 Osobny dodatek do ELFIS Door Studio 2.9.1, z własną ikoną i menu **Extensions → ELFIS — Handles**. Nie zmienia plików ani zapisanych profili biblioteki drzwi. W czasie działania rozszerza odczyt wymiarów i przenoszenie elementów, aby obsłużyć uchwyty.
 
+## Nowość w 1.1.4-beta
+
+Czerwony X znajduje się na końcu rzędu. Wszystkie przyciski akcji mają wysokość 36 px; X ma kompaktowy symbol i opis po najechaniu.
+
+## Nowość w 1.1.3-beta
+
+Czerwony przycisk **X** uruchamia usuwanie uchwytów z klikanych frontów. Nie usuwa drzwi. Opis jest dostępny po najechaniu i dla czytników ekranu.
+
+## Nowość w 1.1.2-beta — usuwanie uchwytów
+
+Wybierz **czerwony X** w oknie uchwytów i klikaj komponenty frontów, także wewnątrz szafek. Czerwony obrys wskazuje cel. Usuwane są wyłącznie uchwyty ELFIS; ręczne elementy, front i wiercenia pozostają. Kliknięta kopia szafki jest izolowana. Ctrl+Z cofa jedno usunięcie; Esc kończy narzędzie. Biblioteka modelu uchwytu nie jest wymagana.
+
 ## Instalacja
 
-W SketchUp wybierz **Extensions → Extension Manager → Install Extension**, wskaż `ELFIS_Handles_1.1.1-beta.rbz` i uruchom ponownie SketchUp. Pasek włączysz przez **View → Toolbars → ELFIS — Handles**.
+W SketchUp wybierz **Extensions → Extension Manager → Install Extension**, wskaż `ELFIS_Handles_1.1.4-beta.rbz` i uruchom ponownie SketchUp. Pasek włączysz przez **View → Toolbars → ELFIS — Handles**.
 
 ## Dodawanie uchwytu
 
@@ -67,3 +79,8 @@ Podczas klikania pochwytu: **Ctrl — prawa, Alt — lewa, Shift — dół**. Be
 Dodatek nie generuje wierceń. Biblioteka nie zawiera modeli producentów. Obsługiwane są prostokątne komponenty frontów; kliknięcie grupy nie zastępuje wskazania komponentu frontu. Nie rozpoznaje dowolnych ramek spoza ELFIS ani kierunku przodu surowych modeli na podstawie ich nazwy. Przy pierwszym montażu na zwykłym froncie najlepiej kliknąć jego przednią powierzchnię. Samodzielne skalowanie frontu po wstawieniu uchwytu skaluje również zagnieżdżony uchwyt — ponowne zastosowanie narzędzia przywraca jego rzeczywisty rozmiar. Nie dodano obserwatora automatycznej korekty po ręcznej edycji geometrii.
 
 Przeszło 46 testów geometrii w SketchUp Pro 2026 na Windows oraz 4 kontrole uruchamiania i anulowania kalibracji na zaimportowanym modelu. Przeszły również testy okna: natychmiastowe aktualizacje, przyciski pozycji, tłumaczenia i wąski układ. Własne modele uchwytów wymagają sprawdzenia osi i dopasowania do frontów.
+
+
+## Wspólne zamówienie
+
+Drzwi 2.9.3 pokazują uchwyty także we wspólnym oknie zamówienia i eksportują je do jednego PDF razem z frontami i panelami kończącymi. Po aktualizacji całkowicie zamknij i ponownie uruchom SketchUp, aby wczytać nowy kod.

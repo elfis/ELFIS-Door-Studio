@@ -2,6 +2,19 @@
 
 This history is reconstructed from preserved RBZ packages, instructions, release notes and test reports. Older development dates were not consistently recorded, so none are invented. Version numbers belong to the named extension line; the first profile generator and the later replacement tool originally had separate version sequences.
 
+## 2.9.3 — Complete PDF orders and Slab edge materials
+
+- Export a single PDF containing separate doors/fronts, end panels and handles sections, with quantities, repeated table headers, page numbering and embedded Unicode fonts.
+- Export fresh complete-model data independently of table filters/selection; retain the hidden-element and Facade inclusion settings. No Python, browser print dialog or external PDF library is required.
+- Preserve front/back face materials and individual narrow-edge materials when replacing a front with an ELFIS Slab, including thickness changes, rotated/mirrored/scaled components and CNC containers.
+- Isolate painted geometry from cached definitions and other component occurrences.
+
+## 2.9.2 — Handles in the door order window
+
+- Add a separate Handles table to the existing door/panel order window, with model, type, fixing pitch, length, finish, supplier, product code and consolidated quantities.
+- Refresh and copy the complete order together, or copy only handles/panels. Front filters do not filter the handle table. Hidden-element visibility applies to both lists.
+- Read mounted ELFIS records without requiring the handle library or Handles extension; retain per-occurrence counts in shared nested cabinets. Skip malformed records with a warning.
+
 ## 2.9.1 — One-Piece minimum-size validation
 
 - Prevent a nominal 140 mm front from passing the 70 mm One-Piece section's size limit because a transformed measurement is fractionally above 140 mm.

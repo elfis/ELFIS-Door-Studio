@@ -137,7 +137,42 @@ module Elfis
       end.sort_by { |c| [c[:name].downcase,c[:key].to_s] }
     end
 
-    def collect_order_list(model=Sketchup.active_model,include_hidden=false,include_facade=false,include_endpanels=false)
+    # Read mounted records, not the handle library: orders also work on another
+    # computer without ELFIS Handles installed, and retain the fitted product.
+    def collect_order_handles(model,include_hidden=false,warnings=[])
+      rows={};visited=0
+      walk=nil
+      walk=->(entities,path,stack) do
+        entities.each do |entity|
+          next unless instance?(entity)
+          visited+=1
+          raise l('Zbyt wiele elementów w zestawieniu uchwytów.','Too many elements in the handle order.') if visited>1_000_000 || path.length>256
+          current=path+[entity]
+          next if !include_hidden && (entity.hidden? || !entity.layer.visible? || !model.drawing_element_visible?(current))
+          if entity.get_attribute('ElfisHandles','handle',false)
+            begin
+              raw=JSON.parse(entity.get_attribute('ElfisHandles','record'),symbolize_names:true)
+              raise l('Niepełny opis uchwytu.','Incomplete handle record.') unless raw.is_a?(Hash) && !raw[:name].to_s.strip.empty?
+              record=raw.slice(:id,:name,:kind,:pitch,:length,:finish,:supplier,:code)
+              key=JSON.generate(record.sort_by { |k,_| k.to_s })
+              row=rows[key] ||= record.merge(quantity:0)
+              row[:quantity]+=1
+            rescue => error
+              warnings<<l("Uchwyt #{entity.name}: #{error.message}","Handle #{entity.name}: #{error.message}")
+            end
+            # A handle SKP can contain nested components. Count the fitted
+            # assembly once, regardless of how its geometry was authored.
+            next
+          end
+          next if stack[entity.definition]
+          walk.call(entity.definition.entities,current,stack.merge(entity.definition=>true))
+        end
+      end
+      walk.call(model.entities,[],{})
+      rows.values.sort_by { |r| [r[:name].to_s.downcase,r[:finish].to_s.downcase,r[:code].to_s] }
+    end
+
+    def collect_order_list(model=Sketchup.active_model,include_hidden=false,include_facade=false,include_endpanels=false,include_handles=true)
       rows={};warnings=[];children={};colours={};measures={};profiles={};visited=0
       walk=nil
       walk=->(entities,tr,inherited,path,stack) do
@@ -202,7 +237,8 @@ module Elfis
       walk.call(model.entities,IDENTITY,nil,[],{})
       list=rows.values.sort_by { |r| [r[:profile].downcase,r[:colours].map { |c| c[:name] }.join.downcase,r[:height],r[:width],r[:thickness],r[:handle]] }
       list.each_with_index { |row,index| row[:id]=index }
-      {model:model.title.empty? ? 'Bez nazwy' : model.title,rows:list,total:list.sum { |r| r[:quantity] },include_hidden:include_hidden,include_facade:include_facade,include_endpanels:include_endpanels,endpanels_present:model.layers.any? { |layer| order_endpanel_tag?(layer.name) },facade_present:model.layers.any? { |layer| layer.name.casecmp('Facade').zero? },warnings:warnings,review_count:list.count { |r| r[:review] }}
+      handles=include_handles ? collect_order_handles(model,include_hidden,warnings) : []
+      {model:model.title.empty? ? 'Bez nazwy' : model.title,rows:list,total:list.sum { |r| r[:quantity] },handles:handles,include_handles:include_handles,include_hidden:include_hidden,include_facade:include_facade,include_endpanels:include_endpanels,endpanels_present:model.layers.any? { |layer| order_endpanel_tag?(layer.name) },facade_present:model.layers.any? { |layer| layer.name.casecmp('Facade').zero? },warnings:warnings,review_count:list.count { |r| r[:review] }}
     end
 
     def order_text_cell(value)
@@ -227,6 +263,15 @@ module Elfis
           lines<<values.map { |v| order_text_cell(v) }.join("\t")
         end
       end
+      unless Array(data[:handles]).empty?
+        lines<<'' unless lines.empty?
+        lines<<l('UCHWYTY','HANDLES')
+        lines<<[l('Model','Model'),l('Rodzaj','Type'),l('Rozstaw [mm]','Pitch [mm]'),l('Długość [mm]','Length [mm]'),l('Wykończenie','Finish'),l('Producent / dostawca','Manufacturer / supplier'),l('Kod produktu','Product code'),l('Ilość','Quantity')].join("\t")
+        data[:handles].each do |row|
+          kind={'standard'=>l('Standardowy','Standard'),'edge'=>l('Krawędziowy','Edge pull'),'knob'=>l('Gałka','Knob')}.fetch(row[:kind],row[:kind])
+          lines<<[row[:name],kind,row[:pitch],row[:length],row[:finish],row[:supplier],row[:code],row[:quantity]].map { |v| order_text_cell(v) }.join("\t")
+        end
+      end
       if data[:review_count]>0
         lines<<''<<ui_label('UWAGA: sprawdź fronty spoza ELFIS oraz pozycje z nierozpoznanym profilem, brakiem materiału lub wieloma materiałami.')
       end
@@ -241,7 +286,7 @@ module Elfis
       clear_order_highlight
       model=Sketchup.active_model
       targets={}
-      data=collect_order_list(model,@order_include_hidden==true,@order_include_facade==true,@order_include_endpanels!=false) do |row,path,bounds|
+      data=collect_order_list(model,@order_include_hidden==true,@order_include_facade==true,@order_include_endpanels!=false,@order_include_handles!=false) do |row,path,bounds|
         (targets[row.object_id] ||= [])<<{model:model,path:path,bounds:bounds}
       end
       @order_revision=(@order_revision || 0)+1
@@ -347,7 +392,7 @@ module Elfis
       replace_order_row(ids,revision,nil,'preserve','auto',supplier_only:supplier)
     end
 
-    def copy_order_list(ids=nil,revision=nil)
+    def copy_order_list(ids=nil,revision=nil,include_handles=true)
       refresh_order_list unless @order_snapshot && @order_snapshot[:model]==Sketchup.active_model
       data=@order_snapshot[:data]
       if ids
@@ -357,7 +402,8 @@ module Elfis
         chosen_rows=data[:rows].select { |row| keys.include?(row[:id]) }
         data=data.merge(rows:chosen_rows,review_count:chosen_rows.count { |row| row[:review] })
       end
-      raise Elfis::BastillePodmienFront.l('Lista jest pusta. Nie skopiowano danych.','The list is empty. Nothing was copied.') if data[:rows].empty?
+      data=data.merge(handles:[]) unless include_handles
+      raise Elfis::BastillePodmienFront.l('Lista jest pusta. Nie skopiowano danych.','The list is empty. Nothing was copied.') if data[:rows].empty? && Array(data[:handles]).empty?
       raise Elfis::BastillePodmienFront.l('Nie udało się zapisać tekstu w schowku.','Could not write text to the clipboard.') unless UI.set_clipboard_data(order_list_text(data))
       @order_dialog.execute_script("setOrderStatus(#{JSON.generate(ui_label('Skopiowano tabelę do schowka. Możesz wkleić ją do Excela lub wiadomości.'))})") if @order_dialog
       true
@@ -495,8 +541,13 @@ module Elfis
             @order_include_hidden=data[:include_hidden]==true
             @order_include_facade=data[:include_facade]==true
             @order_include_endpanels=data[:include_endpanels]==true
+            @order_include_handles=data[:include_handles]!=false
             refresh_order_list
-          when 'copy' then copy_order_list(data[:ids],data[:revision])
+          when 'copy' then copy_order_list(data[:ids],data[:revision],data[:include_handles]!=false)
+          when 'pdf'
+            unless export_order_pdf
+              dialog.execute_script("setOrderStatus(#{JSON.generate(l('Eksport anulowany.','Export cancelled.'))})")
+            end
           when 'highlight' then highlight_order_row(data[:ids] || data[:id],data[:revision])
           when 'zoom' then zoom_order_rows(data[:ids] || data[:id],data[:revision])
           when 'assign_supplier' then assign_order_supplier(data[:ids],data[:revision],data[:supplier])

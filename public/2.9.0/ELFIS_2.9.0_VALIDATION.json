@@ -1,0 +1,19 @@
+{
+  "release": "2.9.0",
+  "native_sketchup_2026": {
+    "passed": true,
+    "compiled": 10,
+    "english_persistence": true,
+    "english_errors": true,
+    "clipboard_languages": true,
+    "user_data_preserved": true,
+    "family_regression": true,
+    "endpanels_regression": true,
+    "version": "2.9.0"
+  },
+  "browser_tests": "EN/PL render, language callbacks, dirty-edit cancellation, data names, list selection and offline docs passed",
+  "native_ui": "English -> Polski -> English verified; installed offline documentation opened",
+  "installed_package_files_verified": 29,
+  "previous_archives_unchanged": 27,
+  "publication": "not published"
+}

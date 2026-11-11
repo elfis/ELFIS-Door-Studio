@@ -1,14 +1,26 @@
-# ELFIS Handles 1.1.1-beta
+# ELFIS Handles 1.1.4-beta
 
 > **BETA — Standard-handle import and placement have been revised. Calibrate fixing points and check placement on a test front before production use.**
 
-An optional handle module for **ELFIS Door Studio 2.9.1**, with its own toolbar icon and installer. This is a first public test version. It uses Door Studio's front measurement and replacement routines; it is not a standalone extension.
+An optional handle module for **ELFIS Door Studio 2.9.1**, with its own toolbar icon and installer. The Handles module remains beta. It uses Door Studio's front measurement and replacement routines; it is not a standalone extension.
 
-[Download ELFIS Handles 1.1.1-beta](https://github.com/elfis/ELFIS-Door-Studio/raw/refs/heads/main/public/handles/1.1.1-beta/ELFIS_Handles_1.1.1-beta.rbz) · [Polska instrukcja](ELFIS_Handles_README.md)
+[Download ELFIS Handles 1.1.4-beta](https://github.com/elfis/ELFIS-Door-Studio/raw/refs/heads/main/public/handles/1.1.4-beta/ELFIS_Handles_1.1.4-beta.rbz) · [Polska instrukcja](ELFIS_Handles_README.md)
+
+## New in 1.1.4-beta
+
+Move the red X to the end of the action row. All action buttons share a 36 px height; the X uses a compact symbol with a tooltip.
+
+## New in 1.1.3-beta
+
+The red **X** button starts click removal of ELFIS handles. It does not delete doors. A translated tooltip and accessible label explain the action.
+
+## New in 1.1.2-beta — click removal
+
+Choose the **red X** in the handle window, then click front components, including nested fronts. A red outline marks the target. Only ELFIS-marked handles are removed; unmarked fittings, the front and machining groups remain. Shared cabinet occurrences are isolated. Ctrl+Z undoes one removal; Esc exits. The source handle library is not required.
 
 ## Install
 
-Install Door Studio first. In SketchUp, choose **Extensions → Extension Manager → Install Extension**, select `ELFIS_Handles_1.1.1-beta.rbz`, and restart SketchUp. Enable **View → Toolbars → ELFIS — Handles** if necessary. The same command is available in the Extensions menu.
+Install Door Studio first. In SketchUp, choose **Extensions → Extension Manager → Install Extension**, select `ELFIS_Handles_1.1.4-beta.rbz`, and restart SketchUp. Enable **View → Toolbars → ELFIS — Handles** if necessary. The same command is available in the Extensions menu.
 
 ## Import a handle
 
@@ -80,3 +92,8 @@ Manually scaling a front also scales its nested handle. Reapplying the tool rest
 Part of ELFIS Door Studio, distributed under the repository's [MIT License](LICENSE). Rights to any imported third-party models remain with their respective owners.
 
 Optional [Ko-fi donations](https://ko-fi.com/elfis1920) support AI credits used for development and testing.
+
+
+## Combined orders
+
+Doors 2.9.3 also lists marked handles in the door order window and exports them in one PDF with fronts and end panels. Fully close and restart SketchUp after updating so new Ruby code is loaded.

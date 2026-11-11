@@ -5,6 +5,8 @@ require File.join(__dir__,'elfis_bastille_podmien_front','i18n.rb')
 require File.join(__dir__,'elfis_bastille_podmien_front','engine.rb')
 require File.join(__dir__,'elfis_bastille_podmien_front','library.rb')
 require File.join(__dir__,'elfis_bastille_podmien_front','order_list.rb')
+require File.join(__dir__,'elfis_bastille_podmien_front','slab_materials.rb')
+require File.join(__dir__,'elfis_bastille_podmien_front','order_pdf.rb')
 
 module Elfis
   module BastillePodmienFront
@@ -187,6 +189,7 @@ module Elfis
         replacement.casts_shadows=instance.casts_shadows?
         replacement.receives_shadows=instance.receives_shadows?
         stamp_door(replacement,p,info[:width],info[:height])
+        preserve_slab_materials(instance,replacement,info) if p[:kind]=='slab'
         replacement.set_attribute('ElfisBastillePodmien','source_name',instance.name)
         replacement.set_attribute('ElfisBastillePodmien','width_mm',info[:width])
         replacement.set_attribute('ElfisBastillePodmien','height_mm',info[:height])

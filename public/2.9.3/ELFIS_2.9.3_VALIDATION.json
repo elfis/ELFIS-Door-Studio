@@ -1,0 +1,32 @@
+{
+  "version": "2.9.3",
+  "native_remove_material_pdf_tests": {
+    "passed": true,
+    "checks": [
+      "Classifies broad faces and all four narrow slab edges",
+      "Slab thickness replacement preserves all six face/back material pairs",
+      "Other source component instances retain their materials",
+      "Slab replacement preserves machining groups",
+      "Material transfer does not contaminate the cached slab definition",
+      "Rotated mirrored scaled source retains surface-role materials",
+      "Click removal does not require a library model",
+      "Removal isolates shared nested cabinet copies",
+      "Removal retains unmarked fittings and CNC groups",
+      "Clicking an unequipped front is a no-op",
+      "Removal rejects locked cabinet paths",
+      "PDF contains embedded Unicode fonts and selectable text",
+      "Long tables paginate with separate product sections"
+    ]
+  },
+  "native_pdf_save_workflow": {
+    "passed": true,
+    "checks": [
+      "Cancelling Save As returns without writing a file",
+      "Native exporter saves a complete model order directly to PDF",
+      "Confirmed destination overwrite works without a leftover temporary file"
+    ]
+  },
+  "browser_en_pl_and_handles": "passed",
+  "pdf_visual_review": "passed: all 5 pages of model order; all 6 pages of stress fixture",
+  "platform": "SketchUp Pro 2026 Windows"
+}

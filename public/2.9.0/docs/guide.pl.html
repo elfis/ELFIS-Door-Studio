@@ -1,0 +1,197 @@
+<!doctype html><html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ELFIS — User Guide</title><style>body{max-width:1080px;margin:28px auto;padding:0 26px;color:#213b3d;background:#f4f5f2;font:15px/1.6 Segoe UI,sans-serif}h1,h2,h3{line-height:1.25}h2{margin-top:36px}table{border-collapse:collapse;width:100%;background:#fff}td,th{border:1px solid #cbd7d0;padding:9px 12px;text-align:left;vertical-align:top}th{background:#e7eee9}code{background:#e5e9e5;padding:2px 4px;overflow-wrap:anywhere}a{color:#185c76}nav{position:sticky;top:0;background:#fff;padding:12px;border-bottom:2px solid #285b59;z-index:1}nav a{margin-right:18px}@media print{nav{position:static}body{max-width:none;background:white}tr{break-inside:avoid}thead{display:table-header-group}}</style></head><body><nav><strong>ELFIS 2.9.0</strong> · <a href="guide.en.html">English</a><a href="guide.pl.html">Polski</a><a href="changelog.html">Changelog</a><a href="roadmap.html">Roadmap / Plany</a></nav><h1>ELFIS — instrukcja 2.9.0</h1>
+<p>Interfejs domyślnie jest po angielsku. W nagłówku biblioteki lub zamówienia wybierz <strong>Language / Język → Polski</strong>. Wybór jest zapamiętywany. Nazwy własnych profili, materiałów, tagów, producentów i komponentów nie są tłumaczone. Zmiana języka otwiera ponownie to okno; drugie otwarte okno zachowuje wpisane dane i zmieni język przy kolejnym otwarciu. Niezapisane ustawienia profilu wymagają potwierdzenia odrzucenia.</p>
+<h2>Instalacja i trzy ikony</h2>
+<p>Extensions → Extension Manager → Install Extension → paczka 2.9.0 RBZ, następnie restart SketchUp. Testowanym środowiskiem jest SketchUp Pro 2026 na Windows; inne wersje i macOS nie są potwierdzone. Five-Piece wymaga operacji bryłowych. To aktualizacja biblioteki/podmiany frontów, niezależna od starszej osobnej wtyczki „Drzwi z profilu”.</p>
+<table>
+<thead>
+<tr>
+<th>Ikona</th>
+<th>Działanie</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Drzwi ze strzałką</td>
+<td>Podmiana klikniętego frontu aktywnym profilem; można klikać kolejne fronty.</td>
+</tr>
+<tr>
+<td>Biblioteka / trzy panele</td>
+<td>Wybór, dodawanie, ustawienia i usuwanie profili; tworzenie z wymiarów.</td>
+</tr>
+<tr>
+<td>Lista zamówienia</td>
+<td>Zestawienie wymiarów, ilości i kolorów; podświetlanie, przybliżanie, zbiorcza podmiana i schowek.</td>
+</tr>
+</tbody></table>
+<p>Ukryty pasek włączysz przez View → Toolbars. Instrukcja jest też pod Extensions → ELFIS — Documentation / Dokumentacja.</p>
+<h2>Biblioteka i przekroje</h2>
+<p>Wyszukiwarka filtruje nazwy. Gwiazdka dodaje do ulubionych, a przycisk Ulubione filtruje karty. Kliknięta karta staje się aktywnym profilem. Czerwony kosz wymaga potwierdzenia: usuwa własny profil albo ukrywa wbudowany. Istniejące drzwi pozostają. „Przywróć wbudowane” przywraca ukryte wzory. Nie można usunąć ostatniego dostępnego profilu. Przy niezapisanych ustawieniach najpierw zapisz je lub odrzuć.</p>
+<table>
+<thead>
+<tr>
+<th>Konstrukcja</th>
+<th>Jak dodać / co powstaje</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Five-Piece Door</td>
+<td>Zaznacz jeden płaski zamknięty przekrój ramiaka: powierzchnię, obrys albo grupę z tym przekrojem. Cztery ramiaki i opcjonalna osobna płycina; szerokie części łączą się na 90°.</td>
+</tr>
+<tr>
+<td>One-Piece Door</td>
+<td>Przekrój od zewnętrznej krawędzi do środka, z płaskim tyłem i pionowym zamknięciem od tyłu do powierzchni środka. Bez rowka na osobną płycinę. Jedna bryła z ciągłym środkiem.</td>
+</tr>
+<tr>
+<td>Slab</td>
+<td>Nazwa i grubość, bez przekroju. Prosta płyta z prostymi krawędziami.</td>
+</tr>
+<tr>
+<td>J-pull</td>
+<td>Parametryczna wnęka: grubość, zasięg, warga, promień i krawędź. Albo własny pełny przekrój boczny z uchwytem na jednym końcu i prostym środkiem.</td>
+</tr>
+</tbody></table>
+<p>Rysuj przekrój w rzeczywistym rozmiarze, nie wyciągnięty ramiak 3D. Five-Piece potrzebuje rozpoznawalnej długiej prostej krawędzi. „Płaska część ramy” to szerokość od zewnętrznej krawędzi do początku ozdobnego frezu; Bastille: 75,5 mm. Płycina potrzebuje prostokątnego rozpoznanego rowka; musi być cieńsza od rowka. Płycina 0 oznacza brak płyciny. Luz nie może wysunąć płyciny z rowka.</p>
+<p>One-Piece prowadzi przekrój wokół prostokąta i wypełnia środek; nie oznacza automatycznie litego drewna. Obsługuje poprawne przekroje z wypukłym środkiem i krzywymi podzielonymi na segmenty. Wewnętrzne narożniki są ostre, bez promienia frezu i bez automatycznych ścieżek CNC. Przykład nie jest dokładną kopią Hartford/Parker.</p>
+<p>J-pull przebiega przez całą wybraną krawędź. Własny przekrój wczytaj przyciskiem w ustawieniach i sprawdź odwracanie przód/tył oraz końca z uchwytem. Prosty środek jest wydłużany bez skalowania detali. Wymiar prostopadły do uchwytu musi przekraczać dwukrotny zasięg strefy profilowanej. Przykład parametryczny nie jest dokładną kopią Arena. Nie ma uchwytu na części krawędzi ani generatora łączącego ramkę z J-pull.</p>
+<p>„Zapisz ustawienia jako profil” zapisuje własny wzór; edycja wbudowanego tworzy własną kopię. „Anuluj dodawanie” odrzuca nowy szkic profilu. W polu producent/źródło wybierz ELFIS, Facade, OS Doors, BA, Tade Moldings lub wpisz nazwę. Sam producent nie dodaje katalogu ani przekrojów.</p>
+<h2>Niskie szuflady</h2>
+<p>W rodzinie Five-Piece/One-Piece włącz wariant według wysokości. Wybierz płaski front z grubością albo własny pełny przekrój szuflady. Podaj zakres wysokości, minimalną szerokość i osobne ograniczenia ramy. Własny przekrój ma obejmować dół i górę oraz prosty środek; detale muszą mieścić się w zadanej strefie przy obu krawędziach. Zaimportuj i sprawdź podgląd oraz odwracanie.</p>
+<p>Wariant Automatyczny dobiera wykonanie według wysokości. Ramkowy i Niska szuflada wymuszają wariant, ale nadal sprawdzają jego ograniczenia. Zakresy dobierz według dokumentacji danego produktu. Wymiary poza zakresem zatrzymują operację, a błąd w zbiorczej podmianie cofa całość.</p>
+<h2>Tworzenie i podmiana</h2>
+<p>Wpisz wysokość i szerokość w mm, np. 715 × 596, i wybierz „Utwórz z wymiarów”. Komponent powstanie w początku osi bieżącego kontekstu. Five-/One-Piece wymagają obu wymiarów większych niż dwukrotna szerokość przekroju, oprócz ograniczeń rodziny. Slab/J-pull mają grubość powyżej 0,1 do 80 mm i muszą spełniać ograniczenia geometrii.</p>
+<p>„Wybierz i klikaj fronty” pozwala podmieniać komponenty bez otwierania szafki. Klikaj szeroką zewnętrzną powierzchnię frontu. Narzędzie celuje w komponent, nie dowolną grupę. Grupowane zwykłe fronty Facade można również podmieniać przez listę, jeżeli rozpoznano płytę. Drzwi można zmieniać wielokrotnie pomiędzy konstrukcjami.</p>
+<p>Niebieski obrys wskazuje cel, zielona linia krawędź J-pull. Obsługiwane są obrót, skala i odbicie; deformacja ukośna jest odrzucana. Pozostałe kopie szafki są odseparowywane przy kliknięciu z zewnątrz. W otwartej współdzielonej szafce wyjdź z edycji lub wcześniej użyj Make Unique.</p>
+<p>Podmiana zachowuje szerokość, wysokość, tylną płaszczyznę, materiał instancji, tag, widoczność/cienie oraz grupy i komponenty obróbki razem z ich zawartością, atrybutami i położeniem. Nazwy grup obróbki nie są kryterium. Grubość pochodzi z profilu: przy 18 → 22 mm dodatkowe 4 mm wychodzą na zewnątrz. Stara geometria wygenerowana przez plugin jest zastępowana.</p>
+<p>Nie są odtwarzane otwory wycięte tylko w starych surowych powierzchniach ani przeliczane głębokości wierceń. Nie powstają nowe ścieżki CNC. Eksport OpenCutList trzeba sprawdzić dla rzeczywistych frontów. Materiały poszczególnych starych powierzchni nie zastępują materiału instancji. W najstarszych drzwiach rozpoznawanie własnych części korzystało z ich standardowych nazw; zmiana nazw tych grup może utrudnić podmianę.</p>
+<h2>Nazwy</h2>
+<p>Extensions → ELFIS — Door Naming / Nazwy drzwi: <strong>Pozostaw nazwy drzwi</strong> (domyślnie) albo <strong>Zmień nazwy drzwi</strong>. Pierwsza opcja zachowuje nazwę instancji; współdzielona definicja może wymagać innej nazwy unikatowej. Druga nadaje nazwę profilu i rozmiar, np. <code>Bastille 715x596</code>. Nowe drzwi z wymiarów zawsze otrzymują nazwę profilu i rozmiar.</p>
+<p>Numer dopisywany jest tylko przy zajętej nazwie definicji. Od 2.4.1 stosowana jest numeracja SketchUp od <code>#1</code>, potem <code>#2</code>, z zachowaniem całego wymiaru. Starsza 2.3.1 zaczynała od <code>#2</code>. Zmiana opcji nie przemianowuje automatycznie całego projektu.</p>
+<h2>Lista zamówienia</h2>
+<p>Fronty ELFIS są rozpoznawane po atrybutach wtyczki. „Dodaj fronty z tagu Facade ★” włącza zwykłe fronty; gwiazdka oznacza element spoza ELFIS, niezależnie od producenta. Front ELFIS na Facade nie jest liczony dwa razy. Łączone są zgodne profil, konstrukcja, wymiary, materiał, producent i strona J-pull.</p>
+<p>„Dodaj Endpanels” pokazuje osobną podlistę. Przypisz tag całej grupie/komponentowi panelu. Działają End Panels / endpanels, różna wielkość liter, spacje, podkreślniki i myślniki. Nie trzeba profilu. Nazwa wskazuje produkt, np. płaski lub T&amp;G. Paneli nie można podmieniać na drzwi; mieszane zaznaczenie również blokuje podmianę. Producenta nadal można przypisywać.</p>
+<table>
+<thead>
+<tr>
+<th>Przycisk / opcja</th>
+<th>Działanie</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Odśwież listę</td>
+<td>Odczytuje model, kasuje zaznaczenie i podgląd; użyj po zmianach geometrii.</td>
+</tr>
+<tr>
+<td>Uwzględnij ukryte fronty</td>
+<td>Dodaje także elementy ukryte i z niewidocznych tagów.</td>
+</tr>
+<tr>
+<td>Filtry profil / kolor / producent</td>
+<td>Działają łącznie. Zmiana filtrów kasuje zaznaczenie.</td>
+</tr>
+<tr>
+<td>Wyczyść filtry</td>
+<td>Resetuje trzy filtry.</td>
+</tr>
+<tr>
+<td>Wyczyść podgląd</td>
+<td>Czyści wybór wierszy i obrysy.</td>
+</tr>
+<tr>
+<td>Nowy profil, Wariant, Zmień profil</td>
+<td>Podmienia wszystkie wystąpienia wybranych wierszy; dla J-pull można zachować stronę lub wskazać nową. Jedno Ctrl+Z cofa całość.</td>
+</tr>
+<tr>
+<td>Przypisz wybranym frontom</td>
+<td>Przypisuje producenta/źródło bez przebudowy geometrii.</td>
+</tr>
+<tr>
+<td>Kopiuj widoczną listę</td>
+<td>Kopiuje wszystkie wiersze po filtrach, nie tylko zaznaczone; tabela ze znakami tabulacji do Excela/wiadomości.</td>
+</tr>
+<tr>
+<td>Kopiuj Endpanels</td>
+<td>Kopiuje tylko widoczną podlistę paneli.</td>
+</tr>
+</tbody></table>
+<p>Wymiary uwzględniają zagnieżdżenia i skalę. CNC nie powiększa pomiaru drzwi ELFIS. Facade wymaga bezpośrednich powierzchni płyty; złożone fronty mogą wymagać kontroli. Endpanels może zawierać zagnieżdżoną bryłę; grupy samych wektorów nie rozszerzają pomiaru. Najcieńszy wymiar zwykłej płyty oznacza grubość, pionowa oś powierzchni wysokość. Nietypowe osie, leżące panele i kilka oddzielnych brył trzeba sprawdzić.</p>
+<p>Kolor uwzględnia materiał dziedziczony. Próbka przedstawia kolor bazowy, nie teksturę. Pomarańczowy znacznik oznacza dane do kontroli, np. brak profilu, materiału albo kilka materiałów. Obrys jest nakładką widoku, nie geometrią; przy uwzględnianiu ukrytych może wskazywać obiekty przez inne elementy.</p>
+<h2>Skróty</h2>
+<table>
+<thead>
+<tr>
+<th>Kontekst</th>
+<th>Klawisz / mysz</th>
+<th>Wynik</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Narzędzie podmiany</td>
+<td>Klik</td>
+<td>Podmiana jednego frontu; narzędzie pozostaje aktywne.</td>
+</tr>
+<tr>
+<td>Narzędzie podmiany</td>
+<td>Esc</td>
+<td>Zakończenie narzędzia.</td>
+</tr>
+<tr>
+<td>Podmiana J-pull</td>
+<td>Shift + klik</td>
+<td>Uchwyt na dole.</td>
+</tr>
+<tr>
+<td>Podmiana J-pull</td>
+<td>Ctrl + klik</td>
+<td>Uchwyt po lewej.</td>
+</tr>
+<tr>
+<td>Podmiana J-pull</td>
+<td>Alt + klik</td>
+<td>Uchwyt po prawej.</td>
+</tr>
+<tr>
+<td>Podmiana J-pull</td>
+<td>Bez klawisza</td>
+<td>Krawędź zapisana w profilu.</td>
+</tr>
+<tr>
+<td>Lista</td>
+<td>Klik</td>
+<td>Jeden wiersz, podświetlenie wszystkich jego kopii.</td>
+</tr>
+<tr>
+<td>Lista</td>
+<td>Shift + klik</td>
+<td>Zakres widocznych wierszy.</td>
+</tr>
+<tr>
+<td>Lista</td>
+<td>Ctrl + klik</td>
+<td>Dodanie/usunięcie pojedynczego wiersza.</td>
+</tr>
+<tr>
+<td>Lista</td>
+<td>Ctrl + Shift + klik</td>
+<td>Dodanie zakresu.</td>
+</tr>
+<tr>
+<td>Lista</td>
+<td>Dwuklik</td>
+<td>Przybliżenie frontów/paneli.</td>
+</tr>
+<tr>
+<td>Aktywny wiersz listy</td>
+<td>Enter / spacja</td>
+<td>Wybranie i podświetlenie.</td>
+</tr>
+<tr>
+<td>Model SketchUp</td>
+<td>Ctrl+Z</td>
+<td>Cofnięcie tworzenia, podmiany, całej podmiany zbiorczej lub przypisania producenta.</td>
+</tr>
+</tbody></table>
+<p>Modyfikatory J-pull dotyczą kliknięcia frontu, nie tworzenia z wymiarów. Przy kilku klawiszach priorytet: Shift, Ctrl, Alt. Dla innych konstrukcji nie zmieniają geometrii. W oknie listy te same klawisze zaznaczają wiersze.</p>
+<h2>Dane i pomoc</h2>
+<p>Biblioteka: <code>%APPDATA%\ELFIS\DoorProfileLibrary\profiles.json</code>. Zawiera przekroje, ustawienia, aktywny profil, ulubione, ukryte wbudowane oraz opcje nazw i wariantów. Język jest osobną preferencją SketchUp. Zrób kopię biblioteki przy migracji lub cofnięciu wersji; starszy kod może nie obsługiwać nowszych typów. Źródłowy DXF po zapisaniu profilu nie jest potrzebny.</p>
+<p>Pusta lista: odśwież, włącz Facade dla zwykłych frontów lub przypisz End Panels całemu panelowi. Za mały front: sprawdź wariant szuflady i ograniczenia rodziny. Zła strona J-pull: sprawdź krawędź, klawisz i odwrócenia przekroju. Nieaktualna lista: odśwież przed działaniem. Nieaktywny kosz: zapisz/odrzuć zmiany i pozostaw przynajmniej jeden profil.</p>
+<p>Eksport PDF, osobna lista uchwytów meblowych i inne akcesoria poza Endpanels są planowane, nie są gotowymi funkcjami. Historia: CHANGELOG.md. Plany: ROADMAP.md.</p>
+</body></html>

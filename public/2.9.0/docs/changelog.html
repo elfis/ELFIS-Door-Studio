@@ -1,0 +1,171 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ELFIS — CHANGELOG</title><style>body{max-width:1080px;margin:28px auto;padding:0 26px;color:#213b3d;background:#f4f5f2;font:15px/1.6 Segoe UI,sans-serif}h1,h2,h3{line-height:1.25}h2{margin-top:36px}table{border-collapse:collapse;width:100%;background:#fff}td,th{border:1px solid #cbd7d0;padding:9px 12px;text-align:left;vertical-align:top}th{background:#e7eee9}code{background:#e5e9e5;padding:2px 4px;overflow-wrap:anywhere}a{color:#185c76}nav{position:sticky;top:0;background:#fff;padding:12px;border-bottom:2px solid #285b59;z-index:1}nav a{margin-right:18px}@media print{nav{position:static}body{max-width:none;background:white}tr{break-inside:avoid}thead{display:table-header-group}}</style></head><body><nav><strong>ELFIS 2.9.0</strong> · <a href="guide.en.html">English</a><a href="guide.pl.html">Polski</a><a href="changelog.html">Changelog</a><a href="roadmap.html">Roadmap / Plany</a></nav><h1>Changelog</h1>
+<p>This history is reconstructed from preserved RBZ packages, instructions, release notes and test reports. Older development dates were not consistently recorded, so none are invented. Version numbers belong to the named extension line; the first profile generator and the later replacement tool originally had separate version sequences.</p>
+<h2>2.9.0 — English / Polish and public documentation</h2>
+<ul>
+<li>English is the default interface language; English / Polski selection in both main windows, persisted separately from profile data.</li>
+<li>Localised library/order windows, native commands, tool hints, validation messages and clipboard headings. User names and profile geometry are preserved.</li>
+<li>English and Polish user guides with toolbar controls, import workflows, keyboard/mouse shortcuts, ordering, machining behaviour and limitations.</li>
+<li>In-app documentation command, archived changelog, current feature inventory in the guides, and a separate roadmap.</li>
+<li>This release does not implement PDF export or a hardware-handle list.</li>
+</ul>
+<h2>2.8.2 — Existing End Panels tag</h2>
+<ul>
+<li>Recognise End Panels / endpanels with case, whitespace, underscore and hyphen variations.</li>
+</ul>
+<h2>2.8.1 — Separate Endpanels sublist</h2>
+<ul>
+<li>Tag-based end-panel ordering without importing panel profiles.</li>
+<li>Separate panel quantities/table/copy button in the existing order window.</li>
+<li>Highlight, zoom, filters and manufacturer assignment for panels.</li>
+<li>Block door-profile replacement for panel rows or mixed front/panel selections.</li>
+<li>Nested panel body measurement excludes vector-only CNC containers.</li>
+</ul>
+<h2>2.8.0 — Families, low drawers and order-list controls</h2>
+<ul>
+<li>Height-based profile families: standard frame and plain/custom-section low drawer.</li>
+<li>Import complete drawer sections while preserving moulding at both edges.</li>
+<li>Automatic, Framed and Low drawer overrides; family dimension validation.</li>
+<li>Bundled Bastille-specific dimension rules.</li>
+<li>Double-click order rows to zoom; combined profile/colour/manufacturer filters.</li>
+<li>Copy filtered visible rows.</li>
+<li>Expand ELFIS/Facade into a single manufacturer/source field, including OS Doors, BA, Tade Moldings and custom names.</li>
+<li>Assign manufacturer metadata to existing listed occurrences without rebuilding geometry.</li>
+</ul>
+<h2>2.7.1 — Multiple order rows</h2>
+<ul>
+<li>Shift range selection, Ctrl toggle and Ctrl+Shift additive ranges.</li>
+<li>Highlight and replace all occurrences belonging to selected rows.</li>
+<li>Preserve individual J-pull handle edges in batch replacement.</li>
+</ul>
+<h2>2.7.0 — Restyle from the order list</h2>
+<ul>
+<li>Choose a new profile and replace all front occurrences belonging to a list position.</li>
+<li>Isolate shared cabinet paths; preserve materials, tags, machining and rear plane.</li>
+<li>One undo step for the whole batch; rollback on an invalid/locked target.</li>
+</ul>
+<h2>2.6.3 — Nested editing overlay position</h2>
+<ul>
+<li>Fix displaced order-list highlights while editing a group/component.</li>
+</ul>
+<h2>2.6.2 — Invalid overlay recovery</h2>
+<ul>
+<li>Recreate removed/invalid SketchUp overlays before highlighting order items.</li>
+</ul>
+<h2>2.6.1 — Highlight from the list</h2>
+<ul>
+<li>Clicking a consolidated row highlights all its front occurrences in the model.</li>
+<li>Clear highlight on request, refresh or close; retain ordinary model selection/edit context.</li>
+</ul>
+<h2>2.6.0 — Door order window</h2>
+<ul>
+<li>Third toolbar button; consolidated front dimensions, quantities, type, colour and J-pull edge.</li>
+<li>Recognise ELFIS doors through attributes, including nested/scaled/mirrored occurrences.</li>
+<li>Optional Facade-tagged ordinary fronts with external-item marking and no double-counting.</li>
+<li>Hidden-element option, material/review warnings and tab-separated clipboard output.</li>
+<li>Store profile identity/specification with newly generated doors.</li>
+</ul>
+<h2>2.5.1 — Profile removal and preview layout</h2>
+<ul>
+<li>Red bin with confirmation; delete custom profiles or hide built-ins.</li>
+<li>Restore built-ins, maintain favourites/active profile and protect the last available profile.</li>
+<li>Align section previews, scale and captions across cards.</li>
+</ul>
+<h2>2.5.0 — One-Piece Door</h2>
+<ul>
+<li>Rename the separate-frame construction Five-Piece Door; introduce integral One-Piece Door.</li>
+<li>Import a suitable border-to-centre section and build one solid with a continuous centre.</li>
+<li>Support valid raised-centre and segmented-curve sections.</li>
+<li>Add a demo; preserve repeated restyling, machining containers and rear-plane anchoring.</li>
+</ul>
+<h2>2.4.1 — Native definition-name collision handling</h2>
+<ul>
+<li>Remove recursive live-model naming scans/indexes in favour of native naming and direct definition lookups.</li>
+<li>Protect trailing dimension digits from SketchUp&#39;s numeric suffix interpretation.</li>
+<li>Preserve the selected profile/size base; duplicate numbering now starts at #1.</li>
+</ul>
+<h2>2.4.0 — Hover and geometry performance</h2>
+<ul>
+<li>Reuse target measurements, preview geometry, tooltips and redraw work while the target is unchanged.</li>
+<li>Reuse matching generated geometry with a bounded 12-variant cache and independently editable results.</li>
+<li>Invalidate caches after model edits, undo/redo or context changes.</li>
+<li>Introduce a naming index; this particular strategy was superseded in 2.4.1.</li>
+</ul>
+<h2>2.3.3 — Replacement-tool preview</h2>
+<ul>
+<li>Fix hover outlines in an open editing context.</li>
+<li>Blue target outline and green J-pull handle-edge preview.</li>
+</ul>
+<h2>2.3.2 — Optional renaming</h2>
+<ul>
+<li>Menu choice: keep original door names (default) or rename to profile and size.</li>
+<li>Persist the option; skip naming searches in preserve-name mode.</li>
+</ul>
+<h2>2.3.1 — Profile-and-size names</h2>
+<ul>
+<li>Rebuild names from the selected profile and height × width instead of repeatedly appending old J-pull names.</li>
+<li>Add a custom duplicate suffix beginning at #2; later replaced by the 2.4.1 strategy.</li>
+</ul>
+<h2>2.3.0 — J-pull click modifiers</h2>
+<ul>
+<li>Shift: bottom; Ctrl: left; Alt: right; no modifier: saved edge.</li>
+<li>Immediate handle-edge preview when modifiers change.</li>
+</ul>
+<h2>2.2.1 — Parametric J-pull recess correction</h2>
+<ul>
+<li>Correct the generated recess orientation relative to the panel faces; retain the flat rear plane.</li>
+<li>Custom sections keep their explicit front/back settings.</li>
+</ul>
+<h2>2.2.0 — J-pull profiles</h2>
+<ul>
+<li>Parametric J-pull generator and custom full-section import.</li>
+<li>Four handle edges, front/back/end flips and geometric validation.</li>
+<li>Restyle between Slab, framed and J-pull fronts.</li>
+</ul>
+<h2>2.1.0 — Slab and repeated restyling</h2>
+<ul>
+<li>Plain Slab profiles using thickness without a cross-section.</li>
+<li>Repeated style changes of already generated fronts, replacing old generated geometry while preserving auxiliary containers.</li>
+</ul>
+<h2>2.0.0 — Door Profile Library</h2>
+<ul>
+<li>Visual profile cards, section previews, search, favourites and a remembered active profile.</li>
+<li>Custom cross-section import and saved settings.</li>
+<li>Creation by dimensions and replacement using the active profile.</li>
+<li>User JSON library outside the extension; source DXF not required after import.</li>
+<li>Profile-controlled thickness, preserved rear plane and machining containers.</li>
+</ul>
+<h2>Replacement tool 1.3.0 — Rear-plane anchoring</h2>
+<ul>
+<li>Retain the old back plane when replacement thickness changes; expand outward.</li>
+<li>Keep machining-vector positions and recorded depths rather than guessing a thickness offset.</li>
+</ul>
+<h2>Replacement tool 1.2.0 — Machining containers</h2>
+<ul>
+<li>Preserve groups/components inside the source front, including nested contents, names, tags, attributes and world position.</li>
+</ul>
+<h2>Replacement tool 1.1.0 — Nested component picking</h2>
+<ul>
+<li>Pick a front component through closed cabinet groups/components.</li>
+<li>Isolate shared cabinet copies along the clicked path and create a component result.</li>
+</ul>
+<h2>Replacement tool 1.0.0 — Click to replace</h2>
+<ul>
+<li>Separate Bastille replacement extension with a bundled 84 × 22 mm section.</li>
+<li>Read the clicked front dimensions and create matching Bastille doors.</li>
+<li>Support rotation, scaling, mirroring and undo.</li>
+</ul>
+<h2>Original profile generator 1.1.0 — Toolbar packaging</h2>
+<ul>
+<li>Door toolbar button and Extensions command for the selected-section generator.</li>
+<li>Installable package and usage instructions.</li>
+</ul>
+<h2>Original profile generator 1.0.0 — Selected-section construction</h2>
+<ul>
+<li>Generate a frame door from a selected planar face, closed outline or section group and entered dimensions.</li>
+<li>Flat 90° frame shoulders, internal moulding around the panel, optional separate panel and parameter validation.</li>
+</ul>
+<h2>Before numbered packages</h2>
+<p>The initial Bastille 715 × 596 mm model and scripts explored 45° versus 90° joints, then corrected the frame so the groove/moulding stayed around the central panel instead of remaining exposed at outer ends. These are development artefacts, not separately verified numbered public releases.</p>
+<h2>Evidence</h2>
+<p>The preserved history includes both original extension instruction files, 2.0/2.1/2.2/2.3 instructions, individual 2.3.1–2.6.3 notes, 2.7.0/2.7.1 readmes and 2.8.0–2.8.2 readmes. Exact archive names and SHA-256 hashes are recorded in RELEASE_ARCHIVES.json. Public documentation describes current behaviour; historical notes describe the corresponding old version and may contain superseded limitations.</p>
+</body></html>
