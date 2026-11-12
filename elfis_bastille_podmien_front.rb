@@ -4,9 +4,12 @@ require 'json'
 require File.join(__dir__,'elfis_bastille_podmien_front','i18n.rb')
 require File.join(__dir__,'elfis_bastille_podmien_front','engine.rb')
 require File.join(__dir__,'elfis_bastille_podmien_front','library.rb')
+require File.join(__dir__,'elfis_bastille_podmien_front','order_stock.rb')
 require File.join(__dir__,'elfis_bastille_podmien_front','order_list.rb')
 require File.join(__dir__,'elfis_bastille_podmien_front','slab_materials.rb')
 require File.join(__dir__,'elfis_bastille_podmien_front','order_pdf.rb')
+require File.join(__dir__,'elfis_bastille_podmien_front','feedback.rb')
+require File.join(__dir__,'elfis_bastille_podmien_front','shelf_pins.rb')
 
 module Elfis
   module BastillePodmienFront
@@ -93,7 +96,7 @@ module Elfis
     end
 
     def door_bounds(source)
-      generated=source.definition.entities.select { |e| instance?(e) && own_geometry?(e,source) }
+      generated=source.definition.entities.select { |e| (instance?(e) || e.is_a?(Sketchup::Face)) && own_geometry?(e,source) }
       return source.definition.bounds if generated.empty?
       bb=Geom::BoundingBox.new
       generated.each { |g| bb.add(g.bounds) }
@@ -195,6 +198,7 @@ module Elfis
         replacement.set_attribute('ElfisBastillePodmien','height_mm',info[:height])
         replacement.set_attribute('ElfisBastillePodmien','profile_id',p[:id])
         preserve_nested_entities(instance,replacement)
+        adopt_native_door_axes(replacement)
         # Do not change the source definition: other instances remain intact.
         instance.erase!
         if change_name
@@ -424,5 +428,6 @@ module Elfis
     update_profile_command
     update_language_commands
     install_public_help
+    Elfis::ShelfPins.install
   end
 end

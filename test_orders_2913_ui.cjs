@@ -1,0 +1,52 @@
+const {chromium}=require('playwright');
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
+const {pathToFileURL}=require('node:url');
+(async()=>{
+ const browser=await chromium.launch({headless:true,channel:'chrome'}),errors=[],checks=[];
+ const page=await browser.newPage({viewport:{width:1150,height:950}});page.on('pageerror',e=>errors.push(e.message));
+ await page.addInitScript(()=>{window.messages=[];window.sketchup={order_action:j=>messages.push(JSON.parse(j))}});
+ const data=JSON.parse(fs.readFileSync('order_2913_fixture.json','utf8'));
+ data.rows.push(...[900,140,715].map((height,i)=>({id:100+i,profile:'Slab',type:'Slab Door',height,width:596,thickness:18,quantity:2,colours:[{key:'White',name:'White',hex:'#ffffff',alpha:1}],source:'ELFIS',handle:'—',section:'fronts'})));
+ data.total+=6;
+ for(const lang of ['en','pl']){
+  await page.goto(pathToFileURL(path.resolve('elfis_bastille_podmien_front/order_list'+(lang==='en'?'.en':'')+'.html')).href);
+  await page.evaluate(d=>renderOrderList(d),data);
+  assert.equal(await page.locator('#stock-tree details').count(),2);
+  assert.equal(await page.locator('#stock-tree details[open]').count(),0);
+  assert.deepEqual(await page.locator('#rows tr').evaluateAll(rows=>rows.map(r=>Number(r.dataset.id))),[101,102,100]);
+  assert.equal(await page.locator('#rows tr').first().locator('td').nth(2).innerText(),'2');
+  assert.equal(await page.locator('#rows tr').first().locator('td.quantity').evaluate(n=>getComputedStyle(n).fontWeight),'700');
+  assert.equal(await page.locator('#endpanels-rows .product-heading').count(),3);
+  await page.selectOption('#sort-direction','desc');assert.equal(await page.evaluate(()=>messages.at(-1).action),'sort');
+  await page.evaluate(()=>setOrderStatus('sorted'));
+  assert.deepEqual(await page.locator('#rows tr').evaluateAll(rows=>rows.map(r=>Number(r.dataset.id))),[100,102,101]);
+  await page.locator('#rows tr').first().click();assert.deepEqual(await page.evaluate(()=>messages.at(-1).ids),[100]);
+  await page.evaluate(()=>setOrderHighlighted([100],2));
+  await page.locator('#rows tr').last().click({modifiers:['Shift']});assert.deepEqual(await page.evaluate(()=>messages.at(-1).ids),[100,102,101]);
+  await page.evaluate(()=>setOrderHighlighted([100,102,101],6));
+  await page.keyboard.press('Escape');assert.equal(await page.evaluate(()=>messages.at(-1).action),'clear_highlight');
+  await page.evaluate(()=>setOrderHighlighted(null,0));assert.equal(await page.locator('#rows tr.selected').count(),0);
+  await page.locator('#stock-tree details').first().locator('summary span').click();assert.equal(await page.locator('#stock-tree details[open]').count(),1);
+  await page.locator('#stock-tree details').first().locator('.stock-part').first().click();
+  const ids=await page.evaluate(()=>messages.at(-1).ids);assert.equal(ids.length,1);assert(ids[0]<0);
+  await page.evaluate(ids=>setOrderHighlighted(ids,1),ids);assert.equal(await page.locator('.stock-part.selected').count(),1);
+  await page.keyboard.press('Escape');assert.equal(await page.evaluate(()=>messages.at(-1).action),'clear_highlight');await page.evaluate(()=>setOrderHighlighted(null,0));
+  await page.locator('#stock-tree details').first().locator('summary button').click();assert.equal((await page.evaluate(()=>messages.at(-1).ids)).length,2);await page.evaluate(()=>setOrderHighlighted(null,0));
+  await page.locator('#stock-length').fill('3000');await page.locator('#stock-kerf').fill('4');await page.locator('#stock-apply').click();
+  assert.deepEqual(await page.evaluate(()=>({action:messages.at(-1).action,length:messages.at(-1).length,kerf:messages.at(-1).kerf})),{action:'stock_settings',length:3000,kerf:4});
+  await page.evaluate(()=>setOrderStatus('settings'));
+  await page.selectOption('#filter-profile',data.rows.find(r=>r.product_group==='endpanels').profile);
+  assert.equal(await page.evaluate(()=>messages.at(-1).action),'filter_stock');
+  assert.equal((await page.evaluate(()=>messages.at(-1).ids)).length,1);
+  await page.evaluate(()=>setOrderStock({settings:{length:2400,kerf:3},groups:[]}));
+  assert.equal(await page.locator('#stock-tree').isHidden(),true);
+  await page.locator('#reset-filters').click();
+  await page.evaluate(stock=>setOrderStock(stock),data.stock);
+  assert.equal(await page.locator('#stock-tree details').count(),2);
+  // Escape is queued rather than dropped while another Ruby callback is busy.
+  await page.locator('#refresh').click();await page.keyboard.press('Escape');await page.evaluate(()=>setOrderStatus('refreshed'));assert.equal(await page.evaluate(()=>messages.at(-1).action),'clear_highlight');await page.evaluate(()=>setOrderHighlighted(null,0));
+  await page.screenshot({path:`output/order-2913-${lang}.png`,fullPage:true});
+  checks.push(`${lang}: numeric sort, Shift selection, quantity order/bold, product groups, stock tree, occurrence/group highlighting, Escape, settings payload`);
+ }
+ assert.deepEqual(errors,[]);await browser.close();fs.writeFileSync('order_2913_ui_results.json',JSON.stringify({passed:true,checks},null,2));console.log('PASS: '+checks.join('\n'));
+})().catch(e=>{console.error(e);process.exit(1)});

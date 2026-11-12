@@ -1,6 +1,103 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ELFIS — CHANGELOG</title><style>body{max-width:1080px;margin:28px auto;padding:0 26px;color:#213b3d;background:#f4f5f2;font:15px/1.6 Segoe UI,sans-serif}h1,h2,h3{line-height:1.25}h2{margin-top:36px}table{border-collapse:collapse;width:100%;background:#fff}td,th{border:1px solid #cbd7d0;padding:9px 12px;text-align:left;vertical-align:top}th{background:#e7eee9}code{background:#e5e9e5;padding:2px 4px;overflow-wrap:anywhere}a{color:#185c76}nav{position:sticky;top:0;background:#fff;padding:12px;border-bottom:2px solid #285b59;z-index:1}nav a{margin-right:18px}@media print{nav{position:static}body{max-width:none;background:white}tr{break-inside:avoid}thead{display:table-header-group}}</style></head><body><nav><strong>ELFIS 2.9.3</strong> · <a href="guide.en.html">English</a><a href="guide.pl.html">Polski</a><a href="changelog.html">Changelog</a><a href="roadmap.html">Roadmap / Plany</a></nav><h1>Changelog</h1>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ELFIS — CHANGELOG</title><style>body{max-width:1080px;margin:28px auto;padding:0 26px;color:#213b3d;background:#f4f5f2;font:15px/1.6 Segoe UI,sans-serif}h1,h2,h3{line-height:1.25}h2{margin-top:36px}table{border-collapse:collapse;width:100%;background:#fff}td,th{border:1px solid #cbd7d0;padding:9px 12px;text-align:left;vertical-align:top}th{background:#e7eee9}code{background:#e5e9e5;padding:2px 4px;overflow-wrap:anywhere}a{color:#185c76}nav{position:sticky;top:0;background:#fff;padding:12px;border-bottom:2px solid #285b59;z-index:1}nav a{margin-right:18px}@media print{nav{position:static}body{max-width:none;background:white}tr{break-inside:avoid}thead{display:table-header-group}}</style></head><body><nav><strong>ELFIS 2.9.14</strong> · <a href="guide.en.html">English</a><a href="guide.pl.html">Polski</a><a href="changelog.html">Changelog</a><a href="roadmap.html">Roadmap / Plany</a></nav><h1>Changelog</h1>
 <p>This history is reconstructed from preserved RBZ packages, instructions, release notes and test reports. Older development dates were not consistently recorded, so none are invented. Version numbers belong to the named extension line; the first profile generator and the later replacement tool originally had separate version sequences.</p>
-<h2>2.9.3 — Complete PDF orders and Slab edge materials</h2><ul><li>One PDF with separate door, end-panel and handle sections, page numbering, repeated headings and selectable Unicode text.</li><li>Fresh full-order export independent of table filters; hidden-element and Facade settings retained.</li><li>Preserve large-face and individual edge-band materials when replacing with Slab; isolate cached geometry and component copies.</li></ul><h2>2.9.2 — Handles in the door order window</h2><ul><li>A separate Handles table in the existing order window, with consolidated product, finish, supplier, code and quantities.</li><li>Common refresh and clipboard export, or copy only handles. Hidden-element controls apply; front filters affect front/panel tables only.</li><li>Read mounted records without the source handle library; count shared nested cabinet occurrences and warn about malformed records.</li></ul><h2>2.9.1 — One-Piece minimum-size validation</h2>
+<h2>2.9.14 — Shared plinth offcuts across widths</h2>
+<ul>
+<li>Combine different plinth widths/heights in one lengthwise cutting plan by default. Use the widest part as the stock purchasing width; retain actual part widths in the expanded tree, clipboard and PDF.</li>
+<li>Add a remembered Separate stock widths checkbox to restore independent width plans. Changing it recalculates immediately.</li>
+<li>Keep different products, suppliers, colours and board thicknesses separate in both modes. No two-dimensional nesting or joining of short remnants.</li>
+</ul>
+<h2>2.9.13 — Order groups, stock-length planning and portrait PDF</h2>
+<ul>
+<li>Escape clears order-list highlights and selected rows in the HTML window or viewport. A temporary preview tool receives viewport Escape and restores the previous tool; switching tools clears the preview too.</li>
+<li>Numeric ascending/descending dimension sorting, remembered between sessions. Shift selection follows the displayed order. Quantities appear bold before dimensions, including handles.</li>
+<li>Split Finishing into Plinths, End Panels, Pelmets, Crowns and Other, based on tags and their parent folders. Preserve product groups in clipboard and PDF.</li>
+<li>Plinth cutting plans: configurable stock length (default 2400 mm) and saw kerf (default 3 mm), whole-length quantities, expandable per-stock parts, offcuts and cutting loss. Highlight all parts of one stock length or one exact nested occurrence.</li>
+<li>Stock products are identified by their tag (or explicit stock_product attribute); separate tags/products, suppliers, colours and cross-sections are never combined. Instance names can differ. Filters recalculate the visible stock plan; complete PDF uses the whole order.</li>
+<li>Best-fit-decreasing plus bounded exact improvement for up to 32 parts. Mark layouts when the minimum number of lengths has not been proven. Report oversize parts instead of silently splitting or omitting them. No end-trim or mitre allowance is included.</li>
+<li>Print-friendly portrait A4 PDF, bold quantity before combined dimensions, product sections, stock cutting details, wrapped text and repeated headings.</li>
+</ul>
+<h2>2.9.12 — Fix false replacement error after removing audio</h2>
+<ul>
+<li>Remove the last obsolete door_operation_finished call from the main click-replacement entry file. It ran after commit, causing Front not replaced / undefined local variable or method even though the front had already been replaced.</li>
+<li>Completion audio remains removed. Door generation, shelf pin tools and existing material/machining behaviour are unchanged.</li>
+</ul>
+<h2>2.9.11 — Remove shelf-pin drilling</h2>
+<ul>
+<li>Add a separate red-X Shelf Pins removal icon and Extensions command. Click successive shelves from outside cabinets, or preselect shelves in the current context. Each click/batch is one Undo operation.</li>
+<li>Remove only groups associated with the shelf by ELFIS ownership metadata. Imported/unmarked drilling, other shelves and panel geometry remain intact. Empty removal reports zero without creating a model operation.</li>
+<li>Red preview marks the shelf and associated groups. Removal follows ownership after shelf movement and does not depend on current drilling settings or the shelf still touching both sides.</li>
+<li>Upgrade older PID-based associations before making cabinet copies unique. Stable owner keys preserve remaining shelf associations across cabinet isolation. Isolate parent/side definitions so other cabinet copies retain their drilling. Locked targets are refused.</li>
+</ul>
+<h2>2.9.10 — Immediate shelf tool and tag preview</h2>
+<ul>
+<li><p>Add independent Additional drillings top/bottom counts (0–10), default one each, with the centre hole always present. Grid defaults to 32 mm. Initial front/rear offsets are 57/37 mm; previously saved values remain. No centre-row switch.</p>
+</li>
+<li><p>Start Shelf Pin Rows immediately using defaults or saved settings. No startup settings dialog, including selected-shelf batches.</p>
+</li>
+<li><p>Open Settings from the active tool&#39;s right-click menu. Add an English/Polish settings window with a live drilling-tag preview derived from diameter/depth.</p>
+</li>
+<li><p>Preserve entered decimal precision in drilling tag names instead of rounding to one decimal. The group name and circle-edge tag match the preview; the containing group remains on Blum Operations.</p>
+</li>
+</ul>
+<h2>2.9.9 — Shelf pin rows</h2>
+<ul>
+<li>Add a fourth Doors-toolbar icon and Extensions command: Shelf Pin Rows / Podpórki półek. Configure dimensions, then click nested adjustable shelves without entering their cabinets, or preselect several shelf components in the current edit context.</li>
+<li>Find two adjacent vertical Body panels from geometry. For each shelf, create two rows of three vector circles per side, at centre and ±32 mm by default. Default centre is 2.5 mm below shelf underside; diameter 5 mm, blind depth 12 mm, front/rear offsets 37 mm measured from shelf edges.</li>
+<li>Every hole is a separate group inside its side-panel component, tagged Blum Operations. Its circle edges use D5.0_DEPTH12.0 (or the selected diameter/depth). No faces or solid subtraction. Match the inspected model convention, without editing OpenCutList.</li>
+<li>Keep existing row positions, enabled by default, reuses matching two-row positions already present at the shelf support height on both sides. Other settings remain explicit. Existing matching production circles are skipped; ELFIS-owned circles are refreshed on reapply.</li>
+<li>Support rotated/mirrored orthogonal instances and nonuniform scaling with physical dimensions. Isolate shared cabinet/side definitions before inserting vectors. A click or batch is one Undo operation. Refuse locked, ambiguous or unsupported parts and holes outside a panel or deeper than its thickness.</li>
+<li>Adjustable horizontal rectangular boards on Body only. Exclude named Fixed shelf, cabinet base/top and cross members. Fixed shelves, dowels and screws are deferred. No automatic observer after moving a shelf: reapply to refresh ELFIS-owned holes; imported machining is preserved.</li>
+</ul>
+<h2>2.9.8 — Remove completion audio</h2>
+<ul>
+<li>Remove completion playback and both sound controls at the user&#39;s request after native playback was not reliably audible. Door operations no longer schedule audio or call audio APIs.</li>
+<li>Retain the 2.9.7 print-friendly PDF, styled order-language selector and unchanged SVG previews.</li>
+</ul>
+<h2>2.9.7 — Print-friendly orders and completion-sound preview</h2>
+<ul>
+<li>Use white pages, black text and thin grey table rules in the complete-order PDF. Remove solid header backgrounds and alternating row fills. Keep separate Doors, Finishing and Handles sections, pagination and all order data.</li>
+<li>Style the Door Order List language selector consistently with its other controls.</li>
+<li>Replace the quiet 0.14-second completion cue with a clearer 0.38-second two-tone WAV, defer playback briefly after successful operations, and add Test sound / Testuj dźwięk beside the existing preference. The test button does not change the preference. Audio failure cannot undo a door operation.</li>
+<li>Preserve SVG profile/section previews unchanged. Actual audibility depends on the active Windows output and SketchUp application volume.</li>
+</ul>
+<h2>2.9.6 — Finishing orders and dimension labels</h2>
+<ul>
+<li>Rename the End Panels order section to Finishing in English/Polish windows, clipboard and complete-order PDF. Include tags anywhere beneath Finishing or Finishing Parts folders, including nested and numbered folders (for example 02 Finishing Parts). Retain support for the standalone endpanels tag.</li>
+<li>Keep finishing products separate from door-profile replacement. The Type column uses the product tag (plinths, pelmets, crowns, end panels, etc.). No profile import is required. Existing manufacturer/source assignment, filtering, consolidation and highlight actions still apply.</li>
+<li>Add Dimensions in model / Wymiary w modelu to the order list. Selected rows show height × width in millimetres on each highlighted occurrence. Preference is remembered. Labels follow nested instance paths, do not change model geometry, skip off-screen/overlapping positions and limit drawing to 200 labels.</li>
+<li>Correct order-list height/width/thickness identification for generated doors with native OpenCutList axes or swapped axes, using physical size and world orientation.</li>
+<li>Keep 2.9.5 native OpenCutList grain compatibility and omit the experimental colour configurator. Native docked custom trays are not part of this update.</li>
+</ul>
+<h2>2.9.5 — Native OpenCutList grain rotation</h2>
+<ul>
+<li>Based on 2.9.4, without the experimental colour configurator or finish library.</li>
+<li>Place generated visible geometry directly inside the front component and use native board axes: X/Y span the face and Z is thickness. OpenCutList can rotate inherited grain using Swap length–width, rather than rotating axes around a nested body whose texture stays fixed.</li>
+<li>Whole-door texture orientation also applies to Five-Piece, as requested. Visible joints remain; individual frame-part groups are replaced by direct faces/edges carrying original part names in ElfisDoorPart attributes. This version does not provide separate frame-part cut-list items.</li>
+<li>Slab main material belongs to the component. Broad/chamfer faces inherit it; independent narrow-edge materials remain on faces. CNC and handle containers remain separate with model-space placement preserved.</li>
+<li>Retain geometry-only bounds and order colour detection after native axis changes. Keep independent cache templates when body groups are exploded.</li>
+<li>Existing fronts keep their saved structure until replaced again. Reapply the profile once, then use OpenCutList to assign material and orient grain. No changes to OpenCutList code, material images or automatic grain observers.</li>
+</ul>
+<h2>2.9.4 — Completion sound and optional Slab chamfer</h2>
+<ul>
+<li>A short completion sound follows successful door creation/replacement. Batch replacement sounds once after commit; validation failures and cancellation remain silent.</li>
+<li>Toggle Completion sound in the profile-library header. The preference is remembered separately from profiles and is enabled by default.</li>
+<li>Slab profiles can enable a front-edge 45° chamfer with an editable size (suggested 1.5 mm). It is off by default, including for existing profiles.</li>
+<li>Retain overall dimensions, rear plane and individual ABS edge materials. Bevel faces use the front material. Chamfer size is included in geometry caching and order/PDF descriptions.</li>
+</ul>
+<h2>2.9.3 — Complete PDF orders and Slab edge materials</h2>
+<ul>
+<li>Export a single PDF containing separate doors/fronts, end panels and handles sections, with quantities, repeated table headers, page numbering and embedded Unicode fonts.</li>
+<li>Export fresh complete-model data independently of table filters/selection; retain the hidden-element and Facade inclusion settings. No Python, browser print dialog or external PDF library is required.</li>
+<li>Preserve front/back face materials and individual narrow-edge materials when replacing a front with an ELFIS Slab, including thickness changes, rotated/mirrored/scaled components and CNC containers.</li>
+<li>Isolate painted geometry from cached definitions and other component occurrences.</li>
+</ul>
+<h2>2.9.2 — Handles in the door order window</h2>
+<ul>
+<li>Add a separate Handles table to the existing door/panel order window, with model, type, fixing pitch, length, finish, supplier, product code and consolidated quantities.</li>
+<li>Refresh and copy the complete order together, or copy only handles/panels. Front filters do not filter the handle table. Hidden-element visibility applies to both lists.</li>
+<li>Read mounted ELFIS records without requiring the handle library or Handles extension; retain per-occurrence counts in shared nested cabinets. Skip malformed records with a warning.</li>
+</ul>
+<h2>2.9.1 — One-Piece minimum-size validation</h2>
 <ul>
 <li>Prevent a nominal 140 mm front from passing the 70 mm One-Piece section&#39;s size limit because a transformed measurement is fractionally above 140 mm.</li>
 <li>Check the remaining centre span with SketchUp&#39;s point tolerance at construction scale, both during target measurement and before generating geometry.</li>
@@ -175,4 +272,5 @@
 <p>The initial Bastille 715 × 596 mm model and scripts explored 45° versus 90° joints, then corrected the frame so the groove/moulding stayed around the central panel instead of remaining exposed at outer ends. These are development artefacts, not separately verified numbered public releases.</p>
 <h2>Evidence</h2>
 <p>The preserved history includes both original extension instruction files, 2.0/2.1/2.2/2.3 instructions, individual 2.3.1–2.6.3 notes, 2.7.0/2.7.1 readmes and 2.8.0–2.8.2 readmes. Exact archive names and SHA-256 hashes are recorded in RELEASE_ARCHIVES.json. Public documentation describes current behaviour; historical notes describe the corresponding old version and may contain superseded limitations.</p>
+<p>Plinth stock cross-sections are grouped at 0.1 mm nominal precision to ignore tiny import differences (e.g. 150 and 150.01 mm). Cutting lengths retain their measured precision.</p>
 </body></html>

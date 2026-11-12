@@ -125,7 +125,9 @@ module Elfis
       return validate_jpull(p) if p[:kind]=='jpull'
       if p[:kind]=='slab'
         p[:thickness]=Float(p.fetch(:thickness))
+        p[:front_chamfer]=Float(p.fetch(:front_chamfer,0))
         raise Elfis::BastillePodmienFront.l('Grubość slab musi wynosić od 0.1 do 80 mm.','Slab thickness must be greater than 0.1 mm and at most 80 mm.') unless p[:thickness].finite? && p[:thickness]>0.1 && p[:thickness]<=80
+        raise l('Faza musi wynosić 0 albo co najmniej 0.1 mm i być mniejsza od grubości.','Chamfer must be 0 or at least 0.1 mm and smaller than the thickness.') unless p[:front_chamfer].finite? && (p[:front_chamfer]==0 || p[:front_chamfer]>=0.1) && p[:front_chamfer]<p[:thickness]
         return p
       end
       [:width,:thickness,:shoulder,:panel,:clearance].each do |key|
@@ -177,6 +179,7 @@ module Elfis
         candidate[:flip_end]=data[:flip_end]==true
       elsif candidate[:kind]=='slab'
         candidate[:thickness]=data.fetch(:thickness)
+        candidate[:front_chamfer]=data.fetch(:front_chamfer,candidate.fetch(:front_chamfer,0))
       elsif candidate[:kind]=='shaker'
         [:shoulder,:panel,:clearance].each { |k| candidate[k]=data.fetch(k) }
       end
@@ -199,7 +202,18 @@ module Elfis
 
     def build_door_definition(model,p,width,height)
       p=resolve_family_profile(p,width,height)
-      cached_door_definition(model,p,width,height) { build_door_definition_uncached(model,p,width,height) }
+      definition=cached_door_definition(model,p,width,height) { build_door_definition_uncached(model,p,width,height) }
+      # Keep visible door geometry in the front component's own coordinates.
+      # OpenCutList can then rotate inherited grain using its native axes tool.
+      # Store original part names on faces/edges for identification; user CNC
+      # and handle groups are added later and are never exploded here.
+      definition.entities.grep(Sketchup::Group).each do |part|
+        name=part.name
+        part.entities.each { |entity| entity.set_attribute('ElfisDoorPart','name',name) if entity.is_a?(Sketchup::Face) || entity.is_a?(Sketchup::Edge) }
+        part.explode
+      end
+      definition.entities.each { |entity| entity.set_attribute('ElfisBastillePodmien','geometry',true) if entity.is_a?(Sketchup::Face) || entity.is_a?(Sketchup::Edge) }
+      definition
     end
 
     def build_door_definition_uncached(model,p,width,height)
@@ -215,15 +229,30 @@ module Elfis
         d=model.definitions.add("Slab #{height}x#{width}")
         body=d.entities.add_group
         body.name='Płyta slab'
-        f=body.entities.add_face([[0,0,0],[width.mm,0,0],[width.mm,0,height.mm],[0,0,height.mm]])
-        f.reverse! if f.normal.y<0
-        f.pushpull(p[:thickness].mm)
+        chamfer=p.fetch(:front_chamfer,0).to_f
+        raise l('Front jest za mały dla wybranej fazy.','The front is too small for this chamfer.') unless [width,height].min>2*chamfer
+        if chamfer>0
+          build_chamfered_slab(body,width,height,p[:thickness],chamfer)
+        else
+          f=body.entities.add_face([[0,0,0],[width.mm,0,0],[width.mm,0,height.mm],[0,0,height.mm]])
+          f.reverse! if f.normal.y<0
+          f.pushpull(p[:thickness].mm)
+        end
         raise Elfis::BastillePodmienFront.l('Nie udało się utworzyć bryły slab.','Could not create a solid slab.') unless solid?(body)
       else
         d=build(model,p,width,height,p[:shoulder],p[:panel],p[:clearance])
       end
       d.entities.each { |g| g.set_attribute('ElfisBastillePodmien','geometry',true) if instance?(g) }
       d
+    end
+
+    def adopt_native_door_axes(door)
+      # Native board convention: X/Y span the face, Z is the thickness.
+      # Start with X along physical height; OCL owns all later axis changes.
+      axes=Geom::Transformation.axes(ORIGIN,Z_AXIS,X_AXIS,Y_AXIS)
+      door.definition.entities.transform_entities(axes.inverse,door.definition.entities.to_a)
+      door.transformation=door.transformation*axes
+      door.definition.invalidate_bounds
     end
 
     def stamp_door(door,p,width,height)
@@ -239,6 +268,7 @@ module Elfis
       door.set_attribute('ElfisBastillePodmien','height_mm',height)
       door.set_attribute('ElfisBastillePodmien','thickness_mm',p[:thickness])
       door.set_attribute('ElfisBastillePodmien','handle_edge',p[:handle_edge]) if p[:kind]=='jpull'
+      door.set_attribute('ElfisBastillePodmien','front_chamfer_mm',p.fetch(:front_chamfer,0)) if p[:kind]=='slab'
     end
 
     def door_dimension_label(value)
@@ -304,6 +334,7 @@ module Elfis
         door=m.active_entities.add_instance(d,IDENTITY)
         assign_door_name(m,door,name)
         stamp_door(door,p,width,height)
+        adopt_native_door_axes(door)
         m.selection.clear
         m.selection.add(door)
         m.commit_operation

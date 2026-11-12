@@ -7,7 +7,7 @@ module Elfis
     # Dependency-free PDF with embedded system TrueType fonts, selectable
     # Unicode text, measured wrapping and repeated table headings.
     class OrderPDF
-      W=841.89;H=595.28;M=36.0;BOTTOM=552.0
+      W=595.28;H=841.89;M=30.0;BOTTOM=794.0
       class Font
         attr_reader :bytes,:chars
         def initialize(path)
@@ -75,12 +75,15 @@ module Elfis
         value.is_a?(Numeric) ? ('%.2f'%value).sub(/\.?0+$/,'') : value
       end
       def clean(value);value.to_s.encode('UTF-8',invalid: :replace,undef: :replace).gsub(/[\x00-\x08\x0B\x0C\x0E-\x1F]/,'').tr("\u2011",'-');end
-      def text(value,x,y,size=9,bold=false,colour='0.13 0.23 0.24')
+      def text(value,x,y,size=9,bold=false,colour='0 0 0')
         font=@fonts[bold ? 1 : 0]
         @stream<<"#{colour} rg BT /F#{bold ? 2 : 1} #{size} Tf 1 0 0 1 #{x.round(2)} #{(H-y).round(2)} Tm <#{font.encode(clean(value))}> Tj ET\n"
       end
       def rect(x,y,w,h,colour)
         @stream<<"#{colour} rg #{x.round(2)} #{(H-y-h).round(2)} #{w.round(2)} #{h.round(2)} re f\n"
+      end
+      def rule(x1,y1,x2,y2,grey='0.65',width=0.35)
+        @stream<<"#{grey} G #{width} w #{x1.round(2)} #{(H-y1).round(2)} m #{x2.round(2)} #{(H-y2).round(2)} l S\n"
       end
       def wrap(value,width,size=8.5,bold=false)
         font=@fonts[bold ? 1 : 0];lines=['']
@@ -101,8 +104,7 @@ module Elfis
       end
       def new_page(title,continued=false)
         @stream=''.b;@pages<<@stream
-        rect(0,0,W,8,'0.16 0.36 0.35')
-        text('ELFIS / '+l('ZAMÓWIENIE','ORDER'),M,33,10,true,'0.16 0.36 0.35')
+        text('ELFIS / '+l('ZAMÓWIENIE','ORDER'),M,33,10,true)
         text(title+(continued ? l(' - ciąg dalszy',' - continued') : ''),M,64,22,true)
         project=wrap(l('Projekt: ','Project: ')+@data[:model].to_s,W-2*M-160,9)
         project.first(3).each_with_index { |line,i| text(line,M,84+i*12,9) }
@@ -113,15 +115,15 @@ module Elfis
         @headings=headings;@widths=widths
         lines=headings.each_with_index.map { |v,i| wrap(v,widths[i]-12,8,true) }
         height=lines.map(&:length).max*11+14
-        rect(M,@y,W-2*M,height,'0.16 0.36 0.35')
+        rule(M,@y+height,W-M,@y+height,'0.35',0.5)
         x=M
         lines.each_with_index do |column,i|
-          column.each_with_index { |line,j| text(line,x+6,@y+14+j*11,8,true,'1 1 1') };x+=widths[i]
+          column.each_with_index { |line,j| text(line,x+6,@y+14+j*11,8,true) };x+=widths[i]
         end
         @y+=height
       end
       def row(values,index,title)
-        columns=values.each_with_index.map { |value,i| wrap(value,@widths[i]-12) }
+        columns=values.each_with_index.map { |value,i| wrap(value,@widths[i]-12,8.5,@quantity_column==i) }
         offset=0;count=columns.map(&:length).max
         # Keep ordinary rows together. Split only a cell taller than a page.
         if count*11+12<=BOTTOM-190 && @y+count*11+12>BOTTOM
@@ -133,16 +135,16 @@ module Elfis
           end
           take=[((BOTTOM-@y-12)/11).floor,count-offset].min
           height=take*11+12
-          rect(M,@y,W-2*M,height,index.even? ? '0.94 0.96 0.95' : '1 1 1')
           x=M
           columns.each_with_index do |lines,i|
-            (lines.slice(offset,take)||[]).each_with_index { |line,j| text(line,x+6,@y+14+j*11,8.5) };x+=@widths[i]
+            (lines.slice(offset,take)||[]).each_with_index { |line,j| text(line,x+6,@y+14+j*11,8.5,@quantity_column==i) };x+=@widths[i]
           end
-          rect(M,@y+height-0.5,W-2*M,0.5,'0.84 0.88 0.86')
+          rule(M,@y+height,W-M,@y+height,'0.75',0.3)
           @y+=height;offset+=take
         end
       end
       def section(title,headings,widths,rows,quantity)
+        @quantity_column=headings.index(l('Ilość','Qty'))
         new_page(title)
         text(l('Razem: ','Total: ')+quantity.to_s+l(' szt. / Pozycje: ',' pcs / Items: ')+rows.length.to_s,M,@y-7,10,true)
         @y+=8;table_header(headings,widths)
@@ -151,18 +153,37 @@ module Elfis
         end
       end
       def build
-        headings=[l('Profil / element','Profile / item'),l('Rodzaj','Type'),l('Wys. [mm]','H [mm]'),l('Szer. [mm]','W [mm]'),l('Gr. [mm]','T [mm]'),l('Ilość','Qty'),l('Kolor / materiał','Colour / material'),l('Uchwyt J-Pull','J-Pull edge'),l('Producent / źródło','Manufacturer / source')]
-        widths=[180,80,65,65,55,40,130,75,W-2*M-690]
-        [['fronts',l('Drzwi / fronty','Doors / fronts')],['endpanels',l('Panele kończące','End panels')]].each do |key,title|
-          rows=@data[:rows].select { |r| (r[:section]||'fronts')==key }
-          values=rows.map { |r| [r[:profile],Elfis::BastillePodmienFront.ui_label(r[:type]),number(r[:height]),number(r[:width]),number(r[:thickness]),r[:quantity],r[:colours].map { |c| c[:name] }.join(' / '),Elfis::BastillePodmienFront.ui_label(r[:handle]),r[:source]] }
-          section(title,headings,widths,values,rows.sum { |r| r[:quantity] })
+        api=Elfis::BastillePodmienFront
+        headings=[l('Profil / element','Profile / item'),l('Rodzaj','Type'),l('Ilość','Qty'),l('Wymiary [mm]','Dimensions [mm]'),l('Kolor / materiał','Colour / material'),l('Uchwyt','Handle'),l('Producent / źródło','Supplier / source')]
+        widths=[105,55,32,88,105,65,W-2*M-450]
+        (['fronts']+FINISHING_GROUPS).each do |group|
+          rows=api.sorted_order_rows(@data[:rows].select { |r| api.order_group(r)==group })
+          next if rows.empty? && group!='fronts'
+          title={'fronts'=>l('Fronty','Fronts'),'plinths'=>l('Cokoły','Plinths'),'endpanels'=>l('Panele kończące','End Panels'),'pelmets'=>l('Pelmety','Pelmets'),'crowns'=>l('Gzymsy','Crowns'),'other'=>l('Pozostałe Finishing','Other Finishing')}[group]
+          if group=='plinths'
+            stock=api.order_stock_plan(rows);values=[]
+            stock[:groups].each do |g|
+              values<<[g[:product],l('Listwy','Stock'),g[:quantity],[stock[:settings][:length],g[:section],g[:thickness]].map { |n| number(n) }.join(' × '),g[:colours].map { |c| c[:name] }.join(' / '),'—',g[:source]]
+              g[:bars].each_with_index do |bar,i|
+                values<<[l('Listwa ','Stock ')+(i+1).to_s,l('Cięcie','Cuts'),'',bar[:parts].map { |p| [p[:length],p[:section]].map { |n| number(n) }.join(' × ') }.join(' + '),l('Odpad: ','Waste: ')+number(bar[:waste]).to_s+' mm',l('Rzaz: ','Kerf: ')+number(bar[:cutting_loss]).to_s+' mm','']
+              end
+              g[:oversize].each { |part| values<<[g[:product],l('ZA DŁUGI','OVERSIZE'),1,number(part[:length]),l('Nie mieści się w listwie','Does not fit stock'),'',''] }
+              values<<[l('Układ przybliżony','Approximate layout'),'','','','','',''] unless g[:optimal]
+            end
+            section(title+" (#{number(stock[:settings][:length])} mm)",headings,widths,values,stock[:groups].sum { |g| g[:quantity] })
+          else
+            values=rows.map { |r| [r[:profile],api.ui_label(r[:type]),r[:quantity],[r[:height],r[:width],r[:thickness]].map { |n| number(n) }.join(' × '),r[:colours].map { |c| c[:name] }.join(' / '),api.ui_label(r[:handle]),r[:source]] }
+            section(title,headings,widths,values,rows.sum { |r| r[:quantity] })
+          end
         end
         handles=Array(@data[:handles])
-        heads=[l('Model','Model'),l('Rodzaj','Type'),l('Rozstaw [mm]','Pitch [mm]'),l('Długość [mm]','Length [mm]'),l('Wykończenie','Finish'),l('Producent / dostawca','Manufacturer / supplier'),l('Kod produktu','Product code'),l('Ilość','Qty')]
+        heads=[l('Model','Model'),l('Rodzaj','Type'),l('Ilość','Qty'),l('Rozstaw [mm]','Pitch [mm]'),l('Długość [mm]','Length [mm]'),l('Wykończenie','Finish'),l('Dostawca','Supplier'),l('Kod','Code')]
         kinds={'edge'=>l('Krawędziowy','Edge pull'),'standard'=>l('Standardowy','Standard'),'knob'=>l('Gałka','Knob')}
-        values=handles.map { |r| [r[:name],kinds.fetch(r[:kind],r[:kind]),number(r[:pitch]),number(r[:length]),r[:finish],r[:supplier],r[:code],r[:quantity]] }
-        section(l('Uchwyty','Handles'),heads,[190,70,60,60,100,130,100,W-2*M-710],values,handles.sum { |r| r[:quantity] })
+        field=(@data[:sort] || {})[:field];direction=(@data[:sort] || {})[:direction]=='desc' ? -1 : 1
+        handles=handles.sort_by { |r| [direction*(r[field=='width' ? :length : :pitch] || 0).to_f,r[:name]] }
+        values=handles.map { |r| [r[:name],kinds.fetch(r[:kind],r[:kind]),r[:quantity],number(r[:pitch]),number(r[:length]),r[:finish],r[:supplier],r[:code]] }
+        section(l('Uchwyty','Handles'),heads,[110,55,32,45,45,80,85,W-2*M-452],values,handles.sum { |r| r[:quantity] })
+        @quantity_column=nil
         notes=Array(@data[:warnings]).dup
         notes.unshift(l('Pozycje wymagające sprawdzenia: ','Items requiring review: ')+@data[:review_count].to_s) if @data[:review_count].to_i>0
         @data[:rows].select { |r| r[:review] }.each do |r|
@@ -174,9 +195,9 @@ module Elfis
           notes.each_with_index { |note,i| row([note],i,title) }
         end
         @pages.each_with_index do |stream,i|
-          @stream=stream;rect(M,565,W-2*M,0.7,'0.75 0.82 0.79')
-          text(l('Wymiary w mm. Sprawdź zamówienie przed wysłaniem.','Dimensions in mm. Review the order before sending.'),M,581,8)
-          text("#{i+1} / #{@pages.length}",W-M-46,581,8,true)
+          @stream=stream;rule(M,H-30,W-M,H-30,'0.65',0.35)
+          text(l('Wymiary w mm. Sprawdź zamówienie przed wysłaniem.','Dimensions in mm. Review the order before sending.'),M,H-14,8)
+          text("#{i+1} / #{@pages.length}",W-M-46,H-14,8,true)
         end
         serialize
       end

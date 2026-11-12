@@ -39,7 +39,7 @@ module Elfis
     end
 
     def geometry_cache_key(p,width,height)
-      fields=[:kind,:width,:thickness,:points,:shoulder,:panel,:clearance,:groove,:handle_edge,:cavity,:lip,:radius,:source,:section,:reference_length,:flip_front,:flip_end]
+      fields=[:kind,:width,:thickness,:points,:shoulder,:panel,:clearance,:groove,:handle_edge,:cavity,:lip,:radius,:source,:section,:reference_length,:flip_front,:flip_end,:front_chamfer]
       JSON.generate([width,height,fields.map { |key| p[key] },p[:drawer_section]])
     end
 
@@ -47,7 +47,7 @@ module Elfis
       cache=performance_session(model).geometry_cache
       key=geometry_cache_key(p,width,height)
       entry=cache.delete(key)
-      if entry && entry[:parts].all? { |part| part[:definition].valid? }
+      if entry && entry[:parts].all? { |part| part[:definition].valid? && part[:definition].entities.length>0 }
         cache[key]=entry
         d=model.definitions.add('ELFIS door')
         d.description=entry[:description]
@@ -68,10 +68,18 @@ module Elfis
         d.attribute_dictionaries&.each do |dict|
           values={};dict.each_pair { |k,v| values[k]=v };attributes[dict.name]=values
         end
-        cache[key]={description:d.description,attributes:attributes,parts:d.entities.grep(Sketchup::Group).map { |g| {definition:g.definition,transform:g.transformation,name:g.name} }}
+        parts=d.entities.grep(Sketchup::Group).map do |g|
+          # A group definition may disappear when the last group is exploded.
+          # Keep an independent component definition as the immutable template.
+          template=model.definitions.add('ELFIS cached geometry')
+          template.entities.add_instance(g.definition,IDENTITY).explode
+          {definition:template,transform:g.transformation,name:g.name}
+        end
+        cache[key]={description:d.description,attributes:attributes,parts:parts}
         cache.shift while cache.length>12
         d
       end
     end
   end
 end
+

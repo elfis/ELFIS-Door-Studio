@@ -1,0 +1,52 @@
+{
+  "version": "2.9.14",
+  "calculation": {
+    "passed": true,
+    "ruby": "3.2.4",
+    "checks": [
+      "Mixed widths are the default",
+      "79 and 150 mm use one product group",
+      "User example needs six whole stock lengths",
+      "Purchasing width is the widest required part",
+      "Short narrow parts use wider-stock offcuts",
+      "616 mm narrow part fits the 1672.01 mm wider-part offcut",
+      "Every occurrence retained exactly once",
+      "Cut lengths plus kerf and waste conserve stock",
+      "Cut lengths plus kerf and waste conserve stock",
+      "Cut lengths plus kerf and waste conserve stock",
+      "Cut lengths plus kerf and waste conserve stock",
+      "Cut lengths plus kerf and waste conserve stock",
+      "Cut lengths plus kerf and waste conserve stock",
+      "Split-width option restores two groups",
+      "Split example needs three plus four lengths",
+      "Length kerf and split option persist together",
+      "Mixed mode can be restored",
+      "Different source remain separate",
+      "Different thickness remain separate",
+      "Different colours remain separate",
+      "Different stock_product remain separate",
+      "Oversize part remains explicit",
+      "Ruby dialog callback forwards the checkbox",
+      "All shipped Ruby compiles in Ruby 3.2"
+    ],
+    "mixed_lengths": 6,
+    "separate_lengths": 7,
+    "native_sketchup_test": "Not run; user requested no UI control."
+  },
+  "ui": {
+    "passed": true,
+    "checks": [
+      "en: shared offcuts, true part widths, checkbox immediate save, busy state, persisted separate mode, return to mixed mode",
+      "pl: shared offcuts, true part widths, checkbox immediate save, busy state, persisted separate mode, return to mixed mode"
+    ]
+  },
+  "order_ui_regression": {
+    "passed": true,
+    "checks": [
+      "en: numeric sort, Shift selection, quantity order/bold, product groups, stock tree, occurrence/group highlighting, Escape, settings payload",
+      "pl: numeric sort, Shift selection, quantity order/bold, product groups, stock tree, occurrence/group highlighting, Escape, settings payload"
+    ]
+  },
+  "pdf_visual_review": true,
+  "live_sketchup_2914": "Pending; no UI control requested."
+}

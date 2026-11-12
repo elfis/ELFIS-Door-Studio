@@ -53,5 +53,15 @@
     "file": "public/handles/1.1.4-beta/ELFIS_Handles_1.1.4-beta.rbz",
     "bytes": 18333,
     "sha256": "18fb5a0bb95d3404bf9ab675b31dee12d1dd2cd380fe9f7d11ddb301706cc98a"
+  },
+  {
+    "file": "public/2.9.13/ELFIS_Profile_Library_2.9.13.rbz",
+    "bytes": 177218,
+    "sha256": "d84ae07ac1821b698e5e4f7b7b9968269ce11337e4205f2a004f3cbd2454b839"
+  },
+  {
+    "file": "public/2.9.14/ELFIS_Profile_Library_2.9.14.rbz",
+    "bytes": 179003,
+    "sha256": "1ee5a49b408f4bcf5ac3cbc5d15e63314b7f95e65d0fda2bd8dfcc125c182141"
   }
 ]

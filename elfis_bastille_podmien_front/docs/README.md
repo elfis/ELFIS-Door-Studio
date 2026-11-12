@@ -1,4 +1,4 @@
-# ELFIS Door Profile Library — 2.9.3
+# ELFIS Door Profile Library — 2.9.4
 
 Create and restyle cabinet fronts from reusable cross-sections, then prepare a consolidated order list from the model.
 
@@ -7,7 +7,7 @@ The interface defaults to **English**. Choose **English / Polski** in the profil
 ## Install or update
 
 1. In SketchUp, choose **Extensions → Extension Manager → Install Extension**.
-2. Select `ELFIS_Profile_Library_2.9.3.rbz` and restart SketchUp.
+2. Select `ELFIS_Profile_Library_2.9.4.rbz` and restart SketchUp.
 3. Enable the ELFIS toolbar through **View → Toolbars** if it is hidden.
 
 This updates the existing door-replacement/profile-library extension. The older “Drzwi z profilu” generator is a separate extension and is not required.

@@ -1,0 +1,29 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Shelf pin settings</title><style>
+*{box-sizing:border-box}body{margin:0;padding:24px;color:#213b3d;background:#f4f5f2;font:14px/1.45 'Segoe UI',sans-serif}h1{font-size:22px;margin:0 0 20px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}label{display:block;font-size:13px}input[type=number]{display:block;width:100%;margin-top:5px;padding:9px;border:1px solid #c5d1cc;border-radius:6px;font:inherit;background:white;color:inherit}.check{margin:20px 0 16px;display:flex;gap:8px;align-items:center}.tag{background:white;border:1px solid #c5d1cc;border-radius:8px;padding:14px}.tag span{display:block;font-size:12px;color:#536b68}output{display:block;margin-top:5px;font:bold 19px/1.4 Consolas,monospace;overflow-wrap:anywhere}.hint{font-size:12px;color:#536b68;margin:12px 0 20px}footer{display:flex;justify-content:flex-end;gap:8px}button{padding:10px 20px;font:inherit;border:1px solid #c5d1cc;border-radius:6px;background:white;color:inherit;cursor:pointer}.primary{background:#237b73;color:white;border-color:#237b73}#error{color:#a52a2a;margin-top:10px}[hidden]{display:none!important}
+</style></head><body><h1 id="heading">Shelf pin settings</h1><div class="grid">
+<label><span id="label-diameter">Hole diameter [mm]</span><input id="diameter" type="number" min="0.1" step="any"></label>
+<label><span id="label-depth">Depth [mm]</span><input id="depth" type="number" min="0.1" step="any"></label>
+<label><span id="label-front">From shelf front edge [mm]</span><input id="front" type="number" min="0" step="any"></label>
+<label><span id="label-back">From shelf rear edge [mm]</span><input id="back" type="number" min="0" step="any"></label>
+<label><span id="label-below">Centre below underside [mm]</span><input id="below" type="number" min="0" step="any"></label>
+<label><span id="label-pitch">Grid [mm]</span><input id="pitch" type="number" min="0.1" step="any"></label>
+<label><span id="label-above">Additional drillings top</span><select id="above"></select></label>
+<label><span id="label-under">Additional drillings bottom</span><select id="under"></select></label></div>
+<label class="check"><input id="reuse" type="checkbox"><span id="label-reuse">Keep existing row positions</span></label>
+<div class="tag"><span id="tag-label">Drilling tag / group name</span><output id="tag-preview">D5.0_DEPTH12.0</output></div>
+<p class="hint" id="hint">This tag is assigned to the circle edges. The containing group uses Blum Operations.</p><div id="error" role="alert" hidden></div><footer><button id="cancel">Cancel</button><button id="save" class="primary">Save settings</button></footer>
+<script>
+'use strict';const $=id=>document.getElementById(id),keys=['diameter','depth','front','back','below','pitch','above','under'];let language='en';
+for(const key of ['above','under']){for(let n=0;n<=10;n++)$(key).append(new Option(n,n));$(key).style.cssText='display:block;width:100%;margin-top:5px;padding:9px;border:1px solid #c5d1cc;border-radius:6px;font:inherit;background:white;color:inherit'}
+function send(data){if(window.sketchup)sketchup.shelf_pin_settings(JSON.stringify(data))}
+function numberText(value){return Number.isInteger(value)?value.toFixed(1):String(value)}
+function preview(){const d=Number($('diameter').value),z=Number($('depth').value);$('tag-preview').textContent=Number.isFinite(d)&&d>0&&Number.isFinite(z)&&z>0?'D'+numberText(d)+'_DEPTH'+numberText(z):'—'}
+function showError(text){$('error').textContent=text;$('error').hidden=false}
+function setSettings(data){language=data.language||'en';document.documentElement.lang=language;for(const key of keys)$(key).value=data[key];$('reuse').checked=data.reuse===true;
+ const pl={heading:'Ustawienia podpórek',diameter:'Średnica otworu [mm]',depth:'Głębokość [mm]',front:'Od przedniej krawędzi półki [mm]',back:'Od tylnej krawędzi półki [mm]',below:'Środek poniżej spodu [mm]',pitch:'Siatka [mm]',above:'Dodatkowe otwory powyżej',under:'Dodatkowe otwory poniżej',reuse:'Zachowaj istniejące pozycje rzędów'};
+ if(language==='pl'){for(const key of [...keys,'reuse'])$('label-'+key).textContent=pl[key];$('heading').textContent=pl.heading;$('tag-label').textContent='Tag wiercenia / nazwa grupy';$('hint').textContent='Ten tag otrzymują krawędzie okręgu. Grupa ma tag Blum Operations.';$('cancel').textContent='Anuluj';$('save').textContent='Zapisz ustawienia'}preview()}
+for(const key of keys)$(key).addEventListener('input',preview);
+$('cancel').onclick=()=>send({action:'cancel'});
+$('save').onclick=()=>{const data={action:'save',reuse:$('reuse').checked};for(const key of keys){if(!$(key).reportValidity())return;data[key]=Number($(key).value)}send(data)};
+send({action:'ready'});
+</script></body></html>

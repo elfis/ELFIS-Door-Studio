@@ -1,0 +1,57 @@
+{
+  "version": "2.9.13",
+  "native": {
+    "passed": true,
+    "checks": [
+      "All shipped Ruby files compile",
+      "Stock layout [1000, 1000, 1000, 1000]",
+      "Stock material balance",
+      "Stock layout [1400, 1400, 900, 900]",
+      "Stock material balance",
+      "Stock layout [1500, 1500, 1500]",
+      "Stock material balance",
+      "Stock layout [1198.5, 1198.5]",
+      "Stock material balance",
+      "Stock layout [1200, 1200]",
+      "Stock material balance",
+      "Stock layout [2400]",
+      "Stock material balance",
+      "Stock layout [2399]",
+      "Stock material balance",
+      "Oversize parts remain explicit",
+      "60 random small layouts match independent exhaustive solver",
+      "1000 parts conserve quantity within bounded runtime",
+      "Finishing fixtures consolidated by dimensions",
+      "Four finishing product types classified",
+      "Four 1000 mm plinths require two whole lengths",
+      "Different suppliers are not combined",
+      "Different named parts of one tag/product share stock",
+      "Different colours and thicknesses stay separate",
+      "Nominal 0.1 mm sections ignore tiny import noise",
+      "A stock-tree part highlights only one occurrence",
+      "Preview tool receives viewport Escape",
+      "Escape clears overlay",
+      "Escape restores previous tool",
+      "Clipboard includes stock layouts and product groups"
+    ],
+    "large_order_seconds": 0.12296670000068843,
+    "version": "2.9.13"
+  },
+  "ui": {
+    "passed": true,
+    "checks": [
+      "en: numeric sort, Shift selection, quantity order/bold, product groups, stock tree, occurrence/group highlighting, Escape, settings payload",
+      "pl: numeric sort, Shift selection, quantity order/bold, product groups, stock tree, occurrence/group highlighting, Escape, settings payload"
+    ]
+  },
+  "pdf": {
+    "portrait_a4": true,
+    "visual_review": "EN/PL sample plus 70-row portrait pagination stress sample; wrapped columns and repeated headings inspected."
+  },
+  "installed_activation": {
+    "version": "2.9.13",
+    "platform": "SketchUp 2026 / Windows",
+    "dialog_verified": true,
+    "installed_files_sha256_verified": true
+  }
+}

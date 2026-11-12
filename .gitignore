@@ -3,3 +3,13 @@ node_modules/
 *.skp
 *.skb
 .DS_Store
+
+output/
+order_2913_fixture.json
+order_2913_native_results.json
+order_2913_ui_results.json
+
+tmp/
+order_2914_fixture.json
+order_2914_calculation_results.json
+order_2914_ui_results.json

@@ -9,7 +9,10 @@ module Elfis
       def initialize
         super('elfis.door_order_highlight','ELFIS — Podgląd frontów z listy')
         @targets=[]
+        @show_dimensions=true
       end
+
+      attr_accessor :show_dimensions
 
       def targets=(targets)
         @targets=targets
@@ -28,6 +31,32 @@ module Elfis
           world=target[:path].inject(IDENTITY) { |tr,entity| tr*entity.transformation }
           (0..7).map { |i| target[:bounds].corner(i).transform(world) }
         end
+      end
+
+      def dimension_labels(view)
+        return [] unless @show_dimensions
+        labels=[]
+        options={font:'Segoe UI',pixel_size:14,bold:true,align:TextAlignCenter,vertical_align:TextVerticalAlignCenter,color:Sketchup::Color.new(20,64,76)}
+        @targets.each do |target|
+          next unless target[:label] && valid_target?(target)
+          bounds=target[:bounds]
+          lengths=[bounds.width,bounds.height,bounds.depth]
+          depth=lengths.each_index.min_by { |i| lengths[i] }
+          center=bounds.center.to_a;center[depth]=bounds.max.to_a[depth]
+          world=target[:path].inject(IDENTITY) { |tr,entity| tr*entity.transformation }
+          point=Geom::Point3d.new(center).transform(world)
+          next unless (point-view.camera.eye).dot(view.camera.direction)>0
+          screen=view.screen_coords(point)
+          next unless screen.x.between?(0,view.vpwidth) && screen.y.between?(0,view.vpheight)
+          anchor=Geom::Point3d.new(screen.x,screen.y,0)
+          text_bounds=view.text_bounds(anchor,target[:label],options)
+          left,top=text_bounds.upper_left.to_a;right,bottom=text_bounds.lower_right.to_a
+          rectangle=[left-7,top-4,right+7,bottom+4]
+          next if labels.any? { |label| a=label[:rect];rectangle[0]<a[2] && rectangle[2]>a[0] && rectangle[1]<a[3] && rectangle[3]>a[1] }
+          labels<<{point:anchor,text:target[:label],rect:rectangle,options:options}
+          break if labels.length>=200
+        end
+        labels
       end
 
       def getExtents
@@ -53,6 +82,29 @@ module Elfis
         view.line_width=4
         view.line_stipple=''
         view.draw2d(GL_LINES,lines)
+        if view.respond_to?(:draw_text)
+          dimension_labels(view).each do |label|
+            left,top,right,bottom=label[:rect]
+            rectangle=[[left,top,0],[right,top,0],[right,bottom,0],[left,bottom,0]].map { |point| Geom::Point3d.new(point) }
+            view.drawing_color=Sketchup::Color.new(255,255,255,240)
+            view.draw2d(GL_QUADS,rectangle)
+            view.drawing_color=Sketchup::Color.new(0,130,170)
+            view.line_width=1
+            view.draw2d(GL_LINE_LOOP,rectangle)
+            view.draw_text(label[:point],label[:text],label[:options])
+          end
+        end
+      end
+    end
+
+    # A temporary preview tool receives Escape in the viewport. Orbit remains
+    # available; switching to a different tool also clears this preview.
+    class OrderHighlightTool
+      def onCancel(reason,view)
+        Elfis::BastillePodmienFront.clear_order_highlight if reason==0 || reason==2
+      end
+      def deactivate(view)
+        Elfis::BastillePodmienFront.clear_order_highlight(false)
       end
     end
 
@@ -69,6 +121,8 @@ module Elfis
       name=door.get_attribute('ElfisBastillePodmien','profile_name') || stored&.dig(:name)
       variant=door.get_attribute('ElfisBastillePodmien','variant','standard')
       type="Drawer · #{type}" if variant=='drawer'
+      chamfer=door.get_attribute('ElfisBastillePodmien','front_chamfer_mm',0).to_f
+      type+=l(" · Faza #{door_dimension_label(chamfer)} mm"," · Chamfer #{door_dimension_label(chamfer)} mm") if kind=='slab' && chamfer>0
       name=door.get_attribute('ElfisBastillePodmien','family_name') || name
       edge=kind=='jpull' ? door.get_attribute('ElfisBastillePodmien','handle_edge','top') : nil
       {id:id || "legacy:#{door.definition.get_attribute('ElfisDrzwi','profile_width_mm')}",name:name || 'Profil nierozpoznany',type:type,
@@ -84,8 +138,27 @@ module Elfis
       bounds.valid? && [bounds.width,bounds.height,bounds.depth].all? { |n| n>0.000001 } ? bounds : nil
     end
 
+    def order_tag_key(name)
+      name.to_s.downcase.gsub(/[\s_-]+/,'').sub(/\A\d+/,'')
+    end
+
     def order_endpanel_tag?(name)
-      name.to_s.downcase.gsub(/[\s_-]+/,'')=='endpanels'
+      order_tag_key(name)=='endpanels'
+    end
+
+    def order_finishing_tag?(layer)
+      return true if order_endpanel_tag?(layer.name) || %w[finishing finishingparts].include?(order_tag_key(layer.name))
+      folder=layer.respond_to?(:folder) ? layer.folder : nil
+      while folder
+        return true if %w[finishing finishingparts].include?(order_tag_key(folder.name))
+        folder=folder.folder
+      end
+      false
+    end
+
+    def order_dimensions?
+      @order_show_dimensions=Sketchup.read_default('ELFIS Door Profile Library','order_dimensions',true) if @order_show_dimensions.nil?
+      @order_show_dimensions
     end
 
     def order_panel_bounds(door,stack={})
@@ -104,16 +177,20 @@ module Elfis
 
     def order_colours(door,inherited,external=false,panel=false)
       counts={}
+      bounds=door_bounds(door)
+      depth_axis=[bounds.width,bounds.height,bounds.depth].each_with_index.min_by { |length,index| length }[1]
+      front_axis=[X_AXIS,Y_AXIS,Z_AXIS][depth_axis]
       walk=nil
       walk=->(entities,tr,material,stack) do
         entities.each do |e|
           if e.is_a?(Sketchup::Face)
             # Generated doors use local +Y as the front. Rear CNC geometry is
             # excluded by entering only the door's own geometry containers.
-            next unless external || e.normal.transform(tr).y>0.000001
+            next unless external || e.normal.transform(tr).dot(front_axis)>0.000001
             mat=e.material || material
             counts[mat]=true
           elsif (!external || panel) && instance?(e) && !stack[e.definition]
+            next if !external && entities==door.definition.entities && door.get_attribute('ElfisBastillePodmien','generated',false) && !own_geometry?(e,door)
             next if panel && !order_panel_bounds(e)
             walk.call(e.definition.entities,tr*e.transformation,e.material || material,stack.merge(e.definition=>true))
           end
@@ -185,7 +262,7 @@ module Elfis
           end
           world=tr*entity.transformation
           node_path=path+[entity]
-          panel=order_endpanel_tag?(entity.layer.name)
+          panel=order_finishing_tag?(entity.layer)
           next if panel && !include_endpanels
           generated=!panel && order_door?(entity)
           external=panel || (!generated && include_facade && entity.layer.name.casecmp('Facade').zero?)
@@ -199,26 +276,25 @@ module Elfis
               raise Elfis::BastillePodmienFront.l('Zerowa skala frontu.','The front has zero scale.') unless scales.all? { |v| v.length>0.000001 }
               raise Elfis::BastillePodmienFront.l('Front jest ukośnie zdeformowany.','The front is sheared.') unless [[0,1],[0,2],[1,2]].all? { |a,b| scales[a].normalize.dot(scales[b].normalize).abs<0.0001 }
               w,t,h=[bounds.width,bounds.height,bounds.depth].zip(scales).map { |length,axis| (length*axis.length).to_mm.round(2) }
-              if external
-                lengths=[w,t,h]
-                thickness_axis=lengths.each_index.min_by { |i| lengths[i] }
-                face_axes=[0,1,2]-[thickness_axis]
-                height_axis=face_axes.max_by { |i| scales[i].normalize.z.abs }
-                width_axis=(face_axes-[height_axis]).first
-                w,t,h=lengths[width_axis],lengths[thickness_axis],lengths[height_axis]
-              end
+              # Native OCL axes can place height/width/thickness on any axis.
+              lengths=[w,t,h]
+              thickness_axis=lengths.each_index.min_by { |i| lengths[i] }
+              face_axes=[0,1,2]-[thickness_axis]
+              height_axis=face_axes.max_by { |i| scales[i].normalize.z.abs }
+              width_axis=(face_axes-[height_axis]).first
+              w,t,h=lengths[width_axis],lengths[thickness_axis],lengths[height_axis]
               raise Elfis::BastillePodmienFront.l('Nieprawidłowe wymiary frontu.','Invalid front dimensions.') unless [w,t,h].all? { |n| n.finite? && n>0 }
               info=profiles[entity] ||= if external
                 label=entity.name.empty? ? entity.definition.name : entity.name
-                {id:"external:#{entity.definition.guid}",name:label.empty? ? (panel ? 'Panel kończący' : 'Front z tagu Facade') : label,type:panel ? 'Panel kończący' : 'Typ nieokreślony',edge_label:'—',unknown:!panel}
+                {id:"external:#{entity.definition.guid}",name:label.empty? ? (panel ? 'Finishing' : 'Front z tagu Facade') : label,type:panel ? entity.layer.name : 'Typ nieokreślony',edge_label:'—',unknown:!panel}
               else
                 order_profile_info(entity)
               end
               material=entity.material || inherited
               paint=colours[[entity.definition,material,external,panel]] ||= order_colours(entity,inherited,external,panel)
               supplier=supplier_name(entity.get_attribute('ElfisBastillePodmien','supplier') || info[:supplier],external && !panel ? 'Facade' : 'ELFIS')
-              key=JSON.generate([info[:id],info[:name],info[:type],info[:signature],info[:edge],w,t,h,paint,supplier,external,panel])
-              row=rows[key] ||= {section:panel ? 'endpanels' : 'fronts',profile:info[:name],type:info[:type],height:h,width:w,thickness:t,quantity:0,colours:paint,handle:info[:edge_label],external:external,source:supplier,supplier:supplier,review:info[:unknown] || paint.length>1 || paint.any? { |c| c[:key].nil? }}
+              key=JSON.generate([info[:id],info[:name],info[:type],info[:signature],info[:edge],w,t,h,paint,supplier,external,panel,panel ? order_product_group(entity.layer) : nil,panel ? (entity.get_attribute('ElfisBastillePodmien','stock_product') || entity.layer.name) : nil])
+              row=rows[key] ||= {stock_product:panel ? (entity.get_attribute('ElfisBastillePodmien','stock_product') || entity.layer.name) : nil,product_group:panel ? order_product_group(entity.layer) : 'fronts',section:panel ? 'endpanels' : 'fronts',profile:info[:name],type:info[:type],height:h,width:w,thickness:t,quantity:0,colours:paint,handle:info[:edge_label],external:external,source:supplier,supplier:supplier,review:info[:unknown] || paint.length>1 || paint.any? { |c| c[:key].nil? }}
               row[:quantity]+=1
               yield(row,node_path,bounds) if block_given?
             rescue => error
@@ -228,7 +304,7 @@ module Elfis
           elsif !stack[entity.definition]
             if external
               label=entity.name.empty? ? entity.definition.name : entity.name
-                warnings<<l("#{label}: tag #{panel ? 'endpanels' : 'Facade'}, ale nie rozpoznano bryły płyty. Sprawdź element osobno; przeszukano elementy wewnątrz.","#{label}: tag #{panel ? 'endpanels' : 'Facade'}, but no panel solid was recognised. Review separately; nested elements were searched.")
+                warnings<<l("#{label}: tag #{panel ? 'Finishing' : 'Facade'}, ale nie rozpoznano bryły płyty. Sprawdź element osobno; przeszukano elementy wewnątrz.","#{label}: tag #{panel ? 'Finishing' : 'Facade'}, but no panel solid was recognised. Review separately; nested elements were searched.")
             end
             walk.call(entity.definition.entities,world,entity.material || inherited,node_path,stack.merge(entity.definition=>true))
           end
@@ -238,7 +314,7 @@ module Elfis
       list=rows.values.sort_by { |r| [r[:profile].downcase,r[:colours].map { |c| c[:name] }.join.downcase,r[:height],r[:width],r[:thickness],r[:handle]] }
       list.each_with_index { |row,index| row[:id]=index }
       handles=include_handles ? collect_order_handles(model,include_hidden,warnings) : []
-      {model:model.title.empty? ? 'Bez nazwy' : model.title,rows:list,total:list.sum { |r| r[:quantity] },handles:handles,include_handles:include_handles,include_hidden:include_hidden,include_facade:include_facade,include_endpanels:include_endpanels,endpanels_present:model.layers.any? { |layer| order_endpanel_tag?(layer.name) },facade_present:model.layers.any? { |layer| layer.name.casecmp('Facade').zero? },warnings:warnings,review_count:list.count { |r| r[:review] }}
+      {sort:order_sort_settings,model:model.title.empty? ? 'Bez nazwy' : model.title,rows:list,total:list.sum { |r| r[:quantity] },handles:handles,include_handles:include_handles,include_hidden:include_hidden,include_facade:include_facade,include_endpanels:include_endpanels,endpanels_present:model.layers.any? { |layer| order_finishing_tag?(layer) },show_dimensions:order_dimensions?,facade_present:model.layers.any? { |layer| layer.name.casecmp('Facade').zero? },warnings:warnings,review_count:list.count { |r| r[:review] }}
     end
 
     def order_text_cell(value)
@@ -248,28 +324,38 @@ module Elfis
     end
 
     def order_list_text(data)
-      heading=['Profil / element','Typ','Wysokość [mm]','Szerokość [mm]','Grubość [mm]','Ilość','Kolor / materiał','Uchwyt','Źródło'].map { |value| ui_label(value) }.join("\t")
+      heading=[l('Profil / element','Profile / item'),l('Typ','Type'),l('Ilość','Qty'),l('Wysokość [mm]','Height [mm]'),l('Szerokość [mm]','Width [mm]'),l('Grubość [mm]','Thickness [mm]'),l('Kolor / materiał','Colour / material'),l('Uchwyt','Handle'),l('Źródło','Source')].join("\t")
       lines=[]
-      split=data[:rows].any? { |r| r[:section]=='endpanels' }
-      [['fronts','FRONTY'],['endpanels','ENDPANELS']].each do |section,label|
-        subset=data[:rows].select { |r| (r[:section] || 'fronts')==section }
+      (['fronts']+FINISHING_GROUPS).each do |group|
+        subset=sorted_order_rows(data[:rows].select { |r| order_group(r)==group })
         next if subset.empty?
         lines<<'' unless lines.empty?
-        lines<<ui_label(label) if split
-        lines<<heading
-        subset.each do |r|
-          type=r[:type].start_with?('Drawer · ') ? 'Drawer · '+ui_label(r[:type].delete_prefix('Drawer · ')) : ui_label(r[:type])
-          values=[r[:profile],type,door_dimension_label(r[:height]),door_dimension_label(r[:width]),door_dimension_label(r[:thickness]),r[:quantity],r[:colours].map { |c| c[:key].nil? ? ui_label(c[:name]) : c[:name] }.join(' / '),ui_label(r[:handle]),r[:source]]
-          lines<<values.map { |v| order_text_cell(v) }.join("\t")
+        lines<<order_group_label(group)
+        if group=='plinths'
+          stock=order_stock_plan(subset)
+          lines<<l('Pełne listwy','Whole stock lengths')+" (#{stock[:settings][:length]} mm; "+l('rzaz','kerf')+" #{stock[:settings][:kerf]} mm)"
+          stock[:groups].each do |g|
+            lines<<[g[:product],g[:quantity],stock[:settings][:length],g[:colours].map { |c| c[:name] }.join(' / '),g[:source]].map { |v| order_text_cell(v) }.join("\t")
+            g[:bars].each_with_index do |bar,i|
+              lines<<"  #{i+1}: "+bar[:parts].map { |p| "#{p[:length]} × #{p[:section]}" }.join(' + ')+" mm; "+l('odpad','waste')+" #{bar[:waste]} mm; "+l('rzaz','cutting loss')+" #{bar[:cutting_loss]} mm"
+            end
+            g[:oversize].each { |p| lines<<l('ZA DŁUGI ODCINEK: ','OVERSIZE PART: ')+p[:length].to_s+' mm' }
+          end
+        else
+          lines<<heading
+          subset.each do |r|
+            values=[r[:profile],ui_label(r[:type]),r[:quantity],door_dimension_label(r[:height]),door_dimension_label(r[:width]),door_dimension_label(r[:thickness]),r[:colours].map { |c| c[:key].nil? ? ui_label(c[:name]) : c[:name] }.join(' / '),ui_label(r[:handle]),r[:source]]
+            lines<<values.map { |v| order_text_cell(v) }.join("\t")
+          end
         end
       end
       unless Array(data[:handles]).empty?
         lines<<'' unless lines.empty?
         lines<<l('UCHWYTY','HANDLES')
-        lines<<[l('Model','Model'),l('Rodzaj','Type'),l('Rozstaw [mm]','Pitch [mm]'),l('Długość [mm]','Length [mm]'),l('Wykończenie','Finish'),l('Producent / dostawca','Manufacturer / supplier'),l('Kod produktu','Product code'),l('Ilość','Quantity')].join("\t")
+        lines<<[l('Model','Model'),l('Rodzaj','Type'),l('Ilość','Quantity'),l('Rozstaw [mm]','Pitch [mm]'),l('Długość [mm]','Length [mm]'),l('Wykończenie','Finish'),l('Producent / dostawca','Manufacturer / supplier'),l('Kod produktu','Product code')].join("\t")
         data[:handles].each do |row|
           kind={'standard'=>l('Standardowy','Standard'),'edge'=>l('Krawędziowy','Edge pull'),'knob'=>l('Gałka','Knob')}.fetch(row[:kind],row[:kind])
-          lines<<[row[:name],kind,row[:pitch],row[:length],row[:finish],row[:supplier],row[:code],row[:quantity]].map { |v| order_text_cell(v) }.join("\t")
+          lines<<[row[:name],kind,row[:quantity],row[:pitch],row[:length],row[:finish],row[:supplier],row[:code]].map { |v| order_text_cell(v) }.join("\t")
         end
       end
       if data[:review_count]>0
@@ -287,22 +373,34 @@ module Elfis
       model=Sketchup.active_model
       targets={}
       data=collect_order_list(model,@order_include_hidden==true,@order_include_facade==true,@order_include_endpanels!=false,@order_include_handles!=false) do |row,path,bounds|
-        (targets[row.object_id] ||= [])<<{model:model,path:path,bounds:bounds}
+        (targets[row.object_id] ||= [])<<{model:model,path:path,bounds:bounds,label:"#{door_dimension_label(row[:height])} × #{door_dimension_label(row[:width])} mm"}
       end
       @order_revision=(@order_revision || 0)+1
       data[:revision]=@order_revision
+      data[:sort]=order_sort_settings
       data[:profiles]=visible_profiles.map { |p| {id:p[:id],name:p[:name],kind:p[:kind],supplier:supplier_name(p[:supplier])} }
       data[:suppliers]=supplier_options
       by_id=data[:rows].to_h { |row| [row[:id],targets[row.object_id] || []] }
+      occurrence_id=-1
+      data[:rows].each do |row|
+        row[:occurrence_ids]=by_id[row[:id]].map do |target|
+          id=occurrence_id;occurrence_id-=1;by_id[id]=[target];id
+        end
+      end
+      data[:stock]=order_stock_plan(data[:rows])
       @order_snapshot={model:model,data:data,targets:by_id}
       @order_dialog.execute_script("renderOrderList(#{JSON.generate(data)})") if @order_dialog
       data
     end
 
-    def clear_order_highlight
+    def clear_order_highlight(release_tool=true)
       if @order_overlay
         @order_overlay.targets=[]
         @order_overlay_model.active_view.invalidate if @order_overlay_model&.valid?
+      end
+      if release_tool && @order_highlight_tool
+        tool=@order_highlight_tool;@order_highlight_tool=nil
+        @order_highlight_model.tools.pop_tool if @order_highlight_model&.valid? && @order_highlight_model.tools.active_tool.equal?(tool)
       end
       @order_dialog.execute_script('setOrderHighlighted(null,0)') if @order_dialog
     end
@@ -334,7 +432,12 @@ module Elfis
         clear_order_highlight
         raise Elfis::BastillePodmienFront.l('Fronty zmieniły się w modelu. Odśwież listę przed podglądem.','The fronts have changed. Refresh the list before highlighting.')
       end
+      @order_overlay.show_dimensions=order_dimensions?
       @order_overlay.targets=targets
+      unless @order_highlight_tool && @order_highlight_model==model && model.tools.active_tool.equal?(@order_highlight_tool)
+        @order_highlight_tool=OrderHighlightTool.new;@order_highlight_model=model
+        model.tools.push_tool(@order_highlight_tool)
+      end
       @order_overlay.enabled=true
       model.active_view.invalidate
       @order_dialog.execute_script("setOrderHighlighted(#{JSON.generate(ids)},#{targets.length})") if @order_dialog
@@ -415,7 +518,7 @@ module Elfis
       ids=Array(id).uniq
       rows=ids.map { |key| snapshot[:data][:rows].find { |item| item[:id]==key } }
       raise Elfis::BastillePodmienFront.l('Wybierz pozycje z listy.','Select list items.') if rows.empty? || rows.any?(&:nil?)
-      raise Elfis::BastillePodmienFront.l('Endpanels są oddzielnymi produktami do zamówienia. Wybierz wyłącznie fronty do podmiany profilu.','End Panels are separate order products. Select only fronts for door-profile replacement.') if !supplier_only && rows.any? { |row| row[:section]=='endpanels' }
+      raise Elfis::BastillePodmienFront.l('Finishing to oddzielne produkty do zamówienia. Wybierz wyłącznie fronty do podmiany profilu.','Finishing items are separate order products. Select only fronts for door-profile replacement.') if !supplier_only && rows.any? { |row| row[:section]=='endpanels' }
       targets=rows.flat_map do |row|
         items=snapshot[:targets]&.fetch(row[:id],nil)
         raise Elfis::BastillePodmienFront.l('Nie znaleziono pozycji. Odśwież listę.','Item not found. Refresh the list.') unless items && !items.empty?
@@ -543,6 +646,26 @@ module Elfis
             @order_include_endpanels=data[:include_endpanels]==true
             @order_include_handles=data[:include_handles]!=false
             refresh_order_list
+          when 'sort'
+            raise 'Invalid sort' unless %w[height width thickness].include?(data[:field]) && %w[asc desc].include?(data[:direction])
+            Sketchup.write_default('ELFIS Door Profile Library','order_sort_field',data[:field])
+            Sketchup.write_default('ELFIS Door Profile Library','order_sort_direction',data[:direction])
+            @order_snapshot[:data][:sort]=order_sort_settings if @order_snapshot
+            dialog.execute_script('setOrderStatus('+JSON.generate(l('Zmieniono sortowanie.','Sort updated.'))+')')
+          when 'filter_stock'
+            raise 'Refresh the order list first.' unless @order_snapshot && @order_snapshot[:model]==Sketchup.active_model && @order_snapshot[:data][:revision]==data[:revision]
+            clear_order_highlight
+            rows=@order_snapshot[:data][:rows].select { |row| Array(data[:ids]).include?(row[:id]) }
+            dialog.execute_script('setOrderStock('+JSON.generate(order_stock_plan(rows))+')')
+          when 'stock_settings'
+            save_order_stock_settings(data[:length],data[:kerf],data[:split_sections])
+            refresh_order_list
+          when 'dimensions'
+            @order_show_dimensions=data[:enabled]==true
+            Sketchup.write_default('ELFIS Door Profile Library','order_dimensions',@order_show_dimensions)
+            @order_overlay.show_dimensions=@order_show_dimensions if @order_overlay
+            Sketchup.active_model.active_view.invalidate
+            dialog.execute_script("setOrderStatus(#{JSON.generate(l('Zmieniono widoczność wymiarów w modelu.','Dimension labels updated.'))})")
           when 'copy' then copy_order_list(data[:ids],data[:revision],data[:include_handles]!=false)
           when 'pdf'
             unless export_order_pdf

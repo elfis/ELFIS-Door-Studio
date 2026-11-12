@@ -2,6 +2,87 @@
 
 This history is reconstructed from preserved RBZ packages, instructions, release notes and test reports. Older development dates were not consistently recorded, so none are invented. Version numbers belong to the named extension line; the first profile generator and the later replacement tool originally had separate version sequences.
 
+## 2.9.14 — Shared plinth offcuts across widths
+
+- Combine different plinth widths/heights in one lengthwise cutting plan by default. Use the widest part as the stock purchasing width; retain actual part widths in the expanded tree, clipboard and PDF.
+- Add a remembered Separate stock widths checkbox to restore independent width plans. Changing it recalculates immediately.
+- Keep different products, suppliers, colours and board thicknesses separate in both modes. No two-dimensional nesting or joining of short remnants.
+
+## 2.9.13 — Order groups, stock-length planning and portrait PDF
+
+- Escape clears order-list highlights and selected rows in the HTML window or viewport. A temporary preview tool receives viewport Escape and restores the previous tool; switching tools clears the preview too.
+- Numeric ascending/descending dimension sorting, remembered between sessions. Shift selection follows the displayed order. Quantities appear bold before dimensions, including handles.
+- Split Finishing into Plinths, End Panels, Pelmets, Crowns and Other, based on tags and their parent folders. Preserve product groups in clipboard and PDF.
+- Plinth cutting plans: configurable stock length (default 2400 mm) and saw kerf (default 3 mm), whole-length quantities, expandable per-stock parts, offcuts and cutting loss. Highlight all parts of one stock length or one exact nested occurrence.
+- Stock products are identified by their tag (or explicit stock_product attribute); separate tags/products, suppliers, colours and cross-sections are never combined. Instance names can differ. Filters recalculate the visible stock plan; complete PDF uses the whole order.
+- Best-fit-decreasing plus bounded exact improvement for up to 32 parts. Mark layouts when the minimum number of lengths has not been proven. Report oversize parts instead of silently splitting or omitting them. No end-trim or mitre allowance is included.
+- Print-friendly portrait A4 PDF, bold quantity before combined dimensions, product sections, stock cutting details, wrapped text and repeated headings.
+
+## 2.9.12 — Fix false replacement error after removing audio
+
+- Remove the last obsolete door_operation_finished call from the main click-replacement entry file. It ran after commit, causing Front not replaced / undefined local variable or method even though the front had already been replaced.
+- Completion audio remains removed. Door generation, shelf pin tools and existing material/machining behaviour are unchanged.
+
+## 2.9.11 — Remove shelf-pin drilling
+
+- Add a separate red-X Shelf Pins removal icon and Extensions command. Click successive shelves from outside cabinets, or preselect shelves in the current context. Each click/batch is one Undo operation.
+- Remove only groups associated with the shelf by ELFIS ownership metadata. Imported/unmarked drilling, other shelves and panel geometry remain intact. Empty removal reports zero without creating a model operation.
+- Red preview marks the shelf and associated groups. Removal follows ownership after shelf movement and does not depend on current drilling settings or the shelf still touching both sides.
+- Upgrade older PID-based associations before making cabinet copies unique. Stable owner keys preserve remaining shelf associations across cabinet isolation. Isolate parent/side definitions so other cabinet copies retain their drilling. Locked targets are refused.
+
+## 2.9.10 — Immediate shelf tool and tag preview
+
+- Add independent Additional drillings top/bottom counts (0–10), default one each, with the centre hole always present. Grid defaults to 32 mm. Initial front/rear offsets are 57/37 mm; previously saved values remain. No centre-row switch.
+
+- Start Shelf Pin Rows immediately using defaults or saved settings. No startup settings dialog, including selected-shelf batches.
+- Open Settings from the active tool's right-click menu. Add an English/Polish settings window with a live drilling-tag preview derived from diameter/depth.
+- Preserve entered decimal precision in drilling tag names instead of rounding to one decimal. The group name and circle-edge tag match the preview; the containing group remains on Blum Operations.
+
+## 2.9.9 — Shelf pin rows
+
+- Add a fourth Doors-toolbar icon and Extensions command: Shelf Pin Rows / Podpórki półek. Configure dimensions, then click nested adjustable shelves without entering their cabinets, or preselect several shelf components in the current edit context.
+- Find two adjacent vertical Body panels from geometry. For each shelf, create two rows of three vector circles per side, at centre and ±32 mm by default. Default centre is 2.5 mm below shelf underside; diameter 5 mm, blind depth 12 mm, front/rear offsets 37 mm measured from shelf edges.
+- Every hole is a separate group inside its side-panel component, tagged Blum Operations. Its circle edges use D5.0_DEPTH12.0 (or the selected diameter/depth). No faces or solid subtraction. Match the inspected model convention, without editing OpenCutList.
+- Keep existing row positions, enabled by default, reuses matching two-row positions already present at the shelf support height on both sides. Other settings remain explicit. Existing matching production circles are skipped; ELFIS-owned circles are refreshed on reapply.
+- Support rotated/mirrored orthogonal instances and nonuniform scaling with physical dimensions. Isolate shared cabinet/side definitions before inserting vectors. A click or batch is one Undo operation. Refuse locked, ambiguous or unsupported parts and holes outside a panel or deeper than its thickness.
+- Adjustable horizontal rectangular boards on Body only. Exclude named Fixed shelf, cabinet base/top and cross members. Fixed shelves, dowels and screws are deferred. No automatic observer after moving a shelf: reapply to refresh ELFIS-owned holes; imported machining is preserved.
+
+## 2.9.8 — Remove completion audio
+
+- Remove completion playback and both sound controls at the user's request after native playback was not reliably audible. Door operations no longer schedule audio or call audio APIs.
+- Retain the 2.9.7 print-friendly PDF, styled order-language selector and unchanged SVG previews.
+
+## 2.9.7 — Print-friendly orders and completion-sound preview
+
+- Use white pages, black text and thin grey table rules in the complete-order PDF. Remove solid header backgrounds and alternating row fills. Keep separate Doors, Finishing and Handles sections, pagination and all order data.
+- Style the Door Order List language selector consistently with its other controls.
+- Replace the quiet 0.14-second completion cue with a clearer 0.38-second two-tone WAV, defer playback briefly after successful operations, and add Test sound / Testuj dźwięk beside the existing preference. The test button does not change the preference. Audio failure cannot undo a door operation.
+- Preserve SVG profile/section previews unchanged. Actual audibility depends on the active Windows output and SketchUp application volume.
+
+## 2.9.6 — Finishing orders and dimension labels
+
+- Rename the End Panels order section to Finishing in English/Polish windows, clipboard and complete-order PDF. Include tags anywhere beneath Finishing or Finishing Parts folders, including nested and numbered folders (for example 02 Finishing Parts). Retain support for the standalone endpanels tag.
+- Keep finishing products separate from door-profile replacement. The Type column uses the product tag (plinths, pelmets, crowns, end panels, etc.). No profile import is required. Existing manufacturer/source assignment, filtering, consolidation and highlight actions still apply.
+- Add Dimensions in model / Wymiary w modelu to the order list. Selected rows show height × width in millimetres on each highlighted occurrence. Preference is remembered. Labels follow nested instance paths, do not change model geometry, skip off-screen/overlapping positions and limit drawing to 200 labels.
+- Correct order-list height/width/thickness identification for generated doors with native OpenCutList axes or swapped axes, using physical size and world orientation.
+- Keep 2.9.5 native OpenCutList grain compatibility and omit the experimental colour configurator. Native docked custom trays are not part of this update.
+
+## 2.9.5 — Native OpenCutList grain rotation
+
+- Based on 2.9.4, without the experimental colour configurator or finish library.
+- Place generated visible geometry directly inside the front component and use native board axes: X/Y span the face and Z is thickness. OpenCutList can rotate inherited grain using Swap length–width, rather than rotating axes around a nested body whose texture stays fixed.
+- Whole-door texture orientation also applies to Five-Piece, as requested. Visible joints remain; individual frame-part groups are replaced by direct faces/edges carrying original part names in ElfisDoorPart attributes. This version does not provide separate frame-part cut-list items.
+- Slab main material belongs to the component. Broad/chamfer faces inherit it; independent narrow-edge materials remain on faces. CNC and handle containers remain separate with model-space placement preserved.
+- Retain geometry-only bounds and order colour detection after native axis changes. Keep independent cache templates when body groups are exploded.
+- Existing fronts keep their saved structure until replaced again. Reapply the profile once, then use OpenCutList to assign material and orient grain. No changes to OpenCutList code, material images or automatic grain observers.
+
+## 2.9.4 — Completion sound and optional Slab chamfer
+
+- A short completion sound follows successful door creation/replacement. Batch replacement sounds once after commit; validation failures and cancellation remain silent.
+- Toggle Completion sound in the profile-library header. The preference is remembered separately from profiles and is enabled by default.
+- Slab profiles can enable a front-edge 45° chamfer with an editable size (suggested 1.5 mm). It is off by default, including for existing profiles.
+- Retain overall dimensions, rear plane and individual ABS edge materials. Bevel faces use the front material. Chamfer size is included in geometry caching and order/PDF descriptions.
+
 ## 2.9.3 — Complete PDF orders and Slab edge materials
 
 - Export a single PDF containing separate doors/fronts, end panels and handles sections, with quantities, repeated table headers, page numbering and embedded Unicode fonts.
@@ -193,3 +274,5 @@ The initial Bastille 715 × 596 mm model and scripts explored 45° versus 90° j
 ## Evidence
 
 The preserved history includes both original extension instruction files, 2.0/2.1/2.2/2.3 instructions, individual 2.3.1–2.6.3 notes, 2.7.0/2.7.1 readmes and 2.8.0–2.8.2 readmes. Exact archive names and SHA-256 hashes are recorded in RELEASE_ARCHIVES.json. Public documentation describes current behaviour; historical notes describe the corresponding old version and may contain superseded limitations.
+
+Plinth stock cross-sections are grouped at 0.1 mm nominal precision to ignore tiny import differences (e.g. 150 and 150.01 mm). Cutting lengths retain their measured precision.

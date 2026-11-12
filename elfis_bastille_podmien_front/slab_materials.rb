@@ -39,19 +39,21 @@ module Elfis
     def preserve_slab_materials(source,replacement,info)
       palette=slab_surface_materials(source,info)
       return if palette.empty? || palette.values.flatten.compact.empty?
-      # Never paint a cached definition or a body used by another door.
       replacement.make_unique
+      # Main board finish belongs to the component. Only narrow edge-band
+      # assignments belong to faces, so OpenCutList can paint/orient the board.
+      replacement.material=source.material || palette.dig([1,1],0) || palette.dig([1,0],0)
       limits=[info[:width].mm,info[:profile][:thickness].mm,info[:height].mm]
-      replacement.definition.entities.each do |body|
-        next unless instance?(body) && own_geometry?(body,replacement)
-        body.make_unique
-        body.definition.entities.grep(Sketchup::Face).each do |face|
-          points=face.vertices.map { |v| v.position.transform(body.transformation) }
-          palette.each do |(axis,side),materials|
-            next unless points.all? { |point| (point.to_a[axis]-side*limits[axis]).abs<0.01.mm }
-            face.material,face.back_material=materials
-            break
-          end
+      replacement.definition.entities.grep(Sketchup::Face).each do |face|
+        face.material=nil;face.back_material=nil
+        face.clear_texture_position(true);face.clear_texture_position(false)
+        points=face.vertices.map(&:position)
+        palette.each do |(axis,side),materials|
+          next if axis==1
+          next unless points.all? { |point| (point.to_a[axis]-side*limits[axis]).abs<0.01.mm }
+          # Do not freeze an inherited board finish on an unbanded edge.
+          face.material,face.back_material=materials.map { |mat| mat==replacement.material ? nil : mat }
+          break
         end
       end
     end
