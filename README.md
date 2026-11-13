@@ -13,7 +13,7 @@ Free, open-source SketchUp tools for cabinet fronts, handles and order lists. En
 
 Different plinth widths (such as 79 and 150 mm) share stock-length offcuts by default. Enable **Separate stock widths** to calculate them independently. Every cut part retains its actual length and width in the tree and PDF. Products, suppliers, colours and board thicknesses remain separate.
 
-**Validation:** 2.9.14 calculation checks passed in standalone Ruby 3.2.4 with EN/PL headless UI and rendered PDF checks. Live validation of this small follow-up in SketchUp is pending at the user's request. The previously live-tested [2.9.13 installer](public/2.9.13/ELFIS_Profile_Library_2.9.13.rbz) remains available.
+**Validation:** 2.9.14 calculation checks passed in standalone Ruby 3.2.4 with EN/PL headless UI and rendered PDF checks. The installed 2.9.14 calculator and order window were subsequently checked in SketchUp 2026: the example gives six shared lengths versus seven with widths separated. The previously live-tested [2.9.13 installer](public/2.9.13/ELFIS_Profile_Library_2.9.13.rbz) remains available.
 
 ## New in Doors 2.9.13
 

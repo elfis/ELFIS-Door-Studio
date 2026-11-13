@@ -48,5 +48,12 @@
     ]
   },
   "pdf_visual_review": true,
-  "live_sketchup_2914": "Pending; no UI control requested."
+  "live_sketchup_2914": {
+    "passed": true,
+    "platform": "SketchUp 2026 / Windows",
+    "installed_version": "2.9.14",
+    "mixed_lengths": 6,
+    "separate_lengths": 7,
+    "order_window_and_checkbox_verified": true
+  }
 }

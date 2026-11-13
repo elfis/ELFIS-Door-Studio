@@ -5,7 +5,7 @@
 - Standalone Ruby 3.2.4 tests run the actual stock planning code without connecting to SketchUp: the supplied mixed-width example needs six lengths by default versus seven with widths separated. Occurrences, kerf and waste are conserved; products/materials/thicknesses remain distinct.
 - All shipped Ruby syntax compiles under Ruby 3.2.4. EN/PL browser checks cover checkbox persistence/callbacks, shared offcuts and both part dimensions. Existing 2.9.13 browser regressions also pass against the new HTML.
 - Mixed/split portrait PDFs rendered and visually reviewed.
-- **Live SketchUp 2.9.14 validation is pending** because the user requested no UI control. Do not describe 2.9.13's live checks as a new native test of 2.9.14.
+- **Follow-up live check passed in SketchUp 2026:** the installed 2.9.14 calculator returned six shared lengths and seven separate lengths; the order window opened and displayed the new checkbox with six lengths in the current project. Earlier 2.9.13 checks remain separately identified.
 - Results: public/2.9.14/VALIDATION.json.
 - For standalone tests on Windows: `npm install --prefix tmp/ruby-order-tests @ruby/wasm-wasi@2.10.1 @ruby/3.2-wasm-wasi@2.10.1`, then `node test_orders_2914_runtime.cjs` and `node test_orders_2914_ui.cjs`. The Ruby adapter reads supplied source/system fonts and redirects generated fixtures/PDFs into local output files; it does not access the running SketchUp process.
 
