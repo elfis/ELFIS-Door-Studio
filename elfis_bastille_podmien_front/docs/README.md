@@ -1,26 +1,31 @@
-# ELFIS Door Profile Library — 2.9.4
+# ELFIS Door Profile Library — 2.9.39
 
 Create and restyle cabinet fronts from reusable cross-sections, then prepare a consolidated order list from the model.
+
+ELFIS Door Studio is a SketchUp plugin for creating and replacing cabinet fronts, placing handles, preparing drilling vectors and compiling order lists. It is designed to support workflows with **Blum Online Configurator, ABF2 and OpenCutList**.
+
+**Polski:** ELFIS Door Studio to wtyczka do SketchUpa służąca do tworzenia i podmiany frontów meblowych, rozmieszczania uchwytów, przygotowywania wektorów wierceń oraz zestawień zamówień. Jest przeznaczona do współpracy z **Blum Online Configurator, ABF2 i OpenCutList**.
 
 The interface defaults to **English**. Choose **English / Polski** in the profile library or order-list header. The choice is remembered independently of the profile database. User profile names, materials, manufacturers, tags and existing component names are not translated.
 
 ## Install or update
 
 1. In SketchUp, choose **Extensions → Extension Manager → Install Extension**.
-2. Select `ELFIS_Profile_Library_2.9.4.rbz` and restart SketchUp.
+2. Select `ELFIS_Profile_Library_2.9.39.rbz` and restart SketchUp.
 3. Enable the ELFIS toolbar through **View → Toolbars** if it is hidden.
 
 This updates the existing door-replacement/profile-library extension. The older “Drzwi z profilu” generator is a separate extension and is not required.
 
 Development and native testing have targeted **SketchUp Pro 2026 on Windows**. Other SketchUp versions and macOS have not been verified. Five-Piece construction uses solid operations.
 
-## Three toolbar buttons
+## Main tools
 
 | Button | Action |
 | --- | --- |
 | Door with arrow | Replace the clicked front using the active library profile. Continue clicking additional fronts. |
 | Profile library / three panels | Choose, add, configure or remove profiles; create doors by dimensions. |
 | Order list | Refresh quantities and dimensions, highlight or zoom to items, change selected front styles, and copy tables. |
+| Arrange Shelves | Preview shelf count and clear openings; mix mm and relative shares, then apply the arrangement and refresh associated shelf-pin drilling. |
 
 Detailed instructions, controls and limitations are in [USER_GUIDE.en.md](USER_GUIDE.en.md). Polish instructions: [USER_GUIDE.pl.md](USER_GUIDE.pl.md). The installed extension also provides **Extensions → ELFIS — Documentation / Dokumentacja**.
 

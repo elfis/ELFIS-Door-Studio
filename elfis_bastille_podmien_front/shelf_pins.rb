@@ -1,6 +1,8 @@
 # encoding: UTF-8
 # Shelf support vectors. No solid cutting and no automatic geometry observers.
 require 'securerandom'
+require_relative 'corner_cabinet'
+require_relative 'drilling_tool_modifiers'
 module Elfis
   module ShelfPins
     extend self
@@ -71,7 +73,7 @@ module Elfis
 
     def board(path,model=Sketchup.active_model)
       e=path.last
-      return nil unless instance?(e) && e.valid? && e.layer.name.downcase=='body'
+      return nil unless instance?(e) && e.valid? && (defined?(StudioSettings) ? StudioSettings.panel?(e) : e.layer.name.downcase=='body')
       faces=e.definition.entities.grep(Sketchup::Face)
       return nil if faces.length<6
       bb=Geom::BoundingBox.new
@@ -88,7 +90,7 @@ module Elfis
     end
 
     def shelf?(b)
-      b && b[:axes][b[:thin]].dot(Z_AXIS).abs>0.999 && b[:lengths].sort[1]>80.mm && ![b[:entity].name,b[:entity].definition.name].join(' ').match?(/fixed\s*shelf|p[oó]łka\s*stała|cabinet\s*(base|top)|cross\s*member|trawers|wieniec/i)
+      b && (!defined?(StudioSettings)||StudioSettings.role?(b[:entity],:shelves)) && b[:axes][b[:thin]].dot(Z_AXIS).abs>0.999 && b[:lengths].sort[1]>80.mm && ![b[:entity].name,b[:entity].definition.name].join(' ').match?(/fixed\s*shelf|p[oó]łka\s*stała|cabinet\s*(base|top)|cross\s*member|trawers|wieniec/i)
     end
 
     def panels(root,model=Sketchup.active_model)
@@ -127,18 +129,19 @@ module Elfis
 
     def plan(path,c=settings,model=Sketchup.active_model)
       c=validate(c);s=board(path,model)
-      raise l('Wskaż poziomą półkę regulowaną na tagu Body.','Point to a horizontal adjustable shelf on the Body tag.') unless shelf?(s)
+      raise l('Wskaż poziomą półkę regulowaną z tagiem ustawionym dla półek.','Point to a horizontal adjustable shelf with a configured shelf tag.') unless shelf?(s)
       raise l('Element lub szafka są zablokowane.','A panel or cabinet is locked.') if path.any?(&:locked?)
       all=panels(path.first,model)
       # Loose parts at model root can also form a cabinet.
       all=model.active_entities.select { |e| instance?(e) }.flat_map { |e| panels(e,model) } if path.length==1
+      return CornerCabinet.pin_plan(path,c,model,s,all) if CornerCabinet.corner?(all,s)
       up=s[:axes][s[:thin]].clone;up.reverse! if up.dot(Z_AXIS)<0
       attempts=[]
       ((0..2).to_a-[s[:thin]]).each do |wi|
         width=s[:axes][wi];depth=up.cross(width).normalize
         frame=Geom::Transformation.axes(ORIGIN,width,depth,up);inv=frame.inverse
         sb=projected(s[:points],inv)
-        eligible=all.reject { |b| b[:entity]==s[:entity] }.select { |b| b[:axes][b[:thin]].dot(width).abs>0.999 }
+        eligible=all.reject { |b| b[:entity]==s[:entity] }.select { |b| (!defined?(StudioSettings)||StudioSettings.role?(b[:entity],:sides)) && b[:axes][b[:thin]].dot(width).abs>0.999 }
         sides=[-1,1].map do |sign|
           edge=sign<0 ? sb.min.x : sb.max.x
           fits=eligible.filter_map do |b|
@@ -161,7 +164,7 @@ module Elfis
         entities.each do |e|
           next unless instance?(e) && !stack.include?(e.definition)
           tw=tr*e.transformation
-          if e.layer.name.downcase=='facade'
+          if defined?(StudioSettings) ? StudioSettings.role?(e,:facades) : e.layer.name.downcase=='facade'
             facade_centres<<e.definition.bounds.center.transform(tw).transform(p[:inverse]).y
           elsif e.definition.entities.grep(Sketchup::Face).empty?
             scan.call(e.definition.entities,tw,stack+[e.definition])
@@ -225,6 +228,15 @@ module Elfis
           raise 'Shelf path changed.' if path.any?(&:nil?)
           path=BastillePodmienFront.unique_path(path)
           p=plan(path,c,model)
+          if p[:corner] && !path.last.get_attribute(DICT,'owner_key') && defined?(DrillingEditor)
+            scan=DrillingEditor.scan(roots:[path.first],model:model)
+            ids=scan[:rows].select { |h|h[:kind]==:pin && !h[:owned] && h[:source] && h[:source][:path]==path }.map { |h|h[:id] }
+            unless ids.empty?
+              DrillingEditor.apply(scan,ids,{},update:false,operation:false)
+              p=plan(path,c,model)
+            end
+          end
+          path.last.set_attribute(DICT,'corner_pattern',JSON.generate(p[:corner_pattern])) if p[:corner_pattern]
           source=path.map(&:persistent_id).join('/')
           owned_sources=removal_groups(path,model).map { |g| g[:path].last.get_attribute(DICT,'source') }.uniq
           owner_key=path.last.get_attribute(DICT,'owner_key') || SecureRandom.uuid
@@ -237,11 +249,11 @@ module Elfis
             pb=board(side_path,model)
             panel.definition.entities.grep(Sketchup::Group).select { |g| owned_sources.include?(g.get_attribute(DICT,'source')) }.each(&:erase!)
             existing=circular_holes(pb)
-            hole_tag=tag_name(c)
-            depth_tag=model.layers[hole_tag]||model.layers.add(hole_tag)
-            group_tag=model.layers['Blum Operations']||model.layers.add('Blum Operations')
+            operation_tag=defined?(StudioSettings) ? StudioSettings.operation_tag : 'Blum Operations'
+            group_tag=model.layers[operation_tag]||model.layers.add(operation_tag)
             holes.each do |h|
-              if existing.any? { |old| old[:center].distance(h[:point])<0.05.mm && (old[:diameter]-c[:diameter]).abs<0.01 && (old[:depth]-c[:depth]).abs<0.01 }
+              depth=h.fetch(:depth,c[:depth]);hole_tag=tag_name(c.merge(depth:depth));depth_tag=model.layers[hole_tag]||model.layers.add(hole_tag)
+              if existing.any? { |old| old[:center].distance(h[:point])<0.05.mm && (old[:diameter]-c[:diameter]).abs<0.01 && (old[:depth]-depth).abs<0.01 }
                 skipped+=1;next
               end
               group=panel.definition.entities.add_group
@@ -253,7 +265,7 @@ module Elfis
               group.transformation=pb[:world].inverse*placement
               group.set_attribute(DICT,'source',source)
               group.set_attribute(DICT,'owner_key',owner_key)
-              group.set_attribute(DICT,'diameter',c[:diameter]);group.set_attribute(DICT,'depth',c[:depth])
+              group.set_attribute(DICT,'diameter',c[:diameter]);group.set_attribute(DICT,'depth',depth)
               count+=1
             end
           end
@@ -306,7 +318,7 @@ module Elfis
         b=entity.definition.entities
         source=entity.get_attribute(DICT,'source')
         groups<<entity if entity.is_a?(Sketchup::Group) && source
-        if entity.layer.name.downcase=='body' && b.grep(Sketchup::Face).length>=6
+        if (defined?(StudioSettings) ? StudioSettings.role?(entity,:shelves) : entity.layer.name.downcase=='body') && b.grep(Sketchup::Face).length>=6
           owners[entity.persistent_id.to_s]=entity
         end
         b.each { |child| walk.call(child,stack+[entity.definition]) if instance?(child) }
@@ -324,7 +336,7 @@ module Elfis
       paths=paths.uniq { |path| path.map(&:persistent_id) }
       raise l('Nie wybrano półek.','No shelves selected.') if paths.empty?
       paths.each do |path|
-        raise l('Wskaż półkę na tagu Body.','Point to a shelf on the Body tag.') unless shelf?(board(path,model))
+        raise l('Wskaż półkę z tagiem ustawionym dla półek.','Point to a shelf with a configured shelf tag.') unless shelf?(board(path,model))
         raise l('Półka lub jej szafka są zablokowane.','A shelf or its cabinet is locked.') if path.any?(&:locked?)
       end
       targets=paths.flat_map { |path| removal_groups(path,model) }.uniq { |g| g[:path].map(&:persistent_id) }
@@ -358,12 +370,9 @@ module Elfis
       c=validate(settings)
       m=Sketchup.active_model
       paths=m.selection.select { |e| instance?(e) }.map { |e| [e] }.select { |path| shelf?(board(path,m)) }
-      if paths.empty?
-        m.select_tool(Tool.new(c,remove:remove))
-      else
-        result=remove ? self.remove(paths,m) : apply(paths,c,m)
-        Sketchup.set_status_text(status(result))
-      end
+      result=remove ? self.remove(paths,m) : apply(paths,c,m) unless paths.empty?
+      m.selection.clear;m.select_tool(Tool.new(c,remove:remove))
+      Sketchup.set_status_text(status(result)) if result
     rescue => e
       UI.messagebox(e.message)
     end
@@ -374,19 +383,18 @@ module Elfis
     end
 
     class Tool
-      def initialize(c,remove:false);@settings=c;@remove=remove;end
+      include DrillingToolModifiers
+      def initialize(c,remove:false);@settings=c;init_drilling_modifiers(:pin,remove);end
       def update_settings(c)
         @settings=c;@signature=nil;@plan=nil;@path=nil
         Sketchup.active_model.active_view.invalidate
       end
       def activate
-        if @remove
-          Sketchup.set_status_text(ShelfPins.l('Kliknij półkę, aby usunąć jej wiercenia ELFIS. Importowane wiercenia pozostają. Esc: zakończ.','Click a shelf to remove its ELFIS drilling. Imported drilling is preserved. Esc: finish.'));return
-        end
-        Sketchup.set_status_text(ShelfPins.l('Kliknij półkę regulowaną. Prawy przycisk: ustawienia. Esc: zakończ.','Click an adjustable shelf. Right-click: settings. Esc: finish.'))
+        show_drilling_mode
       end
       def onMouseMove(flags,x,y,view)
-        signature=[x,y,Sketchup.active_model.active_path]
+        @drilling_x=x;@drilling_y=y;set_drilling_mode(flags)
+        signature=[x,y,Sketchup.active_model.active_path,@drilling_mode]
         return if signature==@signature
         @signature=signature;found=nil
         ph=view.pick_helper;ph.do_pick(x,y)
@@ -400,8 +408,8 @@ module Elfis
           break if found
         end
         if found
-          unless @path==found && @plan
-            @plan=@remove ? {shelf:ShelfPins.board(found),holes:ShelfPins.removal_groups(found)} : ShelfPins.plan(found,@settings)
+          unless @path==found && @plan && @plan_mode==@drilling_mode
+            @plan=build_drilling_plan(found);@plan_mode=@drilling_mode
           end
           @path=found
         else
@@ -417,18 +425,17 @@ module Elfis
         bb=@plan[:shelf][:bb];tr=@plan[:shelf][:world]
         pairs=[[0,1],[0,2],[1,3],[2,3],[4,5],[4,6],[5,7],[6,7],[0,4],[1,5],[2,6],[3,7]]
         points=pairs.flat_map { |a,b| [a,b].map { |i| q=view.screen_coords(bb.corner(i).transform(tr).transform(inverse));Geom::Point3d.new(q.x,q.y,0) } }
-        view.drawing_color=@remove ? 'Red' : 'DodgerBlue';view.line_width=3;view.draw2d(GL_LINES,points)
-        view.drawing_color=@remove ? 'Red' : 'LimeGreen'
+        view.drawing_color=@remove ? 'Red' : (@refresh ? 'MediumSeaGreen' : 'DodgerBlue');view.line_width=3;view.draw2d(GL_LINES,points)
+        view.drawing_color=@remove ? 'Red' : (@refresh ? 'MediumSeaGreen' : 'LimeGreen')
         @plan[:holes].each do |h|
           q=view.screen_coords(h[:point].transform(inverse));points=(0...16).map { |i| a=2*Math::PI*i/16;Geom::Point3d.new(q.x+4*Math.cos(a),q.y+4*Math.sin(a),0) }
           view.draw2d(GL_LINE_LOOP,points)
         end
       end
       def onLButtonDown(flags,x,y,view)
-        onMouseMove(flags,x+0.001,y,view)
+        @signature=nil;onMouseMove(flags,x,y,view)
         return unless @path
-        r=@remove ? ShelfPins.remove([@path]) : ShelfPins.apply([@path],@settings)
-        Sketchup.set_status_text(ShelfPins.status(r));@plan=nil;@path=nil;@signature=nil;view.invalidate
+        perform_drilling_action(@path);@plan=nil;@path=nil;@signature=nil;view.invalidate
       rescue => e
         UI.messagebox(e.message)
       end
@@ -437,7 +444,7 @@ module Elfis
         menu.add_item(ShelfPins.l('Ustawienia podpórek…','Shelf pin settings…')) { ShelfPins.show_settings(self) }
       end
       def onCancel(reason,view);@plan=nil;@path=nil;Sketchup.active_model.select_tool(nil) if reason==0;view.invalidate;end
-      def deactivate(view);view.invalidate;end
+      def deactivate(view);clear_drilling_modifiers;view.invalidate;end
     end
 
     def install
@@ -454,9 +461,8 @@ module Elfis
         @remove_command.tooltip=l('Usuń wiercenia ELFIS z klikniętej lub zaznaczonych półek','Remove ELFIS drilling from clicked or selected shelves')
         @remove_command.small_icon=File.join(__dir__,'shelf_pins_remove.svg');@remove_command.large_icon=@remove_command.small_icon
         UI.menu('Extensions').add_item(@remove_command)
-        toolbar=BastillePodmienFront.instance_variable_get(:@toolbar)
-        toolbar.add_item(@remove_command) if toolbar
       end
+      @command.tooltip=l('Podpórki: klik dodaje · Alt usuwa · Ctrl aktualizuje po przesunięciu półki','Shelf pins: click adds · Alt removes · Ctrl updates after moving a shelf')
     end
   end
 end

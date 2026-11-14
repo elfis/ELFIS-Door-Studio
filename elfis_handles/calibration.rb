@@ -107,6 +107,7 @@ module Elfis
         normal.reverse! if @flip
         update=Handles.calibration_frame(@points[0],@points[1],point,normal,@record[:kind])
         candidate=@record.merge(update)
+        candidate[:length]=Handles.geometry_length(@definition,candidate) unless @record[:length_auto]==false
         finish
         @record.replace(candidate);Handles.persist
         Handles.refresh(Handles.l("Kalibracja zapisana. Rozstaw: #{update[:pitch].round(2)} mm.","Calibration saved. Pitch: #{update[:pitch].round(2)} mm."))

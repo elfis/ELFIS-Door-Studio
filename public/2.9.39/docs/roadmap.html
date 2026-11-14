@@ -1,0 +1,90 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ELFIS — ROADMAP</title><style>body{max-width:1080px;margin:28px auto;padding:0 26px;color:#213b3d;background:#f4f5f2;font:15px/1.6 Segoe UI,sans-serif}h1,h2,h3{line-height:1.25}h2{margin-top:36px}table{border-collapse:collapse;width:100%;background:#fff}td,th{border:1px solid #cbd7d0;padding:9px 12px;text-align:left;vertical-align:top}th{background:#e7eee9}code{background:#e5e9e5;padding:2px 4px;overflow-wrap:anywhere}a{color:#185c76}nav{position:sticky;top:0;background:#fff;padding:12px;border-bottom:2px solid #285b59;z-index:1}nav a{margin-right:18px}@media print{nav{position:static}body{max-width:none;background:white}tr{break-inside:avoid}thead{display:table-header-group}}</style></head><body><nav><strong>ELFIS 2.9.39</strong> · <a href="guide.en.html">English</a><a href="guide.pl.html">Polski</a><a href="changelog.html">Changelog</a><a href="roadmap.html">Roadmap / Plany</a></nav><h1>Roadmap / Plan rozwoju</h1>
+<p>Current versions: Doors <strong>2.9.20</strong>, Handles <strong>1.1.9-beta</strong>. The sections below distinguish implemented work from future ideas; no delivery dates are promised.</p>
+<h2>Implemented / Gotowe</h2>
+<ul>
+<li>Four front styles: Five-Piece, One-Piece, Slab and J-Pull, with supported low-drawer profile families.</li>
+<li>English/Polish interfaces and guides; saved user libraries and preserved installer versions.</li>
+<li>Order tables for Fronts, End Panels and marked ELFIS handles. Consolidated quantities, clipboard copying, front/panel filters and selection tools.</li>
+<li>One complete-order PDF with separate product sections, repeated headings, Unicode fonts and page numbering.</li>
+<li>Standard/knob/edge handle import, fixing-point calibration, live preview/settings, click and batch replacement, and a red X for click removal.</li>
+<li>Slab broad-face and individual edge-band material preservation.</li>
+</ul>
+<h2>Order-list selection (2.9.13) / Zaznaczanie z listy zamówienia</h2>
+<ul>
+<li><p><input checked="" disabled="" type="checkbox"> Add ascending/descending sorting by numeric dimensions (height, width/length and thickness), within each product group.</p>
+</li>
+<li><p><input checked="" disabled="" type="checkbox"> Dodać sortowanie rosnące/malejące według liczbowych wymiarów (wysokość, szerokość/długość i grubość), osobno wewnątrz każdej grupy produktów.</p>
+</li>
+<li><p><input checked="" disabled="" type="checkbox"> Group the order list by product type: Fronts, Plinths, End Panels, Pelmets, Crowns and Handles. Keep Finishing as the parent section for finishing-product subgroups, retain an Other Finishing fallback for unclassified items, and consolidate identical items only within the same product type. Preserve these groups in clipboard and PDF output.</p>
+</li>
+<li><p><input checked="" disabled="" type="checkbox"> Grupować listę zamówienia według rodzaju produktu: Fronty, Cokoły (Plinths), Panele kończące (End Panels), Pelmety, Gzymsy (Crowns) i Uchwyty. Finishing pozostaje sekcją nadrzędną dla podgrup elementów wykończeniowych; nierozpoznane elementy trafiają do Pozostałe Finishing. Łączyć identyczne pozycje wyłącznie w obrębie tego samego rodzaju produktu. Zachować podział przy kopiowaniu i eksporcie PDF.</p>
+</li>
+<li><p><input checked="" disabled="" type="checkbox"> When doors or panels are selected from the order list and highlighted in the model, Escape clears the highlights and the corresponding selected rows, including multiple selections. Support Escape with focus in either the model or the order-list window. Use Escape instead of a mouse-click clearing action.</p>
+</li>
+<li><p><input checked="" disabled="" type="checkbox"> Gdy drzwi lub panele są zaznaczone z listy zamówienia i podświetlone w modelu, Escape usuwa podświetlenie i zaznaczenie odpowiednich wierszy, również przy zaznaczeniu wielu pozycji. Obsługiwać Escape zarówno w modelu, jak i w oknie listy zamówienia. Escape zastępuje kasowanie zaznaczenia kliknięciem myszy.</p>
+</li>
+</ul>
+<h2>Proposed: handle ordering improvements / Rozwój listy uchwytów</h2>
+<ul>
+<li>Explicitly mark existing, manually inserted hardware without importing its model.</li>
+<li>Highlight and zoom to handle occurrences from the hardware table; handle-specific filters.</li>
+<li>Review missing manufacturer/code information before ordering.</li>
+</ul>
+<h2>Proposed: PDF and accessory ordering / PDF i akcesoria</h2>
+<ul>
+<li><p><input checked="" disabled="" type="checkbox"> Suggest a descriptive filename when saving the order PDF: <code>&lt;project name&gt;_Doors_&lt;YYYY-MM-DD&gt;.pdf</code> when the model/project has a meaningful name; otherwise <code>Doors_&lt;YYYY-MM-DD&gt;.pdf</code>. Remove characters invalid in filenames and let the user edit the suggested name in the save dialog.</p>
+</li>
+<li><p><input checked="" disabled="" type="checkbox"> Przy zapisywaniu PDF zamówienia proponować nazwę <code>&lt;nazwa projektu&gt;_Doors_&lt;RRRR-MM-DD&gt;.pdf</code>, jeśli model/projekt ma nadaną nazwę; w przeciwnym razie <code>Doors_&lt;RRRR-MM-DD&gt;.pdf</code>. Usuwać znaki niedozwolone w nazwie pliku i umożliwiać zmianę proponowanej nazwy w oknie zapisu.</p>
+</li>
+<li><p><input checked="" disabled="" type="checkbox"> Use portrait A4 pages for the order PDF. Place the quantity before the dimensions and render the quantity in bold.</p>
+</li>
+<li><p><input checked="" disabled="" type="checkbox"> PDF zamówienia w formacie A4 pionowo. Ilość elementów umieszczać przed wymiarami i wyróżniać pogrubieniem.</p>
+</li>
+<li><p>Additional filtered/selected export scopes alongside the current complete-order PDF.</p>
+</li>
+<li><p>Colour swatches, company/project branding and configurable order references.</p>
+</li>
+<li><p><input checked="" disabled="" type="checkbox"> Finishing product subgroups and whole-length plinth cutting plans with expandable parts (2.9.13).</p>
+</li>
+</ul>
+<h2>Proposed: door and hinge animation / Otwieranie frontów z zawiasami</h2>
+<ul>
+<li><p><input disabled="" type="checkbox"> Animate drawer extension and retraction: move the drawer box, front and handle together along the drawer&#39;s local slide direction, with configurable travel and an exact return to the closed position. Ordering and machining use the closed position.</p>
+</li>
+<li><p><input disabled="" type="checkbox"> Animacja wysuwania i wsuwania szuflad: skrzynka, front i uchwyt poruszają się razem zgodnie z lokalnym kierunkiem prowadnic, z ustawianą długością wysuwu i dokładnym powrotem do pozycji zamkniętej. Lista zamówienia i obróbka korzystają z pozycji zamkniętej.</p>
+</li>
+<li><p><input disabled="" type="checkbox"> Animate opening and closing of doors together with their handles and articulated hinges; support left/right opening and restore the exact closed position. Start with one specific Blum 110° hinge, using separate moving parts and defined pivots. Distinguish approximate presentation motion from a validated hinge mechanism; exact motion requires the selected hinge&#39;s linkage and mounting dimensions. Keep ordering and machining based on the closed door geometry.</p>
+</li>
+<li><p><input disabled="" type="checkbox"> Animacja otwierania i zamykania frontów wraz z uchwytami i ruchomym mechanizmem zawiasów; otwieranie lewe/prawe i powrót do dokładnej pozycji zamkniętej. Początkowo jeden konkretny zawias Blum 110°, z osobnymi częściami ruchomymi i określonymi osiami. Rozróżnić przybliżony ruch prezentacyjny od zweryfikowanej kinematyki: dokładny ruch wymaga wymiarów mechanizmu i montażu wybranego zawiasu. Lista zamówienia i obróbka mają korzystać z geometrii zamkniętego frontu.</p>
+</li>
+</ul>
+<h2>Proposed: placement and profiles / Montaż i profile</h2>
+<ul>
+<li><p><input checked="" disabled="" type="checkbox"> Add click/selection removal of carcass dowel-and-screw drilling, like Shelf Pins removal: click the source rail, fixed shelf or back to remove only the associated ELFIS Carcass Joinery vector groups from the side panels. Preserve imported machining and shelf-pin groups, isolate shared cabinet copies and support one-step Undo.</p>
+</li>
+<li><p><input checked="" disabled="" type="checkbox"> Dodać usuwanie wierceń pod kołki i śruby przez kliknięcie/zaznaczenie, tak jak przy podpórkach półek: kliknięcie wieńca, półki stałej lub pleców usuwa z boków tylko powiązane grupy wektorów ELFIS Carcass Joinery. Zachować importowane wiercenia i podpórki, odseparować kopie szafek oraz zapewnić cofanie jednym Ctrl+Z.</p>
+</li>
+<li><p>Drilling generation from calibrated handle fixing points.</p>
+</li>
+<li><p>Automatic physical-size correction after manual scaling of a front. Currently reapply the handle tool.</p>
+</li>
+<li><p>Profile-library import/export, manufacturer packs and more catalogue-specific variants.</p>
+</li>
+<li><p>Further CNC/cutter-radius integration, independently tested from visible door geometry.</p>
+</li>
+</ul>
+<h2>Public testing / Testy publiczne</h2>
+<ul>
+<li>Clean-install/update/uninstall checks and external testing of standard-handle calibration and placement.</li>
+<li>Additional SketchUp versions/macOS before claiming support.</li>
+<li>Neutral sample models separate from private projects and third-party library assets.</li>
+<li>Signing/store-distribution preparation if distributing through an extension marketplace.</li>
+</ul>
+<p>Free under the MIT License; optional Ko-fi donations support AI credits. The full release history is in CHANGELOG.md.</p>
+<h2>Central defaults (2.9.18) / Ustawienia domyślne</h2>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> Central bilingual panel for default drilling, configurable comma-separated panel tags and visibility-button assignments.</li>
+<li><input checked="" disabled="" type="checkbox"> Review, adopt and resize supported existing drilling groups, preserving centres and cabinet copies.</li>
+<li><input checked="" disabled="" type="checkbox"> Room toggles named groups; existing tag lists remain available per button.</li>
+</ul>
+</body></html>

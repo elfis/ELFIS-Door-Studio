@@ -1,4 +1,4 @@
-# ELFIS — instrukcja 2.9.14
+# ELFIS — instrukcja 2.9.39
 
 Interfejs domyślnie jest po angielsku. W nagłówku biblioteki lub zamówienia wybierz **Language / Język → Polski**. Wybór jest zapamiętywany. Nazwy własnych profili, materiałów, tagów, producentów i komponentów nie są tłumaczone. Zmiana języka otwiera ponownie to okno; drugie otwarte okno zachowuje wpisane dane i zmieni język przy kolejnym otwarciu. Niezapisane ustawienia profilu wymagają potwierdzenia odrzucenia.
 
@@ -73,7 +73,6 @@ Fronty ELFIS są rozpoznawane po atrybutach wtyczki. „Dodaj fronty z tagu Faca
 | Wyczyść filtry | Resetuje trzy filtry. |
 | Wyczyść podgląd | Czyści wybór wierszy i obrysy. |
 | Nowy profil, Wariant, Zmień profil | Podmienia wszystkie wystąpienia wybranych wierszy; dla J-pull można zachować stronę lub wskazać nową. Jedno Ctrl+Z cofa całość. |
-| Przypisz wybranym frontom | Przypisuje producenta/źródło bez przebudowy geometrii. |
 | Kopiuj widoczną listę | Kopiuje wszystkie wiersze po filtrach, nie tylko zaznaczone; tabela ze znakami tabulacji do Excela/wiadomości. |
 | Kopiuj Endpanels | Kopiuje tylko widoczną podlistę paneli. |
 
@@ -180,3 +179,189 @@ Przekroje zakupowe cokołów są grupowane z dokładnością 0,1 mm, aby zignoro
 ## Wysokości cokołów / 2.9.14
 
 Domyślnie odcinki różnych wysokości (np. 79 i 150 mm) korzystają ze wspólnego rozkładu długości listew. Dla każdego produktu/koloru/dostawcy/grubości płyty szerokość zakupowa jest równa największej wymaganej wysokości. Krótsze, węższe elementy mogą wykorzystać odpady po długości szerszych listew. W drzewie, schowku i PDF każdy odcinek zachowuje rzeczywistą długość i wysokość. To nie jest nesting 2D ani łączenie krótkich resztek w długi element. Zaznacz Rozdziel wysokości listew (79 / 150 mm), aby liczyć je osobno, jak w 2.9.13. Przełącznik przelicza układ i zapamiętuje wybór. Materiały, kolory, produkty i grubości płyty pozostają osobno w obu trybach.
+
+
+## Producent / źródło / 2.9.16
+
+Lista zamówienia pokazuje producenta zapisanego w wybranym profilu drzwi. Kolumna i filtr pozostają; usunięto ręczne przypisywanie producenta z listy zamówienia. Metadane frontu są używane awaryjnie, gdy profil lub jego producent są niedostępne. Elementy Facade i Finishing zachowują dotychczasowe źródło. Po zmianie producenta w bibliotece profili odśwież listę.
+
+
+## Kołki i śruby korpusu (2.9.16)
+
+Uruchom ikonę **Dowels and Screws / Kołki i śruby**. Kliknij poziomy wieniec/półkę stałą na tagu **Body** lub pionowe plecy na **Back Wall**. Potrzebne są dwa przylegające boki na Body. Plecy na Back Wall ustalają przód i tył szafki. Obsługiwane są prostokątne szafki stojące pionowo, również przesunięte, obrócone wokół osi pionowej, odbite i skalowane. Szafki pochylone lub ukośnie zdeformowane nie są obsługiwane.
+
+Możesz wcześniej zaznaczyć kilka paneli. Zaznaczenie całej szafki obejmuje rozpoznane wieńce i półki stałe (nazwy Cabinet base/top, Cross member, Fixed shelf) oraz plecy. Zwykłe półki regulowane są pomijane w takim zbiorczym przetwarzaniu. Kliknięcie lub bezpośrednie zaznaczenie półki nakłada na nią układ połączenia stałego. Wektory powstają wyłącznie w bokach, bez otworów w krawędziach wieńców i półek.
+
+**Prawy przycisk → ustawienia**: kołek Ø8 × 14 mm, śruba Ø3 × 18 mm, pierwsze wrzeciono 30 mm od przodu wieńca / półki stałej, raster 32 mm i 21 pozycji D/S/wyłączone. Domyślny układ z próbki: S D S – D – S D S – D – S D, pozycje 15–21 wyłączone. Krótszy wieniec zachowuje bazę od przodu i pomija niemieszczące się otwory. Korekta osi wynosi 0,2 mm do wnętrza dla dolnego/górnego wieńca; półki stałe korzystają z kierunku dolnego wieńca. Plecy: tylko śruby, równo, skrajne po 55 mm od końców, maksymalny rozstaw 220 mm i oś 12,5 mm od tylnej krawędzi boku.
+
+Zielone okręgi podglądu oznaczają kołki, pomarańczowe śruby. **Esc** kończy narzędzie. **Ctrl+Z** cofa całe zastosowanie. Każdy otwór jest osobną grupą na Blum Operations, wewnątrz komponentu boku. Nazwa grupy i tag okręgu zapisują średnicę i głębokość. Nie powstają powierzchnie ani wycięcia brył. Ponowne użycie odświeża własne grupy i wykorzystuje istniejące pasujące wektory. Wiercenia importowane i podpórki pozostają; zmieniony układ może więc współistnieć ze starymi importowanymi otworami — przed produkcją trzeba je osobno sprawdzić.
+
+
+## Usuwanie wierceń korpusu i nazwa PDF (2.9.18)
+
+Osobna ikona **Remove Dowels and Screws / Usuń kołki i śruby**, z czerwonym X obok dodawania, usuwa wiercenia powiązane z klikniętym wieńcem, półką stałą lub plecami. Można też zaznaczyć kilka elementów przed uruchomieniem. Czerwony podgląd pokazuje tylko powiązane grupy ELFIS. Wiercenia importowane i podpórki półek pozostają. Powiązanie działa również po przesunięciu elementu. Kopie szafek są odseparowane; zablokowane lub niejednoznaczne powiązania są odrzucane przed usunięciem. Ponowne kliknięcie jest bezpieczne. Esc kończy narzędzie, Ctrl+Z cofa całe usunięcie. Usuwanie nie zależy od aktualnych parametrów wiercenia ani wykrycia styku paneli.
+
+Okno zapisu PDF proponuje **NazwaProjektu_Doors_RRRR-MM-DD.pdf**, z nazwą modelu/projektu i lokalną datą. Model bez nazwy: **Doors_RRRR-MM-DD.pdf**. Znaki niedozwolone w nazwach plików są zastępowane; proponowaną nazwę można zmienić. Zawartość i układ PDF pozostają takie same.
+
+## Centralne ustawienia domyślne (2.9.18)
+
+Otwórz ikoną koła zębatego na pasku **ELFIS — Doors** albo przez **Extensions → ELFIS — Default settings / Ustawienia domyślne**. Panel zawiera domyślne ustawienia narzędzi, bez ustawień drzwi i profili. Pięć zakładek: Podpórki, Kołki i śruby, Istniejące wiercenia, Tagi paneli, Widoczność. **Zapisz ustawienia domyślne** dotyczy następnych operacji. **Przywróć domyślne** wypełnia wartości fabryczne; zatwierdź je przyciskiem zapisu. Dotychczasowe okna pod prawym przyciskiem korzystają z tych samych ustawień wierceń.
+
+**Tagi paneli:** można wpisać kilka nazw po przecinku; wielkość liter nie ma znaczenia. Domyślnie Body dla boków, wieńców/półek stałych i półek regulowanych, Back Wall dla pleców, Facade dla frontów. Tagi pleców muszą być różne od pozostałych paneli. Tag grup operacji jest pojedynczą nazwą (domyślnie Blum Operations); okręgi nadal mają tag średnicy/głębokości. Zapis nie zmienia tagów istniejących paneli.
+
+**Widoczność:** dla każdego dotychczasowego przycisku ELFIS Tags ustaw nazwy tagów albo grup. Room domyślnie przełącza tagi Windows, Walls, Skirting Boards, Room Doors, Floor Plan, Floor i Ceiling. Własne przypisania tagów lub grup można ustawić w tym samym panelu. Pozostałe przyciski zachowują dotychczasowe listy tagów. Kliknięcie przycisku nie tworzy brakujących elementów.
+
+**Istniejące wiercenia:** zaznacz szafkę/grupę w bieżącym kontekście, otwórz zakładkę i rozpoznaj wiercenia. Sprawdź powiązania i liczby, zaznacz wiersze. Przejęcie bez zmiany wymiarów dodaje oznaczenia ELFIS. Przejęcie ze zmianą parametrów dodatkowo zmienia średnicę/głębokość, okręgi i tag obróbki. Podaj osobne wartości dla kołków, śrub (także pleców) oraz podpórek. Środki otworów pozostają na miejscu, inne kopie szafki są odseparowane. Ctrl+Z cofa całość; przejęte wiercenia można usuwać narzędziami ELFIS przez panel źródłowy.
+
+Rozpoznawane są zamknięte okrągłe wektory w grupach/komponentach wewnątrz ustawionych boków, z nazwami/tagami D…_DEPTH… i jednoznacznym powiązaniem geometrycznym. Grupy niejednoznaczne, zablokowane, eliptyczne i nieobsługiwane są pomijane. Po przesunięciu lub zmianie modelu wykonaj ponowne rozpoznanie. Opuść edycję współdzielonej szafki albo wcześniej utwórz ją jako unikatową. Sam zapis ustawień nie zmienia istniejących wierceń.
+
+## Aktualizacja wierceń po przesunięciu panelu (2.9.20)
+
+Użyj **ELFIS — Update drilling / Aktualizuj wiercenia** (ikona zielonych strzałek odświeżania). Kliknij przesuniętą półkę, wieniec lub plecy. Przy zaznaczonych obsługiwanych panelach/szafkach polecenie aktualizuje zaznaczenie. Usuwa stare powiązane grupy ELFIS i tworzy nowy układ według bieżących ustawień domyślnych. Całość cofa jedno Ctrl+Z. Nie działa żaden mechanizm automatycznego odświeżania w tle. Błędna nowa pozycja jest sprawdzana przed usunięciem starych wierceń.
+
+Wiercenia importowane najpierw przejmij w zakładce Istniejące wiercenia, przed przesunięciem panelu. Obsługiwane są również kontenery z wieloma pełnymi okręgami ArcCurve, w tym kołki i śruby dolnego wieńca. Przejęcie rozdziela wybrane okręgi na osobne grupy z zachowaniem położenia i wielkości; pozostałe okręgi i kopie szafki pozostają bez zmian. Pętle z samych odcinków bez ArcCurve nadal wymagają sprawdzenia.
+
+Oś śrub pleców znajduje się teraz automatycznie na środku ich grubości, także przy plecach cofniętych. Dawne stałe odsunięcie od tyłu boku nie jest używane; marginesy od końców i równy rozstaw pozostają regulowane.
+
+## Odczyt ustawień po restarcie (2.9.21)
+
+Przypisania tagów i przycisków widoczności są zapisywane w formacie odpornym na błąd odczytu po restarcie. Wcześniejsze wartości są odzyskiwane z preferencji SketchUpa. Geometria modelu nie jest zmieniana.
+
+## Wycięcia pleców na zawieszki (2.9.21)
+
+Śruby są rozmieszczane na rzeczywistych odcinkach materiału krawędzi pleców, osobno po lewej i prawej stronie. Margines od końca jest mierzony od granicy wycięcia. Zachowany jest równy rozstaw nieprzekraczający ustawionej wartości. Cały przekrój śruby musi mieścić się w materiale; brak miejsca blokuje operację przed zmianą wierceń. Istniejące powiązane otwory popraw poleceniem Aktualizuj wiercenia.
+
+## Śruby pleców od zewnątrz i dalsze klikanie (2.9.23)
+
+Wiercenie pleców dodaje również rzędy śrub od zewnętrznej strony na wysokości rzeczywistych wieńców dolnego i górnego dochodzących do pleców. Przednia listwa górna nie wystarcza. Brak danego wieńca oznacza brak jego rzędu; bez obu wieńców pozostają tylko otwory w bokach. Średnica, głębokość, marginesy i maksymalny rozstaw pochodzą z ustawień śrub pleców. Wysokość osi uwzględnia korektę do wnętrza: 9,2 mm od zewnętrznej powierzchni wieńca 18 mm przy korekcie 0,2 mm. Nowe rzędy obsługuje rozpoznawanie, zmiana parametrów, usuwanie i aktualizacja wierceń. Ponowne zastosowanie usuwa stare rzędy po usunięciu wieńca.
+
+Po wykonaniu dodawania/usuwania na zaznaczonej szafce narzędzie pozostaje w trybie klikania i usuwa zaznaczenie szafki, aby można było od razu podświetlać jej elementy.
+
+## Wycięcia pod zawieszki — Kamar (2.9.24)
+
+Użyj **ELFIS — Hanger Cutouts / Wycięcia pod zawieszki** (ikona panelu z dwoma pomarańczowymi narożnikami L). Kliknij plecy z zewnątrz ich kontekstu edycji albo zaznacz plecy/szafki i uruchom polecenie. Dwa przylegające boki z odpowiednimi tagami służą do ustalenia orientacji i strony zewnętrznej. Esc kończy tryb klikania; prawy przycisk pokazuje parametry Kamar.
+
+Pierwszy wzorzec to Kamar: dwa wycięcia na wylot w górnych narożnikach, każde **55 mm wysokości × 20 mm szerokości**. Osobna zamknięta pętla z sześciu wektorów w kształcie L otacza każde wycięcie od zewnętrznej strony pleców. Jej całkowity wymiar wynosi **63 mm wysokości × 31 mm szerokości**: 8 mm poniżej i 11 mm w stronę środka panelu. Frezowanie L jest reprezentowane przez wektory CNC, bez dodatkowego modelowania zagłębienia w bryle. Nazwa grupy: **Blum Operations**, tag grupy: ustawiony tag operacji (domyślnie Blum Operations). Wszystkie linie mają dokładnie **Kamar D6.0_DEPTH_8.0**. Dawny tag grupy Kamar D6.0_DEPTH_18.5 nie jest nadawany nowym pętlom.
+
+Poprawne istniejące wycięcia pozostają bez zmian. Pasujące stare grupy L są wykorzystywane i otrzymują właściwą nazwę/tag grupy. Ponowne użycie nie dubluje obrysów. Inne lub częściowe wycięcia, blokady i brak materiału zatrzymują operację przed edycją. Pozostałe kopie szafki, materiały i niezwiązane grupy wierceń pozostają zachowane. Całą operację cofa jedno Ctrl+Z. Obsługiwane są pionowe, nieskoszone plecy grubsze niż 8 mm, o wymiarach mieszczących oba narożniki. Moduł ma strukturę wzorców dla kolejnych zawieszek; obecnie dostępny jest Kamar.
+
+## Usuwanie wycięć przez Alt (2.9.25)
+
+Włącz obecną ikonę Wycięcia pod zawieszki. **Przytrzymaj Alt i kliknij plecy**, aby usunąć pasujące obrysy L Kamar i zamknąć oba wycięcia 55 × 20 mm. Podgląd przy trzymanym Alt jest czerwony. Puszczenie Alt natychmiast przywraca dodawanie. Nie ma dodatkowej ikony na pasku.
+
+Wypełnienie przejmuje materiały sąsiednich powierzchni i łączy zbędne współpłaszczyznowe szwy. Pozostałe wiercenia i inne kopie szafki są zachowane. Obsługiwane są też pasujące stare pętle Kamar. Ponowne usuwanie z już naprawionych pleców nie dodaje geometrii. Wspólny tag Kamar pozostaje w modelu, żeby zachować przypisania innych szafek; usuwane są wyłącznie pasujące grupy wektorów wskazanych pleców. Całą operację usuwania i naprawy cofa jedno Ctrl+Z.
+
+## Alt / Ctrl w podpórkach i kołkach (2.9.26)
+
+Obecne narzędzia **Podpórki półek** oraz **Kołki i śruby** mają jednakowe skróty chwilowe:
+
+| Działanie | Wynik | Podgląd |
+| --- | --- | --- |
+| Klik | Dodaje wiercenia według ustawień | Zwykłe kolory |
+| Przytrzymany Alt + klik | Usuwa wiercenia powiązane ze wskazanym panelem | Czerwony |
+| Przytrzymany Ctrl + klik | Usuwa stare otwory i odtwarza je w bieżącej pozycji panelu | Zielony |
+
+Puszczenie klawisza przywraca bazowy tryb narzędzia. Gdy oba są trzymane, pierwszeństwo ma Alt. Podgląd przełącza się od razu, bez ruszania myszą. Ctrl poprawia **pozycje otworów, nie przesuwa półki ani wieńca**. Używa istniejącej aktualizacji z jednym Ctrl+Z; nie ma automatycznego odświeżania w tle. Wiercenia importowane bez powiązania trzeba najpierw przejąć w zakładce Istniejące wiercenia. Każde narzędzie aktualizuje tylko swój rodzaj otworów, nawet gdy panel ma oba powiązania. Osobne wcześniejsze ikony usuwania/aktualizacji nadal działają. Po działaniu na zaznaczonych półkach narzędzie podpórek pozostaje aktywne i czyści zaznaczenie, tak jak kołki. Alt w zawieszkach działa jak dotychczas.
+
+## Wiercenia zawiasów (2.9.27)
+
+Uruchom **ELFIS — Hinge Drilling / Wiercenia zawiasów** z menu Extensions lub nowej ikony zawiasu. Kliknij front, również przez zamkniętą grupę szafki. Powstaną wektory CNC we froncie oraz przylegającym boku, bez wstawiania modeli zawiasów i bez animacji.
+
+- Klik: dodaje; pasujących istniejących otworów nie powiela.
+- Alt + klik: usuwa wiercenia powiązane przez to narzędzie z frontem, także z boku. Nie usuwa niepowiązanych wierceń importowanych.
+- Ctrl + klik: usuwa powiązane wiercenia i odtwarza je według aktualnej pozycji frontu.
+- Prawy klik → **Ustawienia wierceń zawiasów**: liczba, odsunięcia od góry/dołu, strona Auto/Left/Right i parametry wierceń. Esc kończy.
+
+Domyślny wzorzec Bluma odczytano z szafki TOP: puszka Ø35, głębokość 13 mm, 5 mm od krawędzi puszki do krawędzi frontu (oś 22,5 mm); otwory Ø8 × 13 mm, rozstaw 45 mm, osie o 9,5 mm dalej w głąb frontu. W boku: dwa Ø5 × 11,5 mm, rozstaw 32 mm, 37 mm od przedniej krawędzi boku. Domyślnie dwie puszki 100 mm od krawędzi frontu, dodatkowe zawiasy równomiernie pomiędzy. Front 715 mm zaczynający się 1 mm powyżej dołu szafki ma osie na 101 i 616 mm od dołu szafki. Parametry można zmienić; narzędzie nie oblicza zgodności z każdym modelem zawiasu.
+
+Auto rozpoznaje stronę po istniejących puszkach Ø35; bez nich wybiera najbliższy bok (przy remisie lewy). Dla pełnego pojedynczego frontu można wskazać Left/Right w ustawieniach. Grupy są wewnątrz komponentu obrabianego panelu i mają ustawiony tag operacji, a krawędzie okręgów tagi D…_DEPTH…. Tagi frontów i boków pochodzą z ustawień domyślnych. Kontrola powierzchni i głębokości chroni przed wierceniami poza panelem lub w wycięciu. Pozostałe kopie szafki, materiały i obce wiercenia pozostają zachowane. Ctrl+Z cofa całą operację; nie dodano obserwatorów w tle.
+
+Obsługiwane są pionowe zamknięte fronty i prostopadłe osie paneli, również obrót szafki w planie, odbicie, skalowanie i edycja unikatowej szafki od środka. Współdzieloną otwartą szafkę trzeba najpierw uczynić unikatową. Importowany otwór w tym samym miejscu, ale o innej głębokości wymaga sprawdzenia; Alt nie przejmuje go automatycznie.
+
+## Uproszczony pasek wierceń (2.9.28)
+
+Z głównego paska usunięto osobne ikony usuwania podpórek oraz kołków i śrub. Przytrzymaj Alt i kliknij odpowiednim głównym narzędziem. Polecenia usuwania są nadal dostępne w menu Extensions. Po aktualizacji uruchom SketchUp ponownie, aby pasek powstał bez starych ikon.
+
+## Adaptacja zawiasów i obrysów Kamar (2.9.29)
+
+W **Ustawieniach domyślnych → Zawiasy** są teraz liczba, strona, odsunięcia względem frontu, odległość puszki od krawędzi, prowadnika od przodu boku i głębokości. Prawy klik narzędzia zawiasów otwiera tę samą zakładkę. Zapis zmienia tylko ustawienia; Ctrl + klik frontu odtwarza powiązane otwory według tych parametrów.
+
+**Istniejące wiercenia → Rozpoznaj w zaznaczonej szafce** rozpoznaje też puszki, mocowania zawiasów we froncie i prowadniki w boku jako osobne rodzaje operacji. Powiązanie importowanych zawiasów korzysta z rzeczywistych wysokości puszek Ø35, również przy innych odsunięciach niż 100 mm, oraz obsługiwanego wzorca Bluma 45/9,5 mm we froncie i 32/37 mm w boku. Do rozpoznania importowanych prowadników w skanowanej szafce musi być zgodny front z co najmniej dwiema puszkami. Nietypowe lub niejednoznaczne wiercenia pozostają niepowiązane. Własne operacje ELFIS zachowują powiązanie po przesunięciu.
+
+Przejęcie bez zmiany wymiarów zachowuje geometrię i łączy otwory w obu panelach z frontem. Przejęcie ze zmianą parametrów zmienia średnicę i głębokość poszczególnych rodzajów, aktualizuje tagi CNC i zachowuje środki otworów. Okręgi złożone w jednej grupie są bezpiecznie rozdzielane. Pozostałe operacje i inne kopie szafki nie zmieniają się. Przejęte wiercenia można usuwać przez Alt i odtwarzać przez Ctrl w narzędziu zawiasów. Ctrl korzysta z aktualnych ustawień, więc przed aktualizacją importu ustaw właściwą liczbę i odsunięcia.
+
+Obrysy Kamar są osobnymi pozycjami **Kamar · L 31 × 63 · D6 / 8 mm**. Przejmowane są tylko obrysy zgodne z wycięciem 55 × 20 mm i obsługiwanym wzorcem frezowania od tyłu. Przejęcie zachowuje kształt; Alt w narzędziu zawieszek usuwa obrys i zamyka wycięcie. Parametry D6 / 8 mm są w tej zakładce zablokowane, a frezowanie nie jest zamieniane na okrąg. Inne zawieszki i dowolne kontury wymagają osobnej obsługi.
+
+## Refresh drilling (2.9.30)
+
+Dotychczasowe polecenie aktualizacji nazywa się teraz **ELFIS — Refresh drilling** i ma ikonę okrężnych strzałek. Zaznacz szafkę albo kilka paneli źródłowych i naciśnij ikonę: odświeży powiązane podpórki, kołki i śruby, wiercenia zawiasów we frontach i bokach oraz obrysy Kamar. Bez zaznaczenia można klikać półkę, wieniec, plecy lub front. Jeśli panel ma kilka rodzajów operacji, zostaną uwzględnione wszystkie. Najpierw sprawdzane są wszystkie nowe pozycje, dopiero później następuje usuwanie. Jedno Ctrl+Z cofa całą operację, a inne kopie szafki zostają zachowane. Wiercenia importowane trzeba najpierw przejąć w Istniejących wierceniach.
+
+Okręgi odtwarzane są według aktualnych ustawień narzędzi. Poprawne wycięcia i obrysy Kamar są zachowywane bez niepotrzebnego zalepiania i ponownego wycinania; brakujący zgodny obrys zostanie odtworzony. Nietypowy kształt wycięcia zostaje odrzucony. Ctrl w poszczególnych narzędziach nadal aktualizuje tylko ich własny rodzaj wierceń. Bez automatycznych obserwatorów w tle.
+
+## Kolejność paska (2.9.31)
+
+Click Front → Profile Library → Order List → separator → Wiercenia zawiasów → Podpórki → Kołki i śruby → Wycięcia w plecach → Refresh drilling → separator → Ustawienia domyślne. Uchwyty mają osobny pasek. Po aktualizacji uruchom SketchUp ponownie, aby zastosować nową kolejność.
+
+## Wiercenia TANDEMBOX M/D (2.9.33)
+
+Dwa działania: **TANDEMBOX Drilling / Wiercenia szuflad** wstawia albo przejmuje zgodne otwory; **Refresh drilling** aktualizuje powiązane wiercenia szuflad, również w zaznaczonej szafce. Nowa ikona znajduje się za zawiasami. Klikaj front z zewnątrz szafki; Alt usuwa jego powiązane otwory z frontu i boków, Ctrl je odtwarza. Prawy klik otwiera **Ustawienia domyślne → Szuflady**.
+
+Pierwszy wzorzec obejmuje pokazane **TANDEMBOX M i D, NL 500 mm**, mocowania frontu przykręcane z otworami pilotującymi Ø2,5 × 3 mm i reling D Ø10 × 12 mm. Nie wstawia modeli okuć, dna ani tyłu, nie zmienia ich geometrii. MERIVOBOX, inne długości i inne mocowania wymagają osobnego wzorca.
+
+Punktem odniesienia jest rzeczywisty front i jego tylna płaszczyzna. Linie mocowań są odsunięte o 15,5 mm do środka od wewnętrznych powierzchni boków. Otwory pilotujące we froncie: 49,5/81,5 mm od bazy; D ma dodatkowo Ø10 na 209,5 mm. Baza to dół frontu plus zakładka dolna. Oś prowadnicy: 35 mm ponad bazą; otwory w boku: 19/37/261 mm od jego przedniej krawędzi. Odpowiada to wszystkim 34 otworom frontów i prowadnic w szafce referencyjnej D, D, M. Krawędzie mają tagi średnica/głębokość, grupy ustawiony tag operacji.
+
+**Zakładka Auto** szuka pełnej szerokości wieńca lub półki przy tylnej płaszczyźnie frontu, do 80 mm ponad jego dołem; pomija części nazwane Drawer/Szuflada. Przyjmuje najbliższą górną powierzchnię. W przykładzie dolny front zaczyna się na 1 mm, a wieniec kończy na 18 mm, więc zakładka wynosi 17 mm; dwa pozostałe fronty mają 0. W nietypowej konstrukcji wybierz zakładkę **Ręczną**. O zakładkę przesuwane są razem wiercenia frontu i boków.
+
+**Wariant Auto** odczytuje zapisane M/D lub obsługiwany układ istniejących mocowań i relingu. Dla nowego nieoznaczonego frontu wybierz M albo D. Narzędzie zapisuje powiązanie i wariant we froncie; zgodne pojedyncze importowane okręgi przejmuje bez powielania. Dla kontenerów z wieloma okręgami najpierw użyj **Istniejące wiercenia → Rozpoznaj → Przejmij**. Zakładka rozdziela mocowania frontu, reling i prowadnice, pozwalając zmieniać ich średnicę/głębokość bez przesuwania środków. Przejmij import przed ręcznym przesuwaniem frontu; niepowiązane stare otwory w bokach nie są zgadywane ani usuwane.
+
+Aktualizacja odtwarza powiązane otwory według aktualnych ustawień. Najpierw sprawdza powierzchnie, głębokości i wolne miejsce w korpusie (minimum 503 mm dla NL 500). Kopie szafek są odseparowywane, a zablokowane i niejednoznaczne pozycje odrzucane. Jedno cofnięcie na klik lub zestaw, bez obserwatorów w tle. Wymagane pionowe fronty i prostopadłe osie paneli.
+
+## Usunięte półki i odświeżanie wierceń (2.9.34)
+
+Po usunięciu półki zaznacz szafkę i użyj **Refresh drilling / Odśwież wiercenia**. Znikną osierocone okręgi podpórek powiązane przez ELFIS z usuniętą półką; pozostałe powiązane operacje zostaną zaktualizowane w jednym kroku cofania. Szafkę bez żadnej półki również można oczyścić: zaznacz ją albo uruchom narzędzie i kliknij jej bok z zewnątrz.
+
+Powiązania są sprawdzane w najbliższym korpusie z dwoma równoległymi bokami. Ukryta lub przemianowana półka pozostaje poprawnym źródłem, kopie szafek są odseparowywane. Zablokowane operacje zatrzymują zestaw przed zmianami. Ręczne, nieoznaczone lub starsze wiercenia bez powiązania źródła pozostają. Zaznaczenie samego boku nie wystarcza do stwierdzenia usunięcia półki. Bez automatycznego odświeżania w tle.
+
+## Baza wierceń wieńca i półki stałej (2.9.35)
+
+Odsunięcie pierwszego wrzeciona dla kołków i śrub jest liczone od **przedniej krawędzi wieńca albo półki stałej**, a nie boku korpusu. Kolejne osie pozostają w rastrze 32 mm od tej samej bazy. Ustawienie 31 mm i cofnięcie wieńca o 0,5 mm dają oś w boku 31,5 mm od jego przodu. Przy cofnięciu o 10 mm będzie to 41 mm. Krótki wieniec pomija osie poza własną głębokością bez przesuwania bazy.
+
+Dotyczy dolnych i górnych wieńców oraz półek stałych, także w korpusach obróconych, odbitych i skalowanych. Śruby pleców i korekta grubości 0,2 mm zachowują osobne dotychczasowe zasady. Aktualizacja nie przesuwa istniejących wierceń przy wczytaniu: zaznacz szafkę i użyj **Refresh drilling** albo Ctrl-klik źródłowego panelu, aby odtworzyć powiązane otwory z aktualnych ustawień. Niepowiązane importowane wiercenia najpierw przejmij.
+
+## Panel zawiasów w widoku modelu (2.9.36)
+
+Uruchom **Wiercenia zawiasów**, aby pokazać panel na ekranie. Najedź na front: podgląd pokazuje numerowane osie puszek w milimetrach od dołu frontu. Przejście kursorem na panel zachowuje podgląd tego frontu. Liczbę zmieniasz przyciskami **− / +**, minimum 2, maksimum 10; układ musi mieścić się we froncie. Odsunięcia od góry i dołu mają krok 1 mm. Kliknięcie wartości pozwala wpisać dokładną liczbę albo odległość. Wybierz Auto / Lewa / Prawa dla strony zawiasów. Zawiasy pośrednie pozostają rozłożone równomiernie.
+
+**Kółko myszy:** nad frontem lub polem liczby zmienia liczbę zawiasów, nad odsunięciem od góry/dołu zmienia tę odległość o 1 mm. Poza frontem i panelem nadal przybliża model. Zmiany dotyczą tylko podglądu do momentu **kliknięcia frontu**. Niepoprawny układ nie zastępuje ostatnich poprawnych ustawień. Alt usuwa powiązane otwory, Ctrl je odtwarza. Prawy klik otwiera pełne ustawienia domyślne, Esc kończy.
+
+Po zastosowaniu szybkich ustawień do powiązanego frontu jego wiercenia we froncie i boku są zastępowane, więc zmniejszenie liczby lub zmiana strony nie pozostawia starych rzędów. Front zapisuje własną liczbę, odsunięcia i stronę; ponowne uruchomienie narzędzia i Refresh drilling zachowują ten układ. Głębokości nadal korzystają z aktualnych ustawień domyślnych. Szybki panel nie zmienia ustawień globalnych. Niepowiązane importowane wiercenia najpierw przejmij. Bez obserwatorów w tle i bez zależności od interfejsu OpenCutList.
+
+## Rozmieszczenie półek (2.9.37)
+
+Uruchom **Rozszerzenia → ELFIS — Arrange Shelves / Rozmieszczenie półek** lub ikonę rozstawu półek. Kliknij szafkę albo zaznacz ją przed włączeniem narzędzia. Panel pokazuje liczbę półek i prześwity numerowane **od dołu do góry**. Wymiary pozostają widoczne w modelu podczas ustawiania podglądu. +/− lub kółko nad liczbą zmienia liczbę półek; kliknięcie wartości pozwala ją wpisać. Zmiana liczby albo przycisk **Rozłóż równo w świetle** ustawia równe prześwity.
+
+**Wpisz prześwity / proporcje**: podaj po jednej wartości na każdą przestrzeń; dla 3 półek są 4 wartości. Separatory: przecinek, średnik lub dwukropek; część dziesiętną zapisuj kropką. Liczby bez jednostki poniżej 10 są proporcjami, od 10 są wymiarami mm. Dopisek mm wymusza wymiar, np. 5mm. **300,200,1,1** daje od dołu 300 i 200 mm, a resztę dzieli na pół. **300,200,3:1** dzieli resztę 75% / 25%. Wartości z % także są proporcjami. Same stałe wymiary muszą wypełniać dostępne światło. Minimalny prześwit: 1 mm.
+
+Wysokość jest mierzona od górnej powierzchni dolnego wieńca do dolnej powierzchni górnego. Następnie odejmowana jest rzeczywista grubość każdej półki. Korpus 720 mm, wieńce 18 mm i 3 półki 18 mm dają 630 mm na cztery prześwity: 300,200,1,1 daje **300 / 200 / 65 / 65 mm**. Bez pełnego górnego wieńca granicą jest góra boków. Istniejące półki zachowują grubość i głębokość; nowe kopiują geometrię, tag i materiał komponentu najniższej półki. Usuwane są najwyższe półki regulowane. Zakres 0–20. Po zejściu do zera zapamiętana definicja wzorca pozwala dodać półki ponownie. Nowy pusty korpus wymaga pierwszej półki wzorcowej; czyszczenie nieużywanych definicji komponentów może usunąć zapamiętany wzorzec.
+
+**Zastosuj + nawierty** przesuwa/dodaje/usuwa półki oraz odtwarza powiązane wektory podpórek na nowych wysokościach z aktualnych ustawień, bez zachowywania starych rzędów. Jedno cofnięcie przywraca cały zestaw. Importowane niepowiązane podpórki najpierw przejmij w **Ustawienia domyślne → Istniejące wiercenia**. Pozostałe operacje zostają. Wieńce i półki stałe są pomijane; przy półce stałej wewnątrz lub pionowych podziałach wybierz oddzielną komorę. Zablokowane panele, nieaktualny podgląd i niemożliwe wymiary są odrzucane. Kopie szafek są odseparowywane. Bez obserwatorów i odświeżania w tle podczas obracania modelu.
+
+## Wycięcia pod zawieszki: niezależne części pleców (2.9.38)
+
+Uruchom **Wycięcia pod zawieszki**, a w panelu ekranowym wybierz **Lewe / Prawe / Oba**. Ctrl przełącza Oba → Lewe → Prawe → Oba. Alt + klik usuwa wybrane wycięcia i zamyka narożniki. Strony liczymy od zewnątrz wskazanych pleców. Podgląd pokazuje wybrane narożniki. Samo włączenie narzędzia nie zmienia zaznaczonej szafki.
+
+Każda część pleców zapamiętuje własny rzeczywisty układ. Refresh zachowuje dwa wycięcia w jednych plecach i jedno w drugich, także przy plecach prostopadłych. Bez zapisanych atrybutów układ jest odczytywany z obsługiwanej geometrii Kamar i pasujących obrysów frezowania; Refresh przejmuje ten układ, bez dodawania brakującego narożnika. Starsze obsługiwane wycięcia nadal można usuwać bez atrybutów. Pozostałe wiercenia i materiały zostają. Kliknięcie można cofnąć jednym Undo, kopie szafek są odseparowywane. Nietypowe i niejednoznaczne wycięcia wymagają sprawdzenia.
+
+Ta wersja rozszerza **wycięcia Kamar oraz ich odświeżanie**. Rozmieszczenie półek narożnych, generowanie podpórek, kołków i śrub oraz narożne układy zawiasów pozostają osobnymi zadaniami. Wymiary wzorca Kamar pozostają bez zmian.
+
+## Szafki narożne L (2.9.39)
+
+Dotychczasowe narzędzia **Rozmieszczenie półek**, **Podpórki**, **Kołki i śruby**, **Zawiasy** i **Refresh drilling** obsługują sprawdzoną szafkę L z prostopadłymi bokami i dwiema częściami pleców. Korzystasz z istniejących ikon.
+
+- **Rozmieszczenie półek:** zaznacz całą narożną. Podgląd zachowuje rzeczywisty obrys L i zaokrąglenie wewnętrzne. Prześwity i proporcje liczone są od dołu, po odjęciu grubości półek i wieńców. Wieńce mogą wystawać bliżej otwarcia niż półki regulowane. Szafka 954 mm, wieńce 18 mm i trzy półki 18 mm: cztery prześwity 216 mm. Zapis 300,200,1,1 daje 300 / 200 / 182 / 182 mm. Zastosuj przesuwa lub kopiuje całe komponenty półek i odtwarza nawierty w jednej operacji. Po zejściu do zera zachowany wzorzec pozwala przywrócić półki wraz z układem podpórek.
+- **Podpórki:** wykrywane są rzeczywiste krawędzie styku z płytami. Jednoznacznie przypisane importowane otwory są przejmowane po kliknięciu półki narożnej lub podczas zastosowania rozstawu; stare pozycje są następnie usuwane. Odsunięcia rzędów są zapamiętywane od końców krawędzi i kopiowane na nowe półki. W przykładzie każda półka ma 12 otworów w bokach i 3 w plecach. Otwory w plecach są od zewnątrz, na wylot przez rzeczywistą grubość płyty, także po skalowaniu. Narzędzie zachowuje wskazane importowanym lub zapisanym układem rzędy; nie dodaje ich samowolnie w drugich plecach. Boki zachowują ustawioną głębokość nieprzelotową. Rozstaw pionowy, oś pod półką i liczba otworów dodatkowych pochodzą z bieżących ustawień. Nieprzypisane operacje zostają.
+- **Kołki i śruby:** wieńce L i półki stałe otrzymują wiercenia tylko w rzeczywiście przylegających bokach. Wrzeciona liczone są od krawędzi elementu źródłowego, z zachowaniem korekty osi. Każda część pleców jest rozpatrywana osobno, również przy połączeniu pleców ze sobą. Śruby omijają wycięcia. Zewnętrzne rzędy na dole i górze powstają tylko przy rzeczywistym styku z wieńcem.
+- **Zawiasy:** oba prostopadłe fronty korzystają z obsługiwanego wzorca puszki i mocowań Blum, każdy ze swoim bokiem. Panel liczby i odsunięć oraz Refresh działają osobno dla frontów. Zapamiętana strona zawiasów podąża za komponentem po odbiciu. To obsługa wierceń, bez wstawiania okuć i animacji; nie dodaje dowolnego wzorca zawiasu ani drzwi łamanych.
+- **Refresh:** odświeża powiązane operacje narożnej. Po usunięciu półki usuwa jej osierocone podpórki z boków i pleców. Alt usuwa operacje we właściwym narzędziu. Układy wycięć Kamar lewe/prawe/oba zostają.
+
+Operacje można cofać. Blokady, ukośne deformacje, nieobsługiwane obrysy, niejednoznaczne styki oraz otwory przecinające rzeczywiste krawędzie są odrzucane. Bez obserwatorów i automatycznego odświeżania podczas obracania. Rozstaw wymaga jednej komory, jednakowego obrysu półek regulowanych i półki wzorcowej albo zachowanego szablonu. Wewnętrzna półka stała wymaga osobnej komory. Nierozpoznane wiercenia wymagają sprawdzenia w Istniejących wierceniach.

@@ -1,0 +1,60 @@
+{
+  "version": "2.9.39",
+  "passed": true,
+  "nativeChecks": 248,
+  "sha256": "e9ab584d166dc9ee6f0076a58c4f64a84db7f4c3c8eda3ff821c3a64e4503a35",
+  "limits": [
+    "Supports the tested upright L geometry and one adjustable-shelf bay. Arbitrary skewed/ambiguous panel intersections and custom hinge patterns are not inferred.",
+    "Through-back supports follow a positively recognized or saved existing pattern; rows are not invented in other backs.",
+    "Stored row offsets stay anchored to their source-edge ends; pitch and above/below hole counts use current defaults.",
+    "All drilling circles are validated against actual receiving faces. Unsupported circles or source geometry are rejected before mutation.",
+    "No hardware insertion, folded-door hinge model or opening animation is introduced."
+  ],
+  "environment": "SketchUp Pro 2026, Windows; Ruby 3.2.2",
+  "tests": {
+    "corner_2939_native_results.json": {
+      "passed": true,
+      "checkCount": 88
+    },
+    "shelf_removal_native_results.json": {
+      "passed": true,
+      "checkCount": 17
+    },
+    "joinery_datum_2935_native_results.json": {
+      "passed": true,
+      "checkCount": 16
+    },
+    "shelf_spacing_2937_native_results.json": {
+      "passed": true,
+      "checkCount": 19
+    },
+    "orphan_pins_2934_native_results.json": {
+      "passed": true,
+      "checkCount": 18
+    },
+    "hinge_panel_2936_native_results.json": {
+      "passed": true,
+      "checkCount": 23
+    },
+    "hanger_removal_2925_native_results.json": {
+      "passed": true,
+      "checkCount": 19
+    },
+    "hanger_layout_2938_native_results.json": {
+      "passed": true,
+      "checkCount": 21
+    },
+    "refresh_2930_native_results.json": {
+      "passed": true,
+      "checkCount": 9
+    },
+    "existing_2929_native_results.json": {
+      "passed": true,
+      "checkCount": 18
+    }
+  },
+  "historicalChecks": {
+    "note": "Two old test harnesses contain hard-coded production-reference assumptions and stopped before their synthetic fixture sections. They are not included in the passing count. Self-contained shelf arrangement/removal, joinery datum, orphan cleanup and current actual-corner tests provide the relevant regression coverage.",
+    "includedInPassingCount": false
+  }
+}

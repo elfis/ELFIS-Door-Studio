@@ -4,7 +4,7 @@ module Elfis
     extend self
     EPS=0.0001
     SCALE=100.0
-    VERSION='2.9.14' unless const_defined?(:VERSION)
+    VERSION='2.9.39' unless const_defined?(:VERSION)
     def orient(group)
       faces = group.entities.grep(Sketchup::Face)
       signed = faces.sum { |f| f.area*f.normal.dot(Geom::Vector3d.new(f.vertices.first.position.to_a))/3.0 }

@@ -1,5 +1,8 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ELFIS — ROADMAP</title><style>body{max-width:1080px;margin:28px auto;padding:0 26px;color:#213b3d;background:#f4f5f2;font:15px/1.6 Segoe UI,sans-serif}h1,h2,h3{line-height:1.25}h2{margin-top:36px}table{border-collapse:collapse;width:100%;background:#fff}td,th{border:1px solid #cbd7d0;padding:9px 12px;text-align:left;vertical-align:top}th{background:#e7eee9}code{background:#e5e9e5;padding:2px 4px;overflow-wrap:anywhere}a{color:#185c76}nav{position:sticky;top:0;background:#fff;padding:12px;border-bottom:2px solid #285b59;z-index:1}nav a{margin-right:18px}@media print{nav{position:static}body{max-width:none;background:white}tr{break-inside:avoid}thead{display:table-header-group}}</style></head><body><nav><strong>ELFIS 2.9.14</strong> · <a href="guide.en.html">English</a><a href="guide.pl.html">Polski</a><a href="changelog.html">Changelog</a><a href="roadmap.html">Roadmap / Plany</a></nav><h1>Roadmap / Plan rozwoju</h1>
-<p>Current versions: Doors <strong>2.9.14</strong>, Handles <strong>1.1.9-beta</strong>. The sections below distinguish implemented work from future ideas; no delivery dates are promised.</p>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ELFIS — ROADMAP</title><style>body{max-width:1080px;margin:28px auto;padding:0 26px;color:#213b3d;background:#f4f5f2;font:15px/1.6 Segoe UI,sans-serif}h1,h2,h3{line-height:1.25}h2{margin-top:36px}table{border-collapse:collapse;width:100%;background:#fff}td,th{border:1px solid #cbd7d0;padding:9px 12px;text-align:left;vertical-align:top}th{background:#e7eee9}code{background:#e5e9e5;padding:2px 4px;overflow-wrap:anywhere}a{color:#185c76}nav{position:sticky;top:0;background:#fff;padding:12px;border-bottom:2px solid #285b59;z-index:1}nav a{margin-right:18px}@media print{nav{position:static}body{max-width:none;background:white}tr{break-inside:avoid}thead{display:table-header-group}}</style></head><body><nav><strong>ELFIS 2.9.39</strong> · <a href="guide.en.html">English</a><a href="guide.pl.html">Polski</a><a href="changelog.html">Changelog</a><a href="roadmap.html">Roadmap / Plany</a></nav><h1>Roadmap / Plan rozwoju</h1>
+<h2>Development hold — OpenCutList 8.0</h2>
+<p><strong>Development status:</strong> New feature development is on hold until <strong>OpenCutList 8.0</strong>. Many planned features depend on or are intended to work with OpenCutList; their design will be reviewed against that release before development resumes. The features documented below are already implemented. No OpenCutList 8.0 compatibility is claimed in advance.</p>
+<p><strong>PL:</strong> Dodawanie nowych funkcji jest wstrzymane do wydania OpenCutList 8.0. Większość planowanych funkcji ma współpracować z OpenCutList, dlatego ich zakres zostanie ponownie oceniony po tej wersji. Poniższe pomysły nie są obietnicą terminu wdrożenia.</p>
+<p>Current versions: Doors <strong>2.9.20</strong>, Handles <strong>1.1.9-beta</strong>. The sections below distinguish implemented work from future ideas; no delivery dates are promised.</p>
 <h2>Implemented / Gotowe</h2>
 <ul>
 <li>Four front styles: Five-Piece, One-Piece, Slab and J-Pull, with supported low-drawer profile families.</li>
@@ -32,6 +35,10 @@
 </ul>
 <h2>Proposed: PDF and accessory ordering / PDF i akcesoria</h2>
 <ul>
+<li><p><input checked="" disabled="" type="checkbox"> Suggest a descriptive filename when saving the order PDF: <code>&lt;project name&gt;_Doors_&lt;YYYY-MM-DD&gt;.pdf</code> when the model/project has a meaningful name; otherwise <code>Doors_&lt;YYYY-MM-DD&gt;.pdf</code>. Remove characters invalid in filenames and let the user edit the suggested name in the save dialog.</p>
+</li>
+<li><p><input checked="" disabled="" type="checkbox"> Przy zapisywaniu PDF zamówienia proponować nazwę <code>&lt;nazwa projektu&gt;_Doors_&lt;RRRR-MM-DD&gt;.pdf</code>, jeśli model/projekt ma nadaną nazwę; w przeciwnym razie <code>Doors_&lt;RRRR-MM-DD&gt;.pdf</code>. Usuwać znaki niedozwolone w nazwie pliku i umożliwiać zmianę proponowanej nazwy w oknie zapisu.</p>
+</li>
 <li><p><input checked="" disabled="" type="checkbox"> Use portrait A4 pages for the order PDF. Place the quantity before the dimensions and render the quantity in bold.</p>
 </li>
 <li><p><input checked="" disabled="" type="checkbox"> PDF zamówienia w formacie A4 pionowo. Ilość elementów umieszczać przed wymiarami i wyróżniać pogrubieniem.</p>
@@ -56,10 +63,18 @@
 </ul>
 <h2>Proposed: placement and profiles / Montaż i profile</h2>
 <ul>
-<li>Drilling generation from calibrated handle fixing points.</li>
-<li>Automatic physical-size correction after manual scaling of a front. Currently reapply the handle tool.</li>
-<li>Profile-library import/export, manufacturer packs and more catalogue-specific variants.</li>
-<li>Further CNC/cutter-radius integration, independently tested from visible door geometry.</li>
+<li><p><input checked="" disabled="" type="checkbox"> Add click/selection removal of carcass dowel-and-screw drilling, like Shelf Pins removal: click the source rail, fixed shelf or back to remove only the associated ELFIS Carcass Joinery vector groups from the side panels. Preserve imported machining and shelf-pin groups, isolate shared cabinet copies and support one-step Undo.</p>
+</li>
+<li><p><input checked="" disabled="" type="checkbox"> Dodać usuwanie wierceń pod kołki i śruby przez kliknięcie/zaznaczenie, tak jak przy podpórkach półek: kliknięcie wieńca, półki stałej lub pleców usuwa z boków tylko powiązane grupy wektorów ELFIS Carcass Joinery. Zachować importowane wiercenia i podpórki, odseparować kopie szafek oraz zapewnić cofanie jednym Ctrl+Z.</p>
+</li>
+<li><p>Drilling generation from calibrated handle fixing points.</p>
+</li>
+<li><p>Automatic physical-size correction after manual scaling of a front. Currently reapply the handle tool.</p>
+</li>
+<li><p>Profile-library import/export, manufacturer packs and more catalogue-specific variants.</p>
+</li>
+<li><p>Further CNC/cutter-radius integration, independently tested from visible door geometry.</p>
+</li>
 </ul>
 <h2>Public testing / Testy publiczne</h2>
 <ul>
@@ -69,4 +84,10 @@
 <li>Signing/store-distribution preparation if distributing through an extension marketplace.</li>
 </ul>
 <p>Free under the MIT License; optional Ko-fi donations support AI credits. The full release history is in CHANGELOG.md.</p>
+<h2>Central defaults (2.9.18) / Ustawienia domyślne</h2>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> Central bilingual panel for default drilling, configurable comma-separated panel tags and visibility-button assignments.</li>
+<li><input checked="" disabled="" type="checkbox"> Review, adopt and resize supported existing drilling groups, preserving centres and cabinet copies.</li>
+<li><input checked="" disabled="" type="checkbox"> Room toggles named groups; existing tag lists remain available per button.</li>
+</ul>
 </body></html>

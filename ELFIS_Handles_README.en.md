@@ -1,10 +1,10 @@
-# ELFIS Handles 1.1.4-beta
+# ELFIS Handles 1.1.9-beta
 
 > **BETA — Standard-handle import and placement have been revised. Calibrate fixing points and check placement on a test front before production use.**
 
 An optional handle module for **ELFIS Door Studio 2.9.1**, with its own toolbar icon and installer. The Handles module remains beta. It uses Door Studio's front measurement and replacement routines; it is not a standalone extension.
 
-[Download ELFIS Handles 1.1.4-beta](https://github.com/elfis/ELFIS-Door-Studio/raw/refs/heads/main/public/handles/1.1.4-beta/ELFIS_Handles_1.1.4-beta.rbz) · [Polska instrukcja](ELFIS_Handles_README.md)
+[Download ELFIS Handles 1.1.9-beta](https://github.com/elfis/ELFIS-Door-Studio/raw/refs/heads/main/public/handles/1.1.9-beta/ELFIS_Handles_1.1.9-beta.rbz) · [Polska instrukcja](ELFIS_Handles_README.md)
 
 ## New in 1.1.4-beta
 
@@ -20,7 +20,7 @@ Choose the **red X** in the handle window, then click front components, includin
 
 ## Install
 
-Install Door Studio first. In SketchUp, choose **Extensions → Extension Manager → Install Extension**, select `ELFIS_Handles_1.1.4-beta.rbz`, and restart SketchUp. Enable **View → Toolbars → ELFIS — Handles** if necessary. The same command is available in the Extensions menu.
+Install Door Studio first. In SketchUp, choose **Extensions → Extension Manager → Install Extension**, select `ELFIS_Handles_1.1.9-beta.rbz`, and restart SketchUp. Enable **View → Toolbars → ELFIS — Handles** if necessary. The same command is available in the Extensions menu.
 
 ## Import a handle
 
@@ -97,3 +97,39 @@ Optional [Ko-fi donations](https://ko-fi.com/elfis1920) support AI credits used 
 ## Combined orders
 
 Doors 2.9.3 also lists marked handles in the door order window and exports them in one PDF with fronts and end panels. Fully close and restart SketchUp after updating so new Ruby code is loaded.
+
+
+## 1.1.5-beta — Toolbar shortcuts
+
+The ELFIS — Handles toolbar now has three buttons: **Add Handle**, **Remove Handle**, and **Handles Library**. Add/Remove start the existing front-click tools directly; Esc exits and Ctrl+Z undoes a model change. Removal needs no library selection. Handles Library opens the same window as before, with its layout, import, calibration, preview, settings, red X, batch and ordering controls retained.
+
+On the first Add activation after this update, placement starts top right, vertical, with Block Key Bar Handle if it is already imported. No private handle models are bundled. Otherwise the current/available model is used; an empty library opens for import. Later library choices are remembered. Standard handles: tap Ctrl for horizontal top centre / vertical top right; tap Shift for top/bottom or right/left. Existing frame/offset rules remain in use.
+
+
+## 1.1.6-beta
+
+Toolbar: **ELFIS — Handle Tools**. Fix duplicate legacy library icon during a live update; retain the same Handles Library window.
+
+## 1.1.7-beta — Automatic handle length
+
+Import fills Length from the SKP geometry. Before standard-handle calibration this is a provisional longest file-axis span; calibration recomputes the total length along the fixing-screw axis. Nested group/component transforms and mirroring are included, while construction points are ignored. Edge pulls use their mounting X axis, knobs use their maximum in-plane span.
+
+Edit displays the measured value as `Auto: …` and fills it for automatic/legacy records. Save to accept it. A manually changed length is retained through later calibration; enter the displayed Auto value to return to automatic length. Screw pitch remains separate and comes from fixing-point calibration. Existing mounted instances keep their stored order data until reapplied/replaced.
+
+The same Handles Library layout and the three Handle Tools buttons are retained. Tested in SketchUp Pro 2026 Windows. Previous installers are preserved.
+
+
+## 1.1.8-beta — Unified keyboard controls
+
+Tap Ctrl to toggle vertical/horizontal, Shift to mirror left/right, Alt to mirror top/bottom, and Tab to toggle corner/edge centre. The choice remains after release; holding a key does not repeat the toggle. Standard handles retain the selected mounting position when orientation changes. Edge pulls rotate to match the selected edge; at a corner, orientation chooses the top/bottom edge or side edge. Ctrl moves an edge midpoint to the remembered corresponding midpoint on the other mounting axis. Tab remembers the last corner. Mirrors have no effect on a centre already on the mirror axis.
+
+Edge corners use the configured distance from corner to handle end. Edge midpoints centre the pull (top/bottom retain the configured centre shift). All eight perimeter positions are available in the library. Previously saved side-pull positions keep their old top-offset behaviour until explicitly changed with shortcuts or a position button. Rear fixing, calibration and standard frame/custom offsets are retained. Preview and placement share the same rules.
+
+
+## 1.1.9-beta — Side pull offset from centre
+
+For a rear-fixing edge pull on a side, set Side: offset from centre in millimetres: zero centres, positive moves up, negative moves down. Editing this field selects the same side in vertical mounting, centred plus the entered distance. The origin remains on the rear fixing plane; the pull never changes sides or flips merely because the offset changes. Bounds checks prevent the pull extending past the door.
+
+For side-mounted edge pulls only, tap Shift to cycle centre → up → down using the chosen absolute distance, or 45 mm if the distance is zero. Alt switches left/right and retains that distance. Ctrl still switches mounting axis and Tab still changes corner/edge-centre anchoring. Standard handles keep all 1.1.8-beta shortcuts. These side-specific Shift/Alt rules supersede the generic table above. After switching back from corner mounting, the side-centre offset remains available.
+
+Pochwyt montowany z tyłu na boku: wpisz odsunięcie od środka, 0 = środek, + = góra, − = dół. Shift przełącza środek/góra/dół o tę odległość (45 mm, jeżeli wpisano zero). Alt przełącza lewy/prawy bok z zachowaniem odsunięcia. Skróty uchwytów standardowych pozostają bez zmian. Mocowanie i obrót pochwytu pozostają zgodne z wybraną krawędzią.

@@ -1,9 +1,166 @@
-# ELFIS Door Studio - changelog
-
-## Door module
-
+# Changelog
 
 This history is reconstructed from preserved RBZ packages, instructions, release notes and test reports. Older development dates were not consistently recorded, so none are invented. Version numbers belong to the named extension line; the first profile generator and the later replacement tool originally had separate version sequences.
+
+## 2.9.39 — L corner cabinet machining and shelf arrangement
+
+- Detect actual shelf/rail edge contacts with perpendicular receivers; retain complete rounded L shelf outlines in arrangement previews and cloning.
+- Adopt recognized imported corner supports and preserve edge-anchored row layouts, including exterior through-back rows with actual thickness.
+- Arrange mixed openings, add/remove shelves, retain templates after zero and regenerate drilling atomically. Clean deleted-shelf supports in backs as well as sides.
+- Generate L rail/fixed-shelf joinery from source-edge spindle datums and process each back/butt joint independently with real-face validation.
+- Verify both perpendicular Blum fronts; retain per-front hinge side directions after mirroring.
+- Preserve Kamar two-plus-one cutout layouts, copied cabinets, unrelated machining and materials. No background refresh.
+
+## 2.9.38 — Independent Kamar back layouts
+
+- Add viewport Left / Right / Both controls and Ctrl cycling; retain Alt removal and live corner preview. Tool activation no longer changes selected cabinets immediately.
+- Determine the exterior independently for each back, including perpendicular corner-cabinet backs without two parallel side panels.
+- Save per-back corner layouts; Refresh preserves asymmetric two-plus-one arrangements and adopts supported attribute-free legacy geometry.
+- Preserve single-corner removal, material repair, unrelated drilling and cabinet-copy isolation. No timers or background observers.
+- Corner shelves, joinery and corner hinge patterns remain pending; this release covers Kamar cutouts.
+
+## 2.9.37 — Cabinet shelf arrangement
+
+- Add Arrange Shelves with viewport count controls, equal-clearance distribution, mixed mm/weighted opening input and persistent dimension labels.
+- Measure between rail faces and deduct actual shelf thicknesses before allocating openings, bottom to top. Preview changes before Apply.
+- Clone template shelves when increasing count, remove topmost adjustable shelves when decreasing, retain a template after zero, preserve materials/tags and isolate copied cabinets.
+- Regenerate associated shelf-pin drilling in the same Undo operation. Reject ambiguous compartments, locked panels, stale previews, unadopted imported support drilling and impossible clearances.
+
+## 2.9.36 — Hinge tool viewport panel
+
+- Add native viewport controls for count (2–10), top/bottom offsets and hinge side, with numbered axis-position labels and live preview. Click values for exact input, use +/− buttons or mouse wheel, then click a front to apply.
+- Preserve normal wheel zoom away from fronts/controls. Reject invalid or overlapping hinge layouts without changing the model.
+- Replace owned drilling when applying quick layout changes, including reductions in count and side changes. Store each front layout and preserve it through Refresh drilling; global defaults and current depth settings remain separate.
+- Resolve Auto hinge side before removing old cups, preserving right-hand drilling during regeneration.
+- Keep Alt removal, Ctrl regeneration, right-click settings and Esc; add no background observers or OpenCutList dependency.
+
+## 2.9.35 — Reference dowel/screw rows to source rail front
+
+- Fix the 21-spindle drilling datum: measure the first offset and 32 mm pattern from the rail or fixed shelf front, instead of the receiving side front. Recessed panels move their corresponding side holes by the same amount.
+- Clip active spindles to the source depth and clarify the EN/PL settings labels. Preserve back-screw placement, inward thickness correction, copy isolation and ownership.
+- Refresh drilling and Ctrl regeneration apply the corrected datum to existing owned drilling. Loading the update does not alter model geometry.
+
+## 2.9.34 — Remove shelf-pin drilling after deleting shelves
+
+- Extend Refresh drilling to remove positively owned orphan shelf-pin circles within selected cabinets, including cabinets with no live shelf sources.
+- Add click-to-clean preview for orphan-only cabinets; cache hover scans without background observers.
+- Resolve ownership within each nearest cabinet assembly, isolate shared occurrences, retain hidden/renamed sources and manual/unmarked drilling, and reject locked operations before mutation.
+- Keep cleanup and regeneration within the existing single Undo operation.
+
+## 2.9.33 — TANDEMBOX front and runner drilling
+
+- Add insertion/adoption for the supplied TANDEMBOX M/D 500 mm screw-on pilot/gallery pattern, using the front as source for both cabinet-side runner rows. Match all 34 reference circles.
+- Compute bottom overlay from adjacent cabinet bases/shelves, excluding drawer bottoms; provide manual override and stored/recognized M/D variants.
+- Add Drawers to central EN/PL settings, per-front ownership, Alt removal and Ctrl update. Extend Refresh drilling and Existing drilling adoption/parameter editing. Isolate copies and validate surfaces/depth/clearance before changes.
+- Preserve hardware and drawer-part geometry; no MERIVOBOX or unverified lengths.
+
+## 2.9.32 — Refresh icon at startup
+
+- Assign both Refresh drilling icon sizes before registering the toolbar/menu command on first load. Retain idempotent command reload and the 2.9.31 toolbar order. No drilling behaviour changes.
+
+## 2.9.31 — Toolbar order
+
+- Keep Click Front, Profile Library and Order List first, then a separator. Follow with Hinge Drilling, Shelf Pin Rows, Dowels and Screws, Hanger Cutouts and Refresh drilling. Add a final separator before Default settings. Restart SketchUp to rebuild the toolbar.
+- No geometry, drilling or handle behaviour changes.
+
+## 2.9.30 — Refresh drilling for all supported operations
+
+- Rename the toolbar/menu command to Refresh drilling and replace its icon with circular refresh arrows.
+- Discover associated sources throughout selected cabinets, including fronts. Refresh shelf pins, dowels/screws, hinges and Kamar routing; support multiple operation types on a source.
+- Preflight all destinations, retain one-Undo transaction and copy isolation, repair missing Kamar contours while retaining valid routing geometry. Keep per-tool Ctrl refresh scoped to its own type.
+
+## 2.9.29 — Adopt existing hinges and hanger operations
+
+- Add Hinges to the central Default settings panel, sharing the existing hinge-tool preferences and right-click entry. Validate before writing and preserve hinge defaults for older settings callers.
+- Scan front and side hinge circles; infer supported imported Blum associations from actual cup heights, with separate cup/front-fixing/side-plate parameter types. Preserve centres, isolate copies, update tags and support multi-circle imports. Adopted hinges use the existing Alt removal and Ctrl regeneration.
+- Recognize and adopt supported Kamar L contours separately from drilling circles; preserve the fixed routing template and retain Alt notch filling.
+- Translate new controls into English and Polish. Keep the simplified toolbar and all earlier versions.
+
+## 2.9.28 — Simplified drilling toolbar
+
+- Remove standalone Shelf Pin and Dowel/Screw removal icons from the main toolbar; retain their Extensions menu commands and existing Alt-click shortcuts. No drilling behaviour changes. Restart SketchUp to rebuild the toolbar.
+
+## 2.9.27 — Front and side hinge drilling
+
+- Add a hinge drilling toolbar command: Ø35 cup plus two Ø8 front fixings and paired Ø5 side mounting-plate circles. Match the supplied TOP cabinet’s imported Blum geometry.
+- Configurable count, actual front-relative top/bottom offsets, hinge side, cup setback and depths. Equally space intermediate hinges; derive side heights from cup axes rather than cabinet bounds.
+- Click adds, Alt removes associated front/side drilling, Ctrl updates. Right-click settings, nested picking, surface/depth validation, copy isolation and one-Undo transactions. Preserve imported holes and reject conflicting depths.
+- Retain every earlier version. No animation, automatic observers or hardware insertion.
+
+## 2.9.26 — Shared drilling modifiers
+
+- Shelf-pin and dowel/screw tools: hold Alt to remove, Ctrl to refresh drilling after moving a panel, release to return to the base mode. Red removal and green refresh previews update without mouse movement; repeated keydown does not recompute the preview.
+- Use the existing one-Undo refresh transaction, with explicit per-tool ownership when a panel has both pin and joint drilling. Preserve unrelated drilling and source transformations. Require adoption for unassociated imported drilling.
+- Continue shelf-pin click mode after selected-panel batch actions, matching the dowel tool. Keep standalone refresh and hanger keyboard behaviour isolated from the shared modifier handlers.
+
+## 2.9.25 — Alt removes and repairs Kamar cutouts
+
+- Hold Alt in the existing hanger tool for red removal preview; release it to resume adding. No extra icon. Consume Alt events to avoid focusing the Windows menu.
+- Fill supported notches, remove matching routing contours and clear hanger metadata. Preserve exterior/interior/edge materials, unrelated drilling, shared tag definitions and other cabinet copies.
+- Validate shell closure, original volume, merged seams, repeat removal, legacy loops, locks, mirrored/scaled copies and modifier callbacks in native SketchUp tests.
+
+## 2.9.24 — Kamar hanger cutouts
+
+- Add a hanger-cutout toolbar/menu command with a first Kamar preset: 55 × 20 mm through-notches and closed exterior L routing contours, 63 × 31 mm overall.
+- Use Blum Operations group names/configured operation tag and exactly Kamar D6.0_DEPTH_8.0 on vector edges. Reuse matching legacy loops rather than duplicating them.
+- Validate geometry/locks before editing, preserve unrelated machining/materials, isolate cabinet copies and support one Undo operation. Test fresh and existing notches, shell closure, exact removed volume, repeated use and rotated/mirrored/scaled copies.
+
+## 2.9.23 — Exterior back screws and selected-cabinet click mode
+
+- Add exterior back screw rows only at actual contacting bottom/top rails, retaining inward axis correction, back margins and spacing. No unsupported rows for missing rails or front-only stretchers.
+- Include the new rows in drilling scan/adoption, parameter editing, removal and refresh; reapplication clears obsolete rear rows after rails are removed.
+- Keep Add/Remove dowels and screws active after selected-cabinet batch processing; clear selection for immediate nested-panel hover and clicks.
+
+## 2.9.22 — Room visibility defaults
+
+- Room now defaults to seven tags: Windows, Walls, Skirting Boards, Room Doors, Floor Plan, Floor and Ceiling. Align standalone toolbar fallback and EN/PL help. Existing saved custom assignments are preserved.
+
+## 2.9.21 — Back cutouts and startup preference recovery
+
+- Store central tag/visibility JSON as Base64 to avoid SketchUp string-evaluation SyntaxError after restart.
+- Recover existing legacy values without evaluating their text, preserve old keys, and safely fall back on invalid settings.
+
+- Respect actual back end faces and hanger cutouts. Measure end margins from available material, distribute each side independently, and validate full screw cross-sections in world units.
+
+## 2.9.20 — Click to update drilling and grouped import recognition
+
+- Add a refresh-arrow command to remove old owned drilling and regenerate it at the current source-panel position, for shelf pins, rails/fixed shelves and backs. Selection and click modes share one Undo transaction; no background observer is added. Validate the new layout first and isolate shared cabinet copies.
+- Recognize multiple complete circles stored in one imported vector container. Adopt selected circles separately while preserving physical size/centre and unrelated circles. This restores recognition of grouped bottom-panel dowels and screws.
+- Automatically centre back screw axes within the actual back thickness, including recessed backs, instead of using the previous fixed side-rear offset. Update both settings dialogs to show the automatic behaviour.
+
+## 2.9.19 — Orbit performance fix
+
+- Fix repeated full-model traversal from Room toolbar validation during camera movement. Cache matching groups per model and configured name list, and traverse shared definitions once.
+- Invalidate on model commit, Undo, Redo, abort and explicit settings refresh; retain live visibility checks against cached groups. Include ELFIS Tags 1.04.
+- Native regression: 1000 repeated validations trigger no additional hierarchy scans. No geometry or user settings are changed by the fix.
+
+## 2.9.18 — Central defaults and existing drilling conversion
+
+- Add a bilingual five-tab settings panel and gear command: shelf pins, dowels/screws, existing drilling, panel tags and visibility. No door settings are moved into this panel.
+- Configure multiple comma-separated source/receiver tag aliases; retain existing tool preferences and validate all sections before saving.
+- Recognize supported imported circular vector containers, review their source associations, adopt ownership and optionally change diameter/depth while preserving physical centres. Isolate shared copies, reject stale/ambiguous/locked input and support subsequent removal and Undo.
+- Include ELFIS Tags toolbar 1.03; configure each button's target tags or named groups. Room now uses named room groups; other existing assignments are preserved. Ignore deleted layer callbacks during rollback.
+
+## 2.9.17 — Joinery removal and descriptive PDF filenames
+
+- Add a separate red-X toolbar/menu command to remove carcass dowel-and-screw vector groups by source-panel click or selection. Preview the associated groups in red; retain imported machining and shelf supports.
+- Resolve ownership after source movement, isolate populated cabinet copies, reject locked or ambiguous paths before mutation, and make repeated removal harmless. One operation per application supports Undo.
+- Suggest Project_Doors_YYYY-MM-DD.pdf in the complete-order save dialog, or Doors_YYYY-MM-DD.pdf for an untitled model. Sanitize filename characters, preserve Unicode and allow user editing. PDF contents/layout are unchanged.
+
+## 2.9.16 — Carcass dowels and screws
+
+- Add a separate toolbar command for side-panel drilling at rails, fixed shelves and backs. Click a source panel, select several source panels, or select a cabinet to process recognised structural rails/fixed shelves and its back. Adjustable shelves are excluded from cabinet batches.
+- Use the inspected 21-spindle sample: 32 mm pitch, first spindle 30 mm from the side front, five Ø8 × 14 mm dowels and five Ø3 × 18 mm screws on a full rail. Short rails crop the same positions without moving the front datum. Unobserved spindles 15–21 start disabled and can be configured.
+- Preserve the confirmed 0.2 mm inward axis correction for bottom/top rails; fixed shelves follow the bottom-rail direction. Back panels use screws only, equal spacing, 55 mm end margins and maximum 220 mm spacing by default; the axis is 12.5 mm from the side rear edge.
+- Right-click settings show all 21 spindle assignments (D/S/off), diameters, depths, offsets and the exact generated drilling tags, in English and Polish.
+- Every vector is a separate named group inside its receiving side panel; group tag Blum Operations, circle tag D8.0_DEPTH14.0 or D3.0_DEPTH18.0 by default. No edge drilling or solid subtraction is added. Imported vectors remain untouched; matching existing vectors are reused.
+- Validate receiving faces, cutouts, depth and locked paths before applying. Isolate shared cabinet/panel definitions, preserve physical circle sizes under mirrored/nonuniform scale, and update owned groups without multiplication. Each application is one Undo operation.
+
+## 2.9.15 — Manufacturer follows the door profile
+
+- Remove the manual Manufacturer / source field and Assign to selected items button from both order-list languages, including their JavaScript handlers and Ruby dialog action.
+- Keep the source column and manufacturer/source filter. Generated fronts use the selected library profile's manufacturer ahead of old occurrence-level overrides; stored front metadata is a fallback when the profile is unavailable.
+- External Facade/Finishing items retain their existing source metadata. No geometry, colours or model attributes are rewritten by this change.
 
 ## 2.9.14 — Shared plinth offcuts across widths
 
@@ -282,6 +439,27 @@ Plinth stock cross-sections are grouped at 0.1 mm nominal precision to ignore ti
 
 
 # Handle module
+
+## Handles 1.1.9-beta
+
+- Signed side-pull offset from centre, Shift centre/up/down cycling and Alt side mirroring while retaining offset.
+
+## Handles 1.1.8-beta
+
+- Expanded persistent orientation, mirroring and corner/edge-centre shortcuts; all eight perimeter positions and rotating edge pulls.
+
+## Handles 1.1.7-beta
+
+- Automatic length measurement at import and calibration, with manual override independent of fixing pitch.
+
+## Handles 1.1.6-beta
+
+- Remove duplicate library icon on live update; rename toolbar ELFIS — Handle Tools.
+
+## Handles 1.1.5-beta
+
+- Separate Add Handle, Remove Handle and Handles Library toolbar commands; retain existing library and calibration workflow.
+
 
 ## Handles 1.1.4-beta
 

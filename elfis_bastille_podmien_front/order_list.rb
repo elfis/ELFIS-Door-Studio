@@ -126,7 +126,7 @@ module Elfis
       name=door.get_attribute('ElfisBastillePodmien','family_name') || name
       edge=kind=='jpull' ? door.get_attribute('ElfisBastillePodmien','handle_edge','top') : nil
       {id:id || "legacy:#{door.definition.get_attribute('ElfisDrzwi','profile_width_mm')}",name:name || 'Profil nierozpoznany',type:type,
-       supplier:supplier_name(door.get_attribute('ElfisBastillePodmien','supplier') || stored&.dig(:supplier)),variant:variant,signature:door.get_attribute('ElfisBastillePodmien','profile_geometry'),edge:edge,
+       supplier:supplier_name(stored&.dig(:supplier) || door.get_attribute('ElfisBastillePodmien','supplier')),variant:variant,signature:door.get_attribute('ElfisBastillePodmien','profile_geometry'),edge:edge,
        edge_label:{'top'=>'Góra','bottom'=>'Dół','left'=>'Lewa','right'=>'Prawa'}[edge] || '—',unknown:name.nil?}
     end
 
@@ -292,7 +292,7 @@ module Elfis
               end
               material=entity.material || inherited
               paint=colours[[entity.definition,material,external,panel]] ||= order_colours(entity,inherited,external,panel)
-              supplier=supplier_name(entity.get_attribute('ElfisBastillePodmien','supplier') || info[:supplier],external && !panel ? 'Facade' : 'ELFIS')
+              supplier=external ? supplier_name(entity.get_attribute('ElfisBastillePodmien','supplier'),panel ? 'ELFIS' : 'Facade') : info[:supplier]
               key=JSON.generate([info[:id],info[:name],info[:type],info[:signature],info[:edge],w,t,h,paint,supplier,external,panel,panel ? order_product_group(entity.layer) : nil,panel ? (entity.get_attribute('ElfisBastillePodmien','stock_product') || entity.layer.name) : nil])
               row=rows[key] ||= {stock_product:panel ? (entity.get_attribute('ElfisBastillePodmien','stock_product') || entity.layer.name) : nil,product_group:panel ? order_product_group(entity.layer) : 'fronts',section:panel ? 'endpanels' : 'fronts',profile:info[:name],type:info[:type],height:h,width:w,thickness:t,quantity:0,colours:paint,handle:info[:edge_label],external:external,source:supplier,supplier:supplier,review:info[:unknown] || paint.length>1 || paint.any? { |c| c[:key].nil? }}
               row[:quantity]+=1
@@ -379,7 +379,6 @@ module Elfis
       data[:revision]=@order_revision
       data[:sort]=order_sort_settings
       data[:profiles]=visible_profiles.map { |p| {id:p[:id],name:p[:name],kind:p[:kind],supplier:supplier_name(p[:supplier])} }
-      data[:suppliers]=supplier_options
       by_id=data[:rows].to_h { |row| [row[:id],targets[row.object_id] || []] }
       occurrence_id=-1
       data[:rows].each do |row|
@@ -477,22 +476,6 @@ module Elfis
       end
       view.camera=camera
       count
-    end
-
-    def assign_order_supplier(ids,revision,supplier)
-      snapshot=@order_snapshot
-      raise Elfis::BastillePodmienFront.l('Lista jest nieaktualna. Odśwież ją.','The list is out of date. Refresh it.') unless snapshot && snapshot[:model]==Sketchup.active_model && snapshot[:data][:revision]==revision
-      ids=Array(ids).uniq
-      raise Elfis::BastillePodmienFront.l('Wybierz pozycje z listy.','Select list items.') if ids.empty? || !ids.all? { |key| snapshot[:targets].key?(key) }
-      supplier=supplier_name(supplier,'')
-      raise Elfis::BastillePodmienFront.l('Podaj producenta lub źródło.','Enter a manufacturer or source.') if supplier.empty?
-      targets=ids.flat_map { |key| snapshot[:targets][key] }
-      checker=OrderFrontOverlay.new
-      raise Elfis::BastillePodmienFront.l('Fronty zmieniły się w modelu. Odśwież listę.','The fronts have changed. Refresh the list.') unless targets.all? { |target| checker.valid_target?(target) }
-      raise Elfis::BastillePodmienFront.l('Front lub jego szafka są zablokowane.','The front or its cabinet is locked.') if targets.any? { |target| target[:path].any?(&:locked?) }
-      # Metadata belongs to the occurrence. Shared ancestors must be separated
-      # just like a geometry replacement; use the same atomic path resolver.
-      replace_order_row(ids,revision,nil,'preserve','auto',supplier_only:supplier)
     end
 
     def copy_order_list(ids=nil,revision=nil,include_handles=true)
@@ -673,7 +656,6 @@ module Elfis
             end
           when 'highlight' then highlight_order_row(data[:ids] || data[:id],data[:revision])
           when 'zoom' then zoom_order_rows(data[:ids] || data[:id],data[:revision])
-          when 'assign_supplier' then assign_order_supplier(data[:ids],data[:revision],data[:supplier])
           when 'clear_highlight' then clear_order_highlight
           when 'replace_row' then replace_order_row(data[:ids] || data[:id],data[:revision],data[:profile_id],data[:handle_edge] || 'preserve',data[:variant_mode] || 'auto')
           else raise Elfis::BastillePodmienFront.l('Nieznane polecenie listy frontów.','Unknown order-list command.')

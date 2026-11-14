@@ -10,6 +10,14 @@ require File.join(__dir__,'elfis_bastille_podmien_front','slab_materials.rb')
 require File.join(__dir__,'elfis_bastille_podmien_front','order_pdf.rb')
 require File.join(__dir__,'elfis_bastille_podmien_front','feedback.rb')
 require File.join(__dir__,'elfis_bastille_podmien_front','shelf_pins.rb')
+require File.join(__dir__,'elfis_bastille_podmien_front','carcass_joinery.rb')
+require File.join(__dir__,'elfis_bastille_podmien_front','studio_settings.rb')
+require File.join(__dir__,'elfis_bastille_podmien_front','drilling_editor.rb')
+require File.join(__dir__,'elfis_bastille_podmien_front','drilling_refresh.rb')
+require File.join(__dir__,'elfis_bastille_podmien_front','hanger_cutouts.rb')
+require File.join(__dir__,'elfis_bastille_podmien_front','hinge_drilling.rb')
+require File.join(__dir__,'elfis_bastille_podmien_front','drawer_drilling.rb')
+require File.join(__dir__,'elfis_bastille_podmien_front','shelf_spacing.rb')
 
 module Elfis
   module BastillePodmienFront
@@ -428,6 +436,21 @@ module Elfis
     update_profile_command
     update_language_commands
     install_public_help
+    unless @drilling_separator_added
+      @toolbar.add_separator
+      @drilling_separator_added=true
+    end
+    Elfis::HingeDrilling.install
+    Elfis::DrawerDrilling.install
     Elfis::ShelfPins.install
+    Elfis::ShelfSpacing.install
+    Elfis::CarcassJoinery.install
+    Elfis::HangerCutouts.install
+    Elfis::DrillingRefresh.install
+    unless @settings_separator_added
+      @toolbar.add_separator
+      @settings_separator_added=true
+    end
+    Elfis::StudioSettings.install
   end
 end

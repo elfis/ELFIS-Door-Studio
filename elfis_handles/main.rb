@@ -8,11 +8,11 @@ module Elfis
   module Handles
     extend self
     remove_const(:VERSION) if const_defined?(:VERSION,false)
-    VERSION = '1.1.4-beta'
+    VERSION = '1.1.9-beta'
     DICT = 'ElfisHandles'
     POSITIONS = %w[tl tc tr ml mr bl bc br].freeze
     remove_const(:DEFAULTS) if const_defined?(:DEFAULTS,false)
-    DEFAULTS = {model_id:nil, position:'tr', orientation:'vertical', mode:'auto', offset:45.0, offset_x:nil, offset_y:nil, along:45.0, edge_shift:0.0, preserve:true}.freeze
+    DEFAULTS = {model_id:nil, position:'tr', orientation:'vertical', mode:'auto', offset:45.0, offset_x:nil, offset_y:nil, along:45.0, edge_shift:0.0, side_shift:0.0, preserve:true}.freeze
 
     def api
       unless defined?(Elfis::BastillePodmienFront) && Elfis::BastillePodmienFront.respond_to?(:measure)
@@ -75,14 +75,55 @@ module Elfis
         s[key]=Float(s[key]);raise 'Invalid fixing offset.' unless s[key].finite? && s[key]>=0 && s[key]<=3000
       end
       s[:preserve]=s[:preserve]==true
+      s[:side_shift]=Float(s[:side_shift] || 0)
+      raise 'Side-centre offset must be finite and between -3000 and 3000 mm.' unless s[:side_shift].finite? && s[:side_shift].abs<=3000
       s
+    end
+
+    def geometry_length(definition,record={})
+      bounds=Geom::BoundingBox.new
+      visit=lambda do |entities,transform,stack|
+        entities.each do |entity|
+          if entity.is_a?(Sketchup::Edge)
+            entity.vertices.each { |vertex| bounds.add(vertex.position.transform(transform)) }
+          elsif entity.is_a?(Sketchup::Group) || entity.is_a?(Sketchup::ComponentInstance)
+            child=entity.definition
+            next if stack.include?(child)
+            visit.call(child.entities,transform*entity.transformation,stack+[child])
+          end
+        end
+      end
+      visit.call(definition.entities,mount_inverse(record),[definition])
+      raise l('Model uchwytu nie zawiera geometrii.','The handle model contains no geometry.') unless bounds.valid?
+      spans=[bounds.width,bounds.height,bounds.depth].map(&:to_mm)
+      # After calibration X follows the fixing screws. Before calibration the
+      # longest file-axis span is a provisional import suggestion only.
+      length=if record[:kind]=='knob' then spans.take(2).max
+      elsif record[:mount_frame] || record[:kind]=='edge' then spans[0]
+      else spans.max
+      end
+      raise 'Invalid measured handle length.' unless length.finite? && length>0
+      length.round(3)
+    end
+
+    def import_length(path)
+      model=Sketchup.active_model
+      model.start_operation('ELFIS — Read handle dimensions',true)
+      begin
+        loaded=model.definitions.load(path)
+        raise 'Unable to load the handle model.' unless loaded
+        geometry_length(loaded)
+      ensure
+        model.abort_operation
+      end
     end
 
     def record_import
       path=UI.openpanel(l('Wybierz model uchwytu','Choose a handle model'),nil,'SketchUp models|*.skp||')
       return unless path
       raise 'Choose a .skp file.' unless File.extname(path).downcase=='.skp'
-      values=UI.inputbox(['Name / Nazwa','Type / Rodzaj','Pitch / Rozstaw mm','Length / Długość mm','Finish / Wykończenie','Supplier / Producent','Product code / Kod'],[File.basename(path,'.skp'),'standard',160,200,'','',''],['','standard|knob|edge','','','','',''],'ELFIS — Import handle')
+      measured=import_length(path)
+      values=UI.inputbox(['Name / Nazwa','Type / Rodzaj','Pitch / Rozstaw mm','Length / Długość mm (Auto)','Finish / Wykończenie','Supplier / Producent','Product code / Kod'],[File.basename(path,'.skp'),'standard',160,measured,'','',''],['','standard|knob|edge','','','','',''],'ELFIS — Import handle')
       return unless values
       name,kind,pitch,length,finish,supplier,code=values
       raise 'Enter a name and a valid handle type.' if name.to_s.strip.empty? || !%w[standard knob edge].include?(kind)
@@ -92,7 +133,7 @@ module Elfis
       FileUtils.mkdir_p(File.join(root,'models'))
       destination=File.join(root,'models',"#{id}.skp")
       FileUtils.copy_file(path,destination)
-      database[:models]<<{id:id,name:name.strip,kind:kind,pitch:pitch,length:length,finish:finish.to_s,supplier:supplier.to_s,code:code.to_s,file:"#{id}.skp"}
+      database[:models]<<{id:id,name:name.strip,kind:kind,pitch:pitch,length:length,length_auto:(length-measured).abs<0.001,finish:finish.to_s,supplier:supplier.to_s,code:code.to_s,file:"#{id}.skp"}
       settings[:model_id]=id
       persist
       calibrate(id) unless kind=='edge'
@@ -100,11 +141,15 @@ module Elfis
 
     def edit_record(id)
       m=model_record(id)
-      values=UI.inputbox(['Name / Nazwa','Pitch / Rozstaw mm','Length / Długość mm','Finish / Wykończenie','Supplier / Producent','Product code / Kod'],m.values_at(:name,:pitch,:length,:finish,:supplier,:code),'ELFIS — Edit handle')
+      measured=geometry_length(definition(Sketchup.active_model,m),m)
+      defaults=m.values_at(:name,:pitch,:length,:finish,:supplier,:code)
+      defaults[2]=measured unless m[:length_auto]==false
+      values=UI.inputbox(['Name / Nazwa','Pitch / Rozstaw mm',"Length / Długość mm (Auto: #{measured})",'Finish / Wykończenie','Supplier / Producent','Product code / Kod'],defaults,'ELFIS — Edit handle')
       return unless values
       candidate=m.merge(%i[name pitch length finish supplier code].zip(values).to_h)
       candidate[:pitch]=Float(candidate[:pitch]);candidate[:length]=Float(candidate[:length])
       raise 'Invalid name or dimensions.' unless !candidate[:name].to_s.strip.empty? && candidate[:pitch].finite? && candidate[:pitch]>=0 && candidate[:length].finite? && candidate[:length]>0 && (candidate[:kind]!='standard' || candidate[:pitch]>0)
+      candidate[:length_auto]=(candidate[:length]-measured).abs<0.001
       m.replace(candidate);persist
     end
 
@@ -134,7 +179,7 @@ module Elfis
         s=saved.merge(model_id:s[:model_id],preserve:s[:preserve])
       end
       record=model_record(s[:model_id])
-      s[:position]={'tl'=>'ml','tr'=>'mr','bl'=>'ml','br'=>'mr'}.fetch(s[:position],s[:position]) if record[:kind]=='edge'
+      s[:position]={'tl'=>'ml','tr'=>'mr','bl'=>'ml','br'=>'mr'}.fetch(s[:position],s[:position]) if record[:kind]=='edge' && s[:edge_layout]!='perimeter'
       config(s)
     end
 
@@ -177,21 +222,28 @@ module Elfis
     # Canonical door coordinates: width X, outward depth Y, height Z, all in mm.
     # Return an actual rigid handle rotation: local X cross local Y = local Z.
     def placement(w,h,t,record,s,auto_offset=nil)
+      w,h,t=[w,h,t].map(&:to_f)
       p=s[:position]; edge=record[:kind]=='edge'
       d=s[:mode]=='auto' ? (auto_offset || s[:offset]) : s[:offset]
       dx=s[:mode]=='auto' && auto_offset ? auto_offset : (s[:offset_x] || d)
       dy=s[:mode]=='auto' && auto_offset ? auto_offset : (s[:offset_y] || d)
       pitch=record[:kind]=='knob' ? 0.0 : record[:pitch].to_f
       if edge
-        raise 'Choose an edge midpoint for an edge pull.' unless %w[tc bc ml mr].include?(p)
-        span=%w[tc bc].include?(p) ? w : h
+        horizontal=%w[tc bc].include?(p) || (!%w[ml mr].include?(p) && s[:orientation]=='horizontal')
+        span=horizontal ? w : h
         raise 'The edge pull does not fit this front.' if record[:length]>span+0.001
-        if %w[tc bc].include?(p)
-          raise 'The edge pull extends beyond the front.' if s[:edge_shift]+record[:length]/2>span/2+0.001
-          x=w/2+s[:edge_shift];z=p=='tc' ? h : 0;ax=p=='tc' ? [-1,0,0] : [1,0,0]
+        if horizontal
+          x=p.end_with?('l') ? s[:along]+record[:length]/2 : p.end_with?('r') ? w-s[:along]-record[:length]/2 : w/2+s[:edge_shift]
+          z=p.start_with?('b') ? 0 : h;ax=z==h ? [-1,0,0] : [1,0,0]
+          raise 'The edge pull extends beyond the front.' unless x-record[:length]/2>=-0.001 && x+record[:length]/2<=w+0.001
         else
-          raise 'The edge pull extends beyond the front.' if s[:along]+record[:length]>h+0.001
-          x=p=='ml' ? 0 : w;z=h-s[:along]-record[:length]/2;ax=p=='ml' ? [0,0,-1] : [0,0,1]
+          x=p.end_with?('l') ? 0 : w
+          z=if p.start_with?('b') then s[:along]+record[:length]/2
+          elsif p.start_with?('m') && s[:edge_layout]=='perimeter' then h/2+s[:side_shift].to_f
+          else h-s[:along]-record[:length]/2
+          end
+          ax=x==0 ? [0,0,-1] : [0,0,1]
+          raise 'The edge pull extends beyond the front.' unless z-record[:length]/2>=-0.001 && z+record[:length]/2<=h+0.001
         end
         depth=0 # Rear fixing: handle origin is the rear edge, never the front.
       else
@@ -399,10 +451,48 @@ module Elfis
       @dialog.execute_script("hoverPlacement(#{encoded})")
     end
 
+    def prepare_quick_placement
+      return if settings[:quick_placement_defaults]==1
+      # Apply the requested starting setup once; subsequent library choices stay.
+      preferred=database[:models].find { |r| r[:name].to_s.strip.casecmp('Block Key Bar Handle').zero? }
+      preferred ||= database[:models].find { |r| r[:id]==settings[:model_id] }
+      preferred ||= database[:models].find { |r| r[:kind]=='standard' } || database[:models].first
+      settings.merge!(model_id:preferred&.dig(:id),position:'tr',orientation:'vertical',preserve:false,quick_placement_defaults:1)
+      persist
+    end
+
+    def start_placement
+      api
+      prepare_quick_placement
+      unless settings[:model_id] && database[:models].any? { |r| r[:id]==settings[:model_id] }
+        show
+        refresh(l('Dodaj lub wybierz uchwyt w bibliotece.','Add or select a handle in the library.'))
+        return false
+      end
+      @click_tool=ClickTool.new
+      Sketchup.active_model.select_tool(@click_tool)
+      refresh(l('Kliknij front w modelu.','Click a front in the model.'))
+      true
+    rescue => error
+      UI.messagebox(error.message)
+      false
+    end
+
+    def start_removal
+      api
+      @click_tool=RemoveTool.new
+      Sketchup.active_model.select_tool(@click_tool)
+      refresh(l('Klikaj fronty, aby usunąć uchwyty ELFIS. Esc kończy.','Click fronts to remove their ELFIS handles. Esc exits.'))
+      true
+    rescue => error
+      UI.messagebox(error.message)
+      false
+    end
+
     def show
       api
       return @dialog.bring_to_front if @dialog && @dialog.visible?
-      @dialog=UI::HtmlDialog.new(dialog_title:'ELFIS — Handles',preferences_key:'ELFISHandles',scrollable:true,resizable:true,width:830,height:780,style:UI::HtmlDialog::STYLE_DIALOG)
+      @dialog=UI::HtmlDialog.new(dialog_title:'ELFIS — Handles Library',preferences_key:'ELFISHandles',scrollable:true,resizable:true,width:830,height:780,style:UI::HtmlDialog::STYLE_DIALOG)
       @dialog.set_file(File.join(__dir__,'library.html'))
       @dialog.add_action_callback('action') do |_,raw|
         begin
@@ -427,7 +517,7 @@ module Elfis
             end
         refresh
           when 'click' then model_record(settings[:model_id]);@click_tool=ClickTool.new;Sketchup.active_model.select_tool(@click_tool);refresh(l('Kliknij front w modelu.','Click a front in the model.'))
-          when 'remove_click' then @click_tool=RemoveTool.new;Sketchup.active_model.select_tool(@click_tool);refresh(l('Klikaj fronty, aby usunąć uchwyty ELFIS. Esc kończy.','Click fronts to remove their ELFIS handles. Esc exits.'))
+          when 'remove_click' then start_removal
           when 'selected','all' then n=batch(request[:action]);refresh("#{n} — OK")
           when 'copy'
             rows=order_rows
@@ -448,26 +538,21 @@ module Elfis
     class ClickTool
       def activate
         @held={}
-        @standard_position=nil
+        @placement_override=nil
+        @last_corner='tr'
+        @side_cycle_distance=nil
         Handles.instance_variable_set(:@click_tool,self)
-        Sketchup.set_status_text('ELFIS Handles — Standard: tap Ctrl: horizontal top centre / vertical top right. Tap Shift: horizontal top/bottom; vertical right/left. Edge: hold Ctrl right, Alt left, Shift bottom. Esc: exit.')
+        Sketchup.set_status_text(Handles.l('Uchwyty: Ctrl — pion/poziom; Shift — lewo/prawo; Alt — góra/dół; Tab — narożnik/środek krawędzi. Pochwyty obracają się do krawędzi. Esc — zakończ.','Handles: Ctrl — vertical/horizontal; Shift — left/right; Alt — top/bottom; Tab — corner/edge centre. Edge pulls rotate to the edge. Esc — exit.'))
       end
       def chosen
         s=Handles.settings.dup;r=Handles.model_record(s[:model_id])
-        if r[:kind]=='edge'
-          s[:preserve]=false if @held.values.any?
-          s[:position]=if @held[CONSTRAIN_MODIFIER_KEY] then 'bc'
-          elsif @held[COPY_MODIFIER_KEY] then 'mr'
-          elsif @held[ALT_MODIFIER_KEY] then 'ml'
-          else %w[tc bc ml mr].include?(s[:position]) ? s[:position] : 'tc'
-          end
-        else
-          s.merge!(@standard_position).merge!(preserve:false) if @standard_position
-        end
+        s.merge!(@placement_override).merge!(preserve:false) if @placement_override
         s
       end
       def settings_changed
-        @standard_position=nil
+        @placement_override=nil
+        @last_corner='tr'
+        @side_cycle_distance=nil
         onMouseMove(0,*@xy,Sketchup.active_model.active_view) if @xy
       end
       def pick(x,y,view)
@@ -494,6 +579,9 @@ module Elfis
         @points=(0..7).map { |i| definition.bounds.corner(i).transform(tr) }
         @box=(0..7).map { |i| Handles.api.door_bounds(@path.last).corner(i).transform(info[:world]) }
         Handles.publish_preview(Handles.preview_payload(@path.last,info,r,s))
+        position_names={'tl'=>'top left','tc'=>'top centre','tr'=>'top right','ml'=>'left centre','mr'=>'right centre','bl'=>'bottom left','bc'=>'bottom centre','br'=>'bottom right'}
+        distance=r[:kind]=='edge' && %w[ml mr].include?(s[:position]) && s[:edge_layout]=='perimeter' ? "#{s[:side_shift].to_f} mm from centre" : "#{r[:kind]=='edge' ? s[:along] : (s[:offset_x] || s[:offset])} mm"
+        Sketchup.set_status_text("ELFIS Handles — #{position_names[s[:position]]} · #{s[:orientation]} · #{distance} | Ctrl / Shift / Alt / Tab")
         view.tooltip=r[:name];view.invalidate
       rescue => error
         @points=@box=nil;Handles.publish_preview(nil);view.tooltip=error.message;view.invalidate
@@ -516,29 +604,59 @@ module Elfis
         UI.messagebox(error.message)
       end
       def onKeyDown(key,repeat,flags,view)
+        keys=[CONSTRAIN_MODIFIER_KEY,COPY_MODIFIER_KEY,ALT_MODIFIER_KEY,9]
+        return unless keys.include?(key)
         unless @held[key]
           s=chosen
-          if Handles.model_record(s[:model_id])[:kind]!='edge'
-            if key==COPY_MODIFIER_KEY
-              @standard_position=s[:orientation]=='horizontal' ? {orientation:'vertical',position:'tr'} : {orientation:'horizontal',position:'tc'}
-            elsif key==CONSTRAIN_MODIFIER_KEY
-              position=if s[:orientation]=='horizontal'
-                s[:position]=='bc' ? 'tc' : 'bc'
-              else
-                s[:position]=='tl' ? 'tr' : 'tl'
-              end
-              @standard_position={orientation:s[:orientation],position:position}
+          edge=Handles.model_record(s[:model_id])[:kind]=='edge'
+          p=s[:position];orientation=s[:orientation]
+          # Retain old saved side-pull placement until the first explicit shortcut.
+          p={'ml'=>'tl','mr'=>'tr'}.fetch(p,p) if edge && s[:edge_layout]!='perimeter'
+          orientation='horizontal' if edge && %w[tc bc].include?(p)
+          orientation='vertical' if edge && %w[ml mr].include?(p)
+          @last_corner=p if %w[tl tr bl br].include?(p)
+          if key==COPY_MODIFIER_KEY
+            orientation=orientation=='horizontal' ? 'vertical' : 'horizontal'
+            if edge
+              p=orientation=='horizontal' ? "#{@last_corner[0]}c" : "m#{@last_corner[1]}" if %w[tc bc ml mr].include?(p)
+            end
+          elsif key==CONSTRAIN_MODIFIER_KEY
+            if edge && orientation=='vertical'
+              current=p.start_with?('m') ? s[:side_shift].to_f : 0.0
+              @side_cycle_distance ||= current.abs>0.001 ? current.abs : 45.0
+              side_shift=current.abs<0.001 ? @side_cycle_distance : current>0 ? -@side_cycle_distance : 0.0
+              p="m#{p[-1]}"
+            else
+              p={'tl'=>'tr','tr'=>'tl','ml'=>'mr','mr'=>'ml','bl'=>'br','br'=>'bl'}.fetch(p,p)
+            end
+          elsif key==ALT_MODIFIER_KEY
+            p=if edge && orientation=='vertical'
+              {'tl'=>'tr','tr'=>'tl','ml'=>'mr','mr'=>'ml','bl'=>'br','br'=>'bl'}.fetch(p,p)
+            else
+              {'tl'=>'bl','bl'=>'tl','tc'=>'bc','bc'=>'tc','tr'=>'br','br'=>'tr'}.fetch(p,p)
+            end
+          elsif key==9
+            p=if %w[tl tr bl br].include?(p)
+              orientation=='horizontal' ? "#{p[0]}c" : "m#{p[1]}"
+            else
+              p.start_with?('m') ? "#{@last_corner[0]}#{p[1]}" : "#{p[0]}#{@last_corner[1]}"
             end
           end
+          @last_corner=p if %w[tl tr bl br].include?(p)
+          @last_corner="#{p[0]}#{@last_corner[1]}" if %w[tc bc].include?(p)
+          @last_corner="#{@last_corner[0]}#{p[1]}" if %w[ml mr].include?(p)
+          @placement_override=(@placement_override || {}).merge(position:p,orientation:orientation)
+          @placement_override[:side_shift]=side_shift unless side_shift.nil?
+          @placement_override[:edge_layout]='perimeter' if edge
         end
         @held[key]=true
         onMouseMove(flags,*@xy,view) if @xy
-        true if [CONSTRAIN_MODIFIER_KEY,COPY_MODIFIER_KEY,ALT_MODIFIER_KEY].include?(key)
+        true
       end
       def onKeyUp(key,repeat,flags,view)
         @held.delete(key)
         onMouseMove(flags,*@xy,view) if @xy
-        true if [CONSTRAIN_MODIFIER_KEY,COPY_MODIFIER_KEY,ALT_MODIFIER_KEY].include?(key)
+        true if [CONSTRAIN_MODIFIER_KEY,COPY_MODIFIER_KEY,ALT_MODIFIER_KEY,9].include?(key)
       end
       def onCancel(reason,view)
         @points=@box=nil;view.invalidate;Sketchup.active_model.select_tool(nil)
@@ -587,13 +705,31 @@ module Elfis
 
     require File.join(__dir__,'calibration.rb')
 
+    def install_toolbar
+      return if @toolbar_layout=='quick-tools-1'
+      @toolbar.hide if @toolbar
+      # A distinct native name avoids merging with the legacy one-button bar
+      # when updating code inside an already running SketchUp session.
+      @toolbar=UI::Toolbar.new('ELFIS — Handle Tools')
+      @toolbar_commands=[
+        ['ELFIS — Add Handle','Dodaj uchwyt','Add handle','handle_add.svg',proc { start_placement }],
+        ['ELFIS — Remove Handle','Usuń uchwyt','Remove handle','handle_remove.svg',proc { start_removal }],
+        ['ELFIS — Handles Library','Biblioteka uchwytów','Handles Library','handle.svg',proc { show }]
+      ].map do |name,pl,en,icon,action|
+        command=UI::Command.new(name,&action)
+        command.tooltip=l(pl,en)
+        command.status_bar_text=l(pl,en)
+        command.small_icon=command.large_icon=File.join(__dir__,icon)
+        @toolbar.add_item(command)
+        command
+      end
+      @toolbar_layout='quick-tools-1'
+      @toolbar.restore
+    end
+
+    install_toolbar
     unless file_loaded?(__FILE__)
-      command=UI::Command.new('ELFIS — Handles') { show }
-      command.tooltip='ELFIS — Handle library / Biblioteka uchwytów'
-      command.status_bar_text='Import handles, click fronts, replace handles and copy the order list.'
-      command.small_icon=command.large_icon=File.join(__dir__,'handle.svg')
-      @toolbar=UI::Toolbar.new('ELFIS — Handles');@toolbar.add_item(command);@toolbar.restore
-      UI.menu('Extensions').add_item(command)
+      @toolbar_commands.each { |command| UI.menu('Extensions').add_item(command) }
       UI.start_timer(0,false) { install_hooks if defined?(Elfis::BastillePodmienFront) }
       file_loaded(__FILE__)
     end

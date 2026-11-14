@@ -240,13 +240,24 @@ module Elfis
       end
     end
 
+    def order_pdf_filename(model=Sketchup.active_model,day=Time.now)
+      name=model.title.to_s.strip.sub(/\.skp\z/i,'')
+      if name.empty? && !model.path.to_s.empty?
+        name=File.basename(model.path.to_s.tr('\\','/'),'.skp')
+      end
+      name='' if name.match?(/\A(?:Untitled|Bez tytułu)(?:\s*\d+)?\z/i)
+      name=name.gsub(/[<>:"\/\\|?*\x00-\x1f]/,'_').gsub(/[. ]+\z/,'').strip
+      name=name.each_char.take(120).join.gsub(/[. ]+\z/,'')
+      prefix=name.empty? ? '' : "#{name}_"
+      "#{prefix}Doors_#{day.strftime('%Y-%m-%d')}.pdf"
+    end
+
     def export_order_pdf
       # Export the entire order, independent of table selection/front filters.
       model=Sketchup.active_model
       data=collect_order_list(model,@order_include_hidden==true,@order_include_facade==true,true,true)
       raise l('Lista jest pusta.','The order is empty.') if data[:rows].empty? && data[:handles].empty?
-      name=(model.title.empty? ? 'ELFIS' : model.title).gsub(/[<>:"\/\\|?*]/,'_')
-      path=UI.savepanel(l('Zapisz całe zamówienie jako PDF','Save complete order as PDF'),nil,"#{name}_order.pdf")
+      path=UI.savepanel(l('Zapisz całe zamówienie jako PDF','Save complete order as PDF'),nil,order_pdf_filename(model))
       return false unless path
       path+='.pdf' unless File.extname(path).casecmp('.pdf').zero?
       bytes=OrderPDF.new(data,language).build

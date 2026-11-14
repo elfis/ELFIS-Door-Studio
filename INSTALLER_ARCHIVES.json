@@ -10,6 +10,16 @@
     "sha256": "cfe95cc19766b99e86815e7ff2d1710a07da38275805b82a628bcd9c351b32e4"
   },
   {
+    "file": "public/2.9.13/ELFIS_Profile_Library_2.9.13.rbz",
+    "bytes": 177218,
+    "sha256": "d84ae07ac1821b698e5e4f7b7b9968269ce11337e4205f2a004f3cbd2454b839"
+  },
+  {
+    "file": "public/2.9.14/ELFIS_Profile_Library_2.9.14.rbz",
+    "bytes": 179003,
+    "sha256": "1ee5a49b408f4bcf5ac3cbc5d15e63314b7f95e65d0fda2bd8dfcc125c182141"
+  },
+  {
     "file": "public/2.9.2/ELFIS_Profile_Library_2.9.2.rbz",
     "bytes": 123851,
     "sha256": "260a8d76b940a9001f90abf3af26e37f4d45d04f6dd3a2b605314c75d63bb1de"
@@ -18,6 +28,11 @@
     "file": "public/2.9.3/ELFIS_Profile_Library_2.9.3.rbz",
     "bytes": 132856,
     "sha256": "710c6421553094a6ea25da5ab2c3b88be2fae77276b2bb6c578e3e4ad12da626"
+  },
+  {
+    "file": "public/2.9.39/ELFIS_Profile_Library_2.9.39.rbz",
+    "bytes": 316330,
+    "sha256": "e9ab584d166dc9ee6f0076a58c4f64a84db7f4c3c8eda3ff821c3a64e4503a35"
   },
   {
     "file": "public/handles/1.0.0/ELFIS_Handles_1.0.0.rbz",
@@ -55,13 +70,8 @@
     "sha256": "18fb5a0bb95d3404bf9ab675b31dee12d1dd2cd380fe9f7d11ddb301706cc98a"
   },
   {
-    "file": "public/2.9.13/ELFIS_Profile_Library_2.9.13.rbz",
-    "bytes": 177218,
-    "sha256": "d84ae07ac1821b698e5e4f7b7b9968269ce11337e4205f2a004f3cbd2454b839"
-  },
-  {
-    "file": "public/2.9.14/ELFIS_Profile_Library_2.9.14.rbz",
-    "bytes": 179003,
-    "sha256": "1ee5a49b408f4bcf5ac3cbc5d15e63314b7f95e65d0fda2bd8dfcc125c182141"
+    "file": "public/handles/1.1.9-beta/ELFIS_Handles_1.1.9-beta.rbz",
+    "bytes": 22850,
+    "sha256": "52716be00f33f55959a97b1dc2e084b10c2e840aa917955130d6e5c1fef089eb"
   }
 ]

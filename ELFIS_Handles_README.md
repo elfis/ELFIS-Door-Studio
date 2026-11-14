@@ -1,4 +1,4 @@
-# ELFIS Handles 1.1.4-beta — wersja testowa
+# ELFIS Handles 1.1.9-beta — wersja testowa
 
 > **BETA — Poprawiono import i montaż uchwytów standardowych. Ustaw punkty mocowania i sprawdź rezultat na froncie testowym przed użyciem produkcyjnym.**
 
@@ -84,3 +84,36 @@ Przeszło 46 testów geometrii w SketchUp Pro 2026 na Windows oraz 4 kontrole ur
 ## Wspólne zamówienie
 
 Drzwi 2.9.3 pokazują uchwyty także we wspólnym oknie zamówienia i eksportują je do jednego PDF razem z frontami i panelami kończącymi. Po aktualizacji całkowicie zamknij i ponownie uruchom SketchUp, aby wczytać nowy kod.
+
+
+## 1.1.5-beta — Skróty na pasku
+
+Pasek ELFIS — Handles ma trzy przyciski: **Dodaj uchwyt**, **Usuń uchwyt**, **Biblioteka uchwytów**. Dodawanie i usuwanie uruchamiają narzędzia klikania frontów bez otwierania okna. Esc kończy, a Ctrl+Z cofa zmianę modelu. Usuwanie nie wymaga wyboru modelu uchwytu. Biblioteka zachowuje dotychczasowy układ i wszystkie funkcje, zmienia się tylko jej nazwa.
+
+Pierwsze uruchomienie Dodaj ustawia Block Key Bar Handle (jeśli jest zaimportowany), pionowo u góry po prawej. Prywatne modele nie są dołączone do instalatora. Kolejne wybory z biblioteki zostają zapamiętane. Pusta biblioteka otwiera się do importu. Skróty Ctrl/Shift i reguły odstępów działają jak wcześniej.
+
+
+## 1.1.6-beta
+
+Toolbar: **ELFIS — Handle Tools**. Fix duplicate legacy library icon during a live update; retain the same Handles Library window.
+
+
+## 1.1.9-beta — Automatyczna długość
+
+Import podpowiada długość z geometrii SKP, a kalibracja przelicza ją wzdłuż osi śrub. Edycja pokazuje wartość Auto i uzupełnia pole długości; zapisz, aby ją przyjąć. Ręczna korekta zostaje zachowana przy kolejnej kalibracji. Wpisz ponownie wartość Auto, aby wrócić do automatyki. Rozstaw śrub pozostaje osobnym wymiarem. Wcześniej wstawione uchwyty zachowują zapisane dane zamówienia do ponownego zastosowania lub podmiany.
+
+
+## 1.1.8-beta — Unified keyboard controls
+
+Tap Ctrl to toggle vertical/horizontal, Shift to mirror left/right, Alt to mirror top/bottom, and Tab to toggle corner/edge centre. The choice remains after release; holding a key does not repeat the toggle. Standard handles retain the selected mounting position when orientation changes. Edge pulls rotate to match the selected edge; at a corner, orientation chooses the top/bottom edge or side edge. Ctrl moves an edge midpoint to the remembered corresponding midpoint on the other mounting axis. Tab remembers the last corner. Mirrors have no effect on a centre already on the mirror axis.
+
+Edge corners use the configured distance from corner to handle end. Edge midpoints centre the pull (top/bottom retain the configured centre shift). All eight perimeter positions are available in the library. Previously saved side-pull positions keep their old top-offset behaviour until explicitly changed with shortcuts or a position button. Rear fixing, calibration and standard frame/custom offsets are retained. Preview and placement share the same rules.
+
+
+## 1.1.9-beta — Side pull offset from centre
+
+For a rear-fixing edge pull on a side, set Side: offset from centre in millimetres: zero centres, positive moves up, negative moves down. Editing this field selects the same side in vertical mounting, centred plus the entered distance. The origin remains on the rear fixing plane; the pull never changes sides or flips merely because the offset changes. Bounds checks prevent the pull extending past the door.
+
+For side-mounted edge pulls only, tap Shift to cycle centre → up → down using the chosen absolute distance, or 45 mm if the distance is zero. Alt switches left/right and retains that distance. Ctrl still switches mounting axis and Tab still changes corner/edge-centre anchoring. Standard handles keep all 1.1.8-beta shortcuts. These side-specific Shift/Alt rules supersede the generic table above. After switching back from corner mounting, the side-centre offset remains available.
+
+Pochwyt montowany z tyłu na boku: wpisz odsunięcie od środka, 0 = środek, + = góra, − = dół. Shift przełącza środek/góra/dół o tę odległość (45 mm, jeżeli wpisano zero). Alt przełącza lewy/prawy bok z zachowaniem odsunięcia. Skróty uchwytów standardowych pozostają bez zmian. Mocowanie i obrót pochwytu pozostają zgodne z wybraną krawędzią.

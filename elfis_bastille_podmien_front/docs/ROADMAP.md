@@ -1,6 +1,13 @@
 # Roadmap / Plan rozwoju
 
-Current versions: Doors **2.9.14**, Handles **1.1.9-beta**. The sections below distinguish implemented work from future ideas; no delivery dates are promised.
+## Development hold — OpenCutList 8.0
+
+**Development status:** New feature development is on hold until **OpenCutList 8.0**. Many planned features depend on or are intended to work with OpenCutList; their design will be reviewed against that release before development resumes. The features documented below are already implemented. No OpenCutList 8.0 compatibility is claimed in advance.
+
+**PL:** Dodawanie nowych funkcji jest wstrzymane do wydania OpenCutList 8.0. Większość planowanych funkcji ma współpracować z OpenCutList, dlatego ich zakres zostanie ponownie oceniony po tej wersji. Poniższe pomysły nie są obietnicą terminu wdrożenia.
+
+
+Current versions: Doors **2.9.20**, Handles **1.1.9-beta**. The sections below distinguish implemented work from future ideas; no delivery dates are promised.
 
 ## Implemented / Gotowe
 
@@ -29,6 +36,9 @@ Current versions: Doors **2.9.14**, Handles **1.1.9-beta**. The sections below d
 
 ## Proposed: PDF and accessory ordering / PDF i akcesoria
 
+- [x] Suggest a descriptive filename when saving the order PDF: `<project name>_Doors_<YYYY-MM-DD>.pdf` when the model/project has a meaningful name; otherwise `Doors_<YYYY-MM-DD>.pdf`. Remove characters invalid in filenames and let the user edit the suggested name in the save dialog.
+- [x] Przy zapisywaniu PDF zamówienia proponować nazwę `<nazwa projektu>_Doors_<RRRR-MM-DD>.pdf`, jeśli model/projekt ma nadaną nazwę; w przeciwnym razie `Doors_<RRRR-MM-DD>.pdf`. Usuwać znaki niedozwolone w nazwie pliku i umożliwiać zmianę proponowanej nazwy w oknie zapisu.
+
 - [x] Use portrait A4 pages for the order PDF. Place the quantity before the dimensions and render the quantity in bold.
 - [x] PDF zamówienia w formacie A4 pionowo. Ilość elementów umieszczać przed wymiarami i wyróżniać pogrubieniem.
 
@@ -46,6 +56,9 @@ Current versions: Doors **2.9.14**, Handles **1.1.9-beta**. The sections below d
 
 ## Proposed: placement and profiles / Montaż i profile
 
+- [x] Add click/selection removal of carcass dowel-and-screw drilling, like Shelf Pins removal: click the source rail, fixed shelf or back to remove only the associated ELFIS Carcass Joinery vector groups from the side panels. Preserve imported machining and shelf-pin groups, isolate shared cabinet copies and support one-step Undo.
+- [x] Dodać usuwanie wierceń pod kołki i śruby przez kliknięcie/zaznaczenie, tak jak przy podpórkach półek: kliknięcie wieńca, półki stałej lub pleców usuwa z boków tylko powiązane grupy wektorów ELFIS Carcass Joinery. Zachować importowane wiercenia i podpórki, odseparować kopie szafek oraz zapewnić cofanie jednym Ctrl+Z.
+
 - Drilling generation from calibrated handle fixing points.
 - Automatic physical-size correction after manual scaling of a front. Currently reapply the handle tool.
 - Profile-library import/export, manufacturer packs and more catalogue-specific variants.
@@ -59,3 +72,9 @@ Current versions: Doors **2.9.14**, Handles **1.1.9-beta**. The sections below d
 - Signing/store-distribution preparation if distributing through an extension marketplace.
 
 Free under the MIT License; optional Ko-fi donations support AI credits. The full release history is in CHANGELOG.md.
+
+## Central defaults (2.9.18) / Ustawienia domyślne
+
+- [x] Central bilingual panel for default drilling, configurable comma-separated panel tags and visibility-button assignments.
+- [x] Review, adopt and resize supported existing drilling groups, preserving centres and cabinet copies.
+- [x] Room toggles named groups; existing tag lists remain available per button.
