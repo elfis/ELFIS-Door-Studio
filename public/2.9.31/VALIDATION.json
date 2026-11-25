@@ -1,0 +1,353 @@
+{
+  "version": "2.9.31",
+  "passed": true,
+  "sha256": "6ea2df53a767bc2762a043ac777660b78005b10b87a4df4cbbb95fa2092dc8a6",
+  "validation": {
+    "passed": true,
+    "checks": [
+      "Filename: \"Kitchen\" / \"\"",
+      "Filename: \"Żółta kuchnia\" / \"\"",
+      "Filename: \"Untitled\" / \"\"",
+      "Filename: \"Bez tytułu\" / \"\"",
+      "Filename: \"\" / \"\"",
+      "Filename: \"\" / \"C:\\\\Projects\\\\Project.skp\"",
+      "Filename: \"A:B/C*D?E|F<test>\" / \"\"",
+      "Filename: \"Project.skp\" / \"\"",
+      "Filename: \"Project...  \" / \"\"",
+      "Long project name bounded",
+      "Save dialog uses suggested filename",
+      "Production Ruby compiles"
+    ]
+  },
+  "scope": "Toolbar registration order and two separators only; drilling logic unchanged.",
+  "restartRequired": true,
+  "installation": {
+    "plugins": "<SketchUp Plugins>",
+    "doors": "2.9.31",
+    "handles": "1.1.9-beta",
+    "passed": true,
+    "files": [
+      {
+        "sha256": "14AFB62F2109B3F4356488A95D2738BA82A65E0A4F336D27261E8FAEF31A3250",
+        "match": true,
+        "file": "elfis_bastille_podmien_front.rb"
+      },
+      {
+        "sha256": "3AB8859328943FC7415AD65CEEA23222B40359119B9DBCDED24E341E53738313",
+        "match": true,
+        "file": "elfis_handles.rb"
+      },
+      {
+        "sha256": "878CE82D163DADACA54E4F63183D1486EAE90F15E34565D4E591267A9B20DA22",
+        "match": true,
+        "file": "elfis_tag_toolbar.rb"
+      },
+      {
+        "sha256": "67261CFB0E3C31933C395866C4BB779E0FE961AA0CB23576DA44B0B9AA5B092C",
+        "match": true,
+        "file": "elfis_bastille_podmien_front\\bastille.json"
+      },
+      {
+        "sha256": "40DA35702C1E7E171F06BCC1D381D0DC35E190509177963242D47A7D2D1E4156",
+        "match": true,
+        "file": "elfis_bastille_podmien_front\\carcass_joinery_layout.rb"
+      },
+      {
+        "sha256": "6897087CCF2E87ED6B6DB08EAC5A07272E8BA2E490D5EB99478DBE18CABC5123",
+        "match": true,
+        "file": "elfis_bastille_podmien_front\\carcass_joinery_remove.svg"
+      },
+      {
+        "sha256": "24B1678AD9A401348089958698C56BF227C3BF08FBC9CD6F35775C8DDFEDB12B",
+        "match": true,
+        "file": "elfis_bastille_podmien_front\\carcass_joinery_settings.html"
+      },
+      {
+        "sha256": "7C6F58F9AB0E13A30D5CE383F63021EDBC10768D4176DBD60FF02C2BBD8FC00A",
+        "match": true,
+        "file": "elfis_bastille_podmien_front\\carcass_joinery.rb"
+      },
+      {
+        "sha256": "0F7428378F709356352148F790AA736FDB0D4F04EAA3624928089E332E2D8FDD",
+        "match": true,
+        "file": "elfis_bastille_podmien_front\\carcass_joinery.svg"
+      },
+      {
+        "sha256": "9277D3F0B6639789AEB8484E4746ED3F6AD541B062733A894EC4ADF588673E10",
+        "match": true,
+        "file": "elfis_bastille_podmien_front\\door_complete.wav"
+      },
+      {
+        "sha256": "17EF63B7823EE1B8B0AF211ED5C3CDAC2BD5EB820B7807767B9B08ACD9727545",
+        "match": true,
+        "file": "elfis_bastille_podmien_front\\drilling_editor.rb"
+      },
+      {
+        "sha256": "D9970AD1C408209E6B2AA620392771063AA34BE0292BB35D139A8D1C83FF059A",
+        "match": true,
+        "file": "elfis_bastille_podmien_front\\drilling_refresh.rb"
+      },
+      {
+        "sha256": "F19F10EF82F75B60273360B1E31360AC1CA12A1C7EA324AA6C44ED5DADC6BB77",
+        "match": true,
+        "file": "elfis_bastille_podmien_front\\drilling_refresh.svg"
+      },
+      {
+        "sha256": "A8DB4551D9A9B2CC3992DE161D00076B9DA8754D6F14AFFFC40360CC0F182020",
+        "match": true,
+        "file": "elfis_bastille_podmien_front\\drilling_tool_modifiers.rb"
+      },
+      {
+        "sha256": "FF8E51F05DA7B2A04FF0BFF191A113BAEBDA01E3FD9E730ED42AE26FC7F18E57",
+        "match": true,
+        "file": "elfis_bastille_podmien_front\\engine.rb"
+      },
+      {
+        "sha256": "EAD85F5185C93D05E51FC65992EB24842FE010B26E578BA12C84C13130D60D91",
+        "match": true,
+        "file": "elfis_bastille_podmien_front\\families.rb"
+      },
+      {
+        "sha256": "220B59F73DAB1CEB0623431B25D11628E8061FF06ADF49439229BE3EF2B0F79D",
+        "match": true,
+        "file": "elfis_bastille_podmien_front\\feedback.rb"
+      },
+      {
+        "sha256": "39B191A678CC87D5083D602F8D2C4C87BF3DCBA63AF519E34235F34B9C895E19",
+        "match": true,
+        "file": "elfis_bastille_podmien_front\\hanger_cutouts.rb"
+      },
+      {
+        "sha256": "C9AB5B37AC84CE7C62A55DD0B41B473BAB08BDEDA50CD4F32A94D656B895FE09",
+        "match": true,
+        "file": "elfis_bastille_podmien_front\\hanger_cutouts.svg"
+      },
+      {
+        "sha256": "BE4F539A92D135162789187E9068EA673EFE3BB798500A1F6DEA9D9450B70603",
+        "match": true,
+        "file": "elfis_bastille_podmien_front\\hinge_drilling.rb"
+      },
+      {
+        "sha256": "8F7F9D4B6BB314AF211E9B6C970774593F6A751A0D864C9BEAB9761705E3D0CE",
+        "match": true,
+        "file": "elfis_bastille_podmien_front\\hinge_drilling.svg"
+      },
+      {
+        "sha256": "A1D459679E944B4C0981369676A8F55AFD9B0F94FE6066B8A8EAE9244E432392",
+        "match": true,
+        "file": "elfis_bastille_podmien_front\\i18n.rb"
+      },
+      {
+        "sha256": "426141C3DDBA76A2DB3AE5E88262280D24D9872B5416409647A33D259B9FB668",
+        "match": true,
+        "file": "elfis_bastille_podmien_front\\jpull.rb"
+      },
+      {
+        "sha256": "B1BDA32ACB7FF2F68BF04B51096E98E32A3EC0FCDA28F9732A57E30CEDDE7151",
+        "match": true,
+        "file": "elfis_bastille_podmien_front\\library.en.html"
+      },
+      {
+        "sha256": "23884572E11CA0AD60C43294150FC11AFDE06CA26E121AC3FF08C0F02543D3A1",
+        "match": true,
+        "file": "elfis_bastille_podmien_front\\library.html"
+      },
+      {
+        "sha256": "DFF40EBF236A204B23B48F8EDD7C72B725A74D641856400ACA5905529CD5CBC7",
+        "match": true,
+        "file": "elfis_bastille_podmien_front\\library.rb"
+      },
+      {
+        "sha256": "D9AA9FE581A3EC0C48B9ECBC460B001B05CD249C0697D4F5D65BE9EB90A49961",
+        "match": true,
+        "file": "elfis_bastille_podmien_front\\library.svg"
+      },
+      {
+        "sha256": "A00B6070CDB80687F14788C5D6ADE215D53F2B7DD065FBC26A27E56F0EE06552",
+        "match": true,
+        "file": "elfis_bastille_podmien_front\\onepiece.rb"
+      },
+      {
+        "sha256": "2CEB2FB5CA785ACDA4AB8DDF3C527BE75A0105747E820CDAB4AA5FD05F5C071A",
+        "match": true,
+        "file": "elfis_bastille_podmien_front\\order_controls.js"
+      },
+      {
+        "sha256": "28B645151F7F2271AD2AE883B924445537DF1CDB6A6C6483AD8FC3460DEC0547",
+        "match": true,
+        "file": "elfis_bastille_podmien_front\\order_list.en.html"
+      },
+      {
+        "sha256": "DBA27BFDA15D726AE690DED87516732C4300AFEACD61559564A8A67959610FD6",
+        "match": true,
+        "file": "elfis_bastille_podmien_front\\order_list.html"
+      },
+      {
+        "sha256": "D6ECFD8C692DF1A427418924E433EA33946ABE6E39E082B7B6745E2BAFC5E9D9",
+        "match": true,
+        "file": "elfis_bastille_podmien_front\\order_list.rb"
+      },
+      {
+        "sha256": "FEB4088D7904D33D137597622A0794E0A260642E44EFD14512E15D5CA2C03EAB",
+        "match": true,
+        "file": "elfis_bastille_podmien_front\\order_list.svg"
+      },
+      {
+        "sha256": "E5D7235F0C3D9E4E2994FF15C12A59E958A54FECAD7BDEC4122D2F1C770AD17F",
+        "match": true,
+        "file": "elfis_bastille_podmien_front\\order_pdf.rb"
+      },
+      {
+        "sha256": "716C9D9EF5905C2543BBED067F539D6F3E7C4C0468D99FDA4B1AF9EB21A66AC3",
+        "match": true,
+        "file": "elfis_bastille_podmien_front\\order_stock.rb"
+      },
+      {
+        "sha256": "6758457AEFB1C336003A2EADCDE98F0C68ECF390A679B3860309485AF6EC1E45",
+        "match": true,
+        "file": "elfis_bastille_podmien_front\\outline.rb"
+      },
+      {
+        "sha256": "3F8B38AE99EA551D8BCC88AB2656DA3AD9A59DD5C02516B5A4D484CF9EC88335",
+        "match": true,
+        "file": "elfis_bastille_podmien_front\\performance.rb"
+      },
+      {
+        "sha256": "1783CED714E1D406379232C4632A2C8378C13DE730E1525BD58FFCF23587BEEE",
+        "match": true,
+        "file": "elfis_bastille_podmien_front\\podmien.svg"
+      },
+      {
+        "sha256": "A1CAAF1F5960DC333B96CB2550B3E20292DEF5528B6AB11308802AFA998E4DAB",
+        "match": true,
+        "file": "elfis_bastille_podmien_front\\shelf_pins_remove.svg"
+      },
+      {
+        "sha256": "3A5469ADD4D09B300867171EF9BEE41D7CB465F60E210E7261B38F92A75236FE",
+        "match": true,
+        "file": "elfis_bastille_podmien_front\\shelf_pins_settings.html"
+      },
+      {
+        "sha256": "F367C95AB2BCB7E22BE9B5BE61519E5E69A054DB719DCC13D29CC765B37FCBB1",
+        "match": true,
+        "file": "elfis_bastille_podmien_front\\shelf_pins.rb"
+      },
+      {
+        "sha256": "9FAA4E0BFC7AB2B685599FF6E59CC1E34D3F9CD41829E17C38241A36121350DB",
+        "match": true,
+        "file": "elfis_bastille_podmien_front\\shelf_pins.svg"
+      },
+      {
+        "sha256": "AABC5457CB6D2F0A78208A222581313DB45A01BB0BB5686C1DD4F0CA2E148CD3",
+        "match": true,
+        "file": "elfis_bastille_podmien_front\\slab_materials.rb"
+      },
+      {
+        "sha256": "53A88BF65CE3499D6AEF079DB2E89D4A66269153801A0B5DFCBE1E8E2CBFFC37",
+        "match": true,
+        "file": "elfis_bastille_podmien_front\\studio_settings.html"
+      },
+      {
+        "sha256": "BD40E76EF35BB8ED657A92D0B5D171B1F23877D5942567FF81DFAEEC451C8F7F",
+        "match": true,
+        "file": "elfis_bastille_podmien_front\\studio_settings.rb"
+      },
+      {
+        "sha256": "5ED737EC52B7F28A9D6D4CEDCB922269AD0F4313CA9C40D4A5996937BFF24E7A",
+        "match": true,
+        "file": "elfis_bastille_podmien_front\\studio_settings.svg"
+      },
+      {
+        "sha256": "FCAE267D7C1469F39C4E894ADFB00F4FB4643778821DC14ED9D25C764B9F222C",
+        "match": true,
+        "file": "elfis_bastille_podmien_front\\translations.en.json"
+      },
+      {
+        "sha256": "23F9D34D41B36338EBC33E764DE8B249D717AAFB69290FA49ABAFF9752E5E65D",
+        "match": true,
+        "file": "elfis_bastille_podmien_front\\docs\\changelog.html"
+      },
+      {
+        "sha256": "27F1031BBCE632E469CB9C5D743D8458BA4E669934B8010AF71DC0569CEE9F82",
+        "match": true,
+        "file": "elfis_bastille_podmien_front\\docs\\CHANGELOG.md"
+      },
+      {
+        "sha256": "3595211D937FD7DF647A4A0CB3B0A5869DAE32EE0974A6691FB6EB3CCD99BAA2",
+        "match": true,
+        "file": "elfis_bastille_podmien_front\\docs\\guide.en.html"
+      },
+      {
+        "sha256": "A53033C84AA1F018A95916D9FA162C31C550FC3C3908ED790ED2EFE553189F48",
+        "match": true,
+        "file": "elfis_bastille_podmien_front\\docs\\guide.pl.html"
+      },
+      {
+        "sha256": "AE77DD5C179BF7C2121AA7E951A6E2AA0D67973C5D813AD5C36986A507890547",
+        "match": true,
+        "file": "elfis_bastille_podmien_front\\docs\\README.md"
+      },
+      {
+        "sha256": "221A3A4FCEA8E0D33642FE721F14AD3AE3700C317491AF8226DF8546C21BBF98",
+        "match": true,
+        "file": "elfis_bastille_podmien_front\\docs\\RELEASE_ARCHIVES.json"
+      },
+      {
+        "sha256": "95722E70711D1FA14AFAF27649AF2A2BCD0B415039E70BEEFDB6861FA3171587",
+        "match": true,
+        "file": "elfis_bastille_podmien_front\\docs\\roadmap.html"
+      },
+      {
+        "sha256": "37B507D7CF0F6854EA10B1BA3AF50EAD538BE0FC2C834BB8FAF6828570C5EA6E",
+        "match": true,
+        "file": "elfis_bastille_podmien_front\\docs\\ROADMAP.md"
+      },
+      {
+        "sha256": "10504B6CFA42146E88DF8B3CD1A694F3805BC554857B09E36F5D0D0A825BBA56",
+        "match": true,
+        "file": "elfis_bastille_podmien_front\\docs\\USER_GUIDE.en.md"
+      },
+      {
+        "sha256": "3CD62F321B46DC012FB89FFF510CB4B505C3FB049EDB4A2FEA5CC6F3590C2ABF",
+        "match": true,
+        "file": "elfis_bastille_podmien_front\\docs\\USER_GUIDE.pl.md"
+      },
+      {
+        "sha256": "3791160833C27E322FA740064D0C5942B3AF208B44B4C4ABF5A6DD481E8DCC62",
+        "match": true,
+        "file": "elfis_handles\\calibration.rb"
+      },
+      {
+        "sha256": "F9A9A21CE3A05E0114BD3658DD38225C2CF120A81A95716A5A7C7D5898FE1ABC",
+        "match": true,
+        "file": "elfis_handles\\handle_add.svg"
+      },
+      {
+        "sha256": "B30B76EAF443524AEAD492F82488EE81C7162CBDF1A9F24674E2D30595EA3D5F",
+        "match": true,
+        "file": "elfis_handles\\handle_remove.svg"
+      },
+      {
+        "sha256": "B6199FA572A2336C924A4E3ACA02A667B12F8AE15BA8F3DB3F25130862F519D3",
+        "match": true,
+        "file": "elfis_handles\\handle.svg"
+      },
+      {
+        "sha256": "52B84E952584AB3945EFC010A59A3EF9A4BEF6CD69C35CFFA65BA6634087D86C",
+        "match": true,
+        "file": "elfis_handles\\library.html"
+      },
+      {
+        "sha256": "1B750224CD9504820CF0FF58E2B29F349C5B42B7FBA0295B641225A5D7916F54",
+        "match": true,
+        "file": "elfis_handles\\main.rb"
+      },
+      {
+        "sha256": "412170FCAB924789F2BAB40F402066390AECA31F60D72F4F4CC9F0476ABFC4DB",
+        "match": true,
+        "file": "elfis_handles\\docs\\SHORTCUTS.md"
+      }
+    ],
+    "backup": "<workspace>\\Backups\\SketchUp2026_before_install_20261113_223033_514"
+  }
+}

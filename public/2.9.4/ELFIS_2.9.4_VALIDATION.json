@@ -1,0 +1,32 @@
+{
+  "version": "2.9.4",
+  "platform": "SketchUp Pro 2026 Windows",
+  "native_sound_chamfer": {
+    "passed": true,
+    "checks": [
+      "Existing and new Slab profiles remain square by default",
+      "Front chamfer creates a closed ten-face solid",
+      "Chamfer retains overall width height and thickness",
+      "Rear plane remains fixed and front plane stays at full thickness",
+      "1.5 mm chamfer insets the front by 1.5 mm on each side",
+      "Chamfer volume matches the four 45-degree perimeter cuts",
+      "Cached square Slab geometry is not changed by chamfer creation",
+      "Chamfer amount has an independent geometry cache signature",
+      "Chamfer replacement retains broad-face and all ABS edge material roles",
+      "Four bevel faces use the front material while ABS stays on narrow sides",
+      "Chamfer specification is visible in order rows and PDF data",
+      "Invalid chamfer -1 rejected",
+      "Invalid chamfer 0.01 rejected",
+      "Invalid chamfer 18 rejected",
+      "Invalid chamfer NaN rejected",
+      "One completion sound is scheduled only after successful commit",
+      "Completion cue uses an existing bundled WAV",
+      "Disabling completion sound keeps successful replacement silent",
+      "Nested batch replacements are silent until the batch owner commits",
+      "Failed validation never produces a success cue",
+      "Profile window receives the persisted sound preference"
+    ]
+  },
+  "browser_en_pl_sound_chamfer": "passed",
+  "installer_sha256": "88ab1f3c062bcf1c3c6ea94b110cfb00d4aef458577ffe085aa37a700b21e865"
+}

@@ -1,0 +1,16 @@
+{
+  "passed": true,
+  "version": "2.9.7",
+  "checks": [
+    "en: complete order generated with doors, Finishing and handles",
+    "pl: complete order generated with doors, Finishing and handles",
+    "Completion cue uses a nonzero deferred timer and a valid WAV",
+    "Sound-off preference remains respected",
+    "Sound preview works without changing the enabled preference"
+  ],
+  "completion_sound_enabled": true,
+  "pdf": "EN/PL four-page orders rendered and visually reviewed; extracted content equals previous renderer; no filled table backgrounds",
+  "browser": "EN/PL sound preview callback, styled language selector, unchanged SVG functions and existing language/multiselect/Finishing suites passed",
+  "sound_audibility": "Native playback invoked; user reported silence in first trial, second diagnostic trial pending. No Windows audio settings changed.",
+  "sha256": "b40828ac519c342beb21331374c42e96d6ae239e75a6050f9f41c55a51417d19"
+}

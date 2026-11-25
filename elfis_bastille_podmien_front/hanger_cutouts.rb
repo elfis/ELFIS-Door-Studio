@@ -1,3 +1,4 @@
+require_relative '../elfis_menu'
 # encoding: UTF-8
 require 'securerandom'
 require 'json'
@@ -391,7 +392,7 @@ module Elfis
       @command=UI::Command.new('ELFIS — Hanger Cutouts / Wycięcia pod zawieszki') { activate }
       @command.tooltip=l('Kamar: klik dodaje; Alt + klik usuwa i zamyka wycięcia','Kamar: click to add; Alt + click to remove and fill notches')
       @command.small_icon=File.join(__dir__,'hanger_cutouts.svg');@command.large_icon=@command.small_icon
-      UI.menu('Extensions').add_item(@command)
+      ElfisMenu.category('Drilling').add_item(@command)
       toolbar=BastillePodmienFront.instance_variable_get(:@toolbar);toolbar.add_item(@command) if toolbar
     end
   end

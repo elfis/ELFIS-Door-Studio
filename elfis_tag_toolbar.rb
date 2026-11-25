@@ -446,7 +446,7 @@ module ELFIS_TagToolbar
   end
 
   def self.start
-    return if @toolbar && @toolbar.visible?
+    return if @toolbar
     ensure_tags
 
     unless @app_observer
@@ -456,8 +456,12 @@ module ELFIS_TagToolbar
 
     return if @toolbar && @toolbar.visible?
 
-    @toolbar = UI::Toolbar.new("ELFIS Tags")
+    layout_file=File.join(__dir__,'elfis_bastille_podmien_front','toolbar_layout.rb')
+    require layout_file if File.file?(layout_file)
+    @toolbar = defined?(Elfis::ToolbarLayout) ? Elfis::ToolbarLayout::Builder.new(:visibility,'ELFIS Tags') : UI::Toolbar.new('ELFIS Tags')
     @commands = {}
+    require_relative 'elfis_menu'
+    visibility_menu = ElfisMenu.category('Display & visibility').add_submenu('Visibility toggles')
 
     BUTTONS.each do |button|
       cmd = UI::Command.new("Toggle #{button[:label]}") {
@@ -469,8 +473,9 @@ module ELFIS_TagToolbar
       end
 
       @commands[button[:id]] = cmd
+      visibility_menu.add_item(cmd)
       update_icon(button)
-      @toolbar.add_item(cmd)
+      @toolbar.respond_to?(:build) ? @toolbar.add_item(cmd,button[:id].to_s) : @toolbar.add_item(cmd)
       @toolbar.add_separator if [:room, :finishing, :appliances, :operations].include?(button[:id])
     end
 
@@ -485,9 +490,10 @@ module ELFIS_TagToolbar
     cleanup_cmd.tooltip = "Remove ABFBlocked groups"
     cleanup_cmd.status_bar_text = "Find and remove all ABFBlocked groups from the model."
     @cleanup_command = cleanup_cmd
-    @toolbar.add_item(cleanup_cmd)
+    ElfisMenu.category('Cabinet tools').add_item(cleanup_cmd)
+    @toolbar.respond_to?(:build) ? @toolbar.add_item(cleanup_cmd,'cleanup') : @toolbar.add_item(cleanup_cmd)
 
-    @toolbar.show
+    @toolbar.respond_to?(:build) ? @toolbar.build : @toolbar.show
   end
 
   def self.refresh

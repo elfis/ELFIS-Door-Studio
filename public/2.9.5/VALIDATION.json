@@ -1,0 +1,30 @@
+{
+  "version": "2.9.5",
+  "native": {
+    "passed": true,
+    "version": "2.9.5",
+    "checks": [
+      "slab has direct faces for native OCL orientation",
+      "slab has direct faces for native OCL orientation",
+      "OpenCutList recognises slab as the front component",
+      "OCL length/width swap preserves slab placement and dimensions (0.0, 0.0)",
+      "slab main faces inherit material from the component",
+      "shaker has direct faces for native OCL orientation",
+      "shaker has direct faces for native OCL orientation",
+      "OpenCutList recognises shaker as the front component",
+      "OCL length/width swap preserves shaker placement and dimensions (0.0, 0.0)",
+      "shaker main faces inherit material from the component",
+      "Slab replacement retains component finish and clears broad/chamfer face paint",
+      "Slab replacement preserves ABS edge face material",
+      "Arbitrarily named CNC group survives replacement",
+      "Native axes preserve CNC placement in model space",
+      "Handle group survives replacement",
+      "Door bounds exclude CNC extending beyond the front",
+      "Order colour uses the component finish and excludes ABS/machining"
+    ],
+    "visual": "left=original, right=OCL swap; bottom Slab, top Five-Piece"
+  },
+  "visual": "Slab/Five-Piece before versus after OCL transformation inspected; grain rotated 90 degrees",
+  "test_method": "Actual OCL part recognition/size axes, identical SmartAxesTool geometry/instance transform. UI picker click not tested.",
+  "sha256": "02c97b394fc1a1c03e1effc640a5d8c550b827b19d62e775b2abd1d21674c74d"
+}

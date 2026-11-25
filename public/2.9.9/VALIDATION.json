@@ -1,0 +1,41 @@
+{
+  "passed": true,
+  "checks": [
+    "Seven adjustable shelves found in three actual cabinets; fixed shelves and cross members excluded",
+    "wiszaca: twelve planned circles",
+    "wiszaca: planned centres match the existing production vectors",
+    "wiszaca: twelve planned circles",
+    "wiszaca: planned centres match the existing production vectors",
+    "wiszaca: twelve planned circles",
+    "wiszaca: planned centres match the existing production vectors",
+    "stojaca: twelve planned circles",
+    "stojaca: planned centres match the existing production vectors",
+    "wysoka: twelve planned circles",
+    "wysoka: planned centres match the existing production vectors",
+    "wysoka: twelve planned circles",
+    "wysoka: planned centres match the existing production vectors",
+    "wysoka: twelve planned circles",
+    "wysoka: planned centres match the existing production vectors",
+    "Actual cabinets: all 84 existing holes reused without duplicates",
+    "Rotated, mirrored and nonuniformly scaled cabinet creates twelve holes",
+    "Every hole has its own nested group",
+    "Group tags, circle tags, names and vector-only geometry match the inspected convention",
+    "Hole diameter stays physical under nonuniform cabinet scale",
+    "Shared cabinet copy remains untouched",
+    "Reapplying updates owned holes without multiplying groups",
+    "Through drilling is rejected for blind shelf supports"
+  ],
+  "version": "2.9.9",
+  "sha256": "7d905880341818ee1409534a48a3e18289af77bd05bcae73df7c145d3106f038",
+  "activation": {
+    "version": "2.9.9",
+    "source": [
+      "<SketchUp Plugins>/elfis_bastille_podmien_front/shelf_pins.rb",
+      181
+    ],
+    "toolbar_command": true
+  },
+  "ui": "Native toolbar icon clicked, settings fields verified, cancelled without changing model",
+  "browser": "Existing EN/PL language, family, selection, filtering and order suites passed",
+  "limits": "Horizontal adjustable rectangular boards on Body; fixed shelves/dowels/screws deferred. Export geometry convention verified; no machine execution or end-to-end OCL DXF export in this test."
+}

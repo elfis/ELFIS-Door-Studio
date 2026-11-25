@@ -1,4 +1,4 @@
-# ELFIS — instrukcja 2.9.39
+# ELFIS — instrukcja 2.9.40
 
 Interfejs domyślnie jest po angielsku. W nagłówku biblioteki lub zamówienia wybierz **Language / Język → Polski**. Wybór jest zapamiętywany. Nazwy własnych profili, materiałów, tagów, producentów i komponentów nie są tłumaczone. Zmiana języka otwiera ponownie to okno; drugie otwarte okno zachowuje wpisane dane i zmieni język przy kolejnym otwarciu. Niezapisane ustawienia profilu wymagają potwierdzenia odrzucenia.
 
@@ -365,3 +365,17 @@ Dotychczasowe narzędzia **Rozmieszczenie półek**, **Podpórki**, **Kołki i �
 - **Refresh:** odświeża powiązane operacje narożnej. Po usunięciu półki usuwa jej osierocone podpórki z boków i pleców. Alt usuwa operacje we właściwym narzędziu. Układy wycięć Kamar lewe/prawe/oba zostają.
 
 Operacje można cofać. Blokady, ukośne deformacje, nieobsługiwane obrysy, niejednoznaczne styki oraz otwory przecinające rzeczywiste krawędzie są odrzucane. Bez obserwatorów i automatycznego odświeżania podczas obracania. Rozstaw wymaga jednej komory, jednakowego obrysu półek regulowanych i półki wzorcowej albo zachowanego szablonu. Wewnętrzna półka stała wymaga osobnej komory. Nierozpoznane wiercenia wymagają sprawdzenia w Istniejących wierceniach.
+
+## Układ pasków i rozpoznawanie narożnika (2.9.40)
+
+Otwórz **Rozszerzenia → ELFIS — Ustawienia domyślne → Paski narzędzi**. Wybierz Drzwi i wiercenia, Uchwyty lub Widoczność. Przeciągaj wiersze albo używaj ↑/↓, odznaczaj ikony, dodawaj/usuwaj/przesuwaj separatory lub wyłącz cały pasek. Podgląd pomija ukryte ikony i zbędne separatory. Przywróć ten pasek resetuje tylko wybrany układ. **Zapisz ustawienia domyślne i uruchom SketchUp ponownie**. Zapis nie przebudowuje działającego paska. Ustawienia pozostają w menu Rozszerzenia, także po ukryciu ikony. Układ jest zapisany lokalnie i nie zmienia projektu. Uchwyty wymagają osobnego modułu 1.1.10-beta lub nowszego do konfiguracji paska.
+
+Istniejące wiercenia rozpoznają kołki i śruby szafek L według rzeczywistych styków prostopadłych płyt. Starsze śruby pleców przypisywane są na podstawie rzeczywistej krawędzi pleców, bez wymuszania obecnego domyślnego rozstawu. Przejęcie i zmiana parametrów zachowują środki otworów. Zablokowane, niejednoznaczne lub nieprzylegające operacje pozostają nieaktywne. Po aktualizacji ponownie rozpoznaj szafkę.
+
+Lista istniejących wierceń pokazuje głębokości zaokrąglone do najbliższych 0,5 mm, z jednym miejscem po przecinku. Zaokrąglenie dotyczy wyłącznie wyświetlania, bez zmiany geometrii ani parametrów wiercenia.
+
+### Usuwanie wszystkich wierceń szafki
+Zaznacz szafkę lub kilka szafek, następnie Ustawienia domyślne → Istniejące wiercenia → Usuń wszystkie wiercenia. Potwierdź liczbę usuwanych okręgów. Usuwane są również ukryte i importowane wektory D…_DEPTH… bez powiązań ELFIS. Powiązania źródłowe są kasowane, aby Refresh nie odtworzył starego układu. Ctrl+Z cofa całą operację. Pozostałe kopie szafki, geometria płyt, wycięcia Kamar i frezowania pozostają. Funkcja nie usuwa nieoznaczonych okręgów ani fizycznych otworów wyciętych w bryłach.
+
+### Kołki i śruby 2.0
+Osobna ikona **2.0** na pasku ELFIS Doors; po restarcie obok starego narzędzia. Oba polecenia są też w Extensions. Ustawienia i nazwy CNC są wspólne. Stare narzędzie nadal korzysta z pleców. Nowe rozpoznaje przód z frontu, następnie z pleców, a przy braku obu pokazuje kierunek według osi panelu. **Shift** przełącza kierunek, **Alt** usuwa, **Ctrl** odświeża. Odległości są liczone od samego wieńca/półki stałej, z uwzględnieniem cofnięcia. Kierunek zapisuje się dla Refresh. Bez jednoznacznego odniesienia sprawdź turkusowy wskaźnik przed kliknięciem. Szafki narożne zachowują dotychczasowy planer krawędzi styku.

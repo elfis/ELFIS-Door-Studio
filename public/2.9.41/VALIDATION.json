@@ -1,0 +1,14 @@
+{
+  "archiveIntegrityVerified": true,
+  "examples": [
+    "18.00000000003489 -> 18.0",
+    "11.5 -> 11.5",
+    "11.7 -> 11.5",
+    "12.3 -> 12.5"
+  ],
+  "change": "Display formatting only: nearest 0.5 mm, one decimal",
+  "geometryChanged": false,
+  "syntax": "HTML inline JavaScript parsed successfully",
+  "version": "2.9.41",
+  "sha256": "3b45994c551f86171948cb2b0ba212ede7763885dfcf019bcb2c5b141cdf7acf"
+}

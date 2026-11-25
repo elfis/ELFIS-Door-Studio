@@ -1,0 +1,40 @@
+{
+  "version": "2.9.40",
+  "passed": true,
+  "environment": "SketchUp Pro 2026 Windows / Chromium headless UI",
+  "tests": {
+    "toolbar_layout_2940_results.json": {
+      "passed": true,
+      "checkCount": 18
+    },
+    "toolbar_settings_2940_ui_results.json": {
+      "passed": true,
+      "checkCount": 15
+    },
+    "corner_scan_2940_native_results.json": {
+      "passed": true,
+      "checkCount": 14
+    },
+    "existing_2929_native_results.json": {
+      "passed": true,
+      "checkCount": 18
+    }
+  },
+  "sha256": "0c650417411dbf86a81340b53d88d6290da384a8f9cbb56c44821e9e390dfa7f",
+  "handlesVersion": "1.1.10-beta",
+  "handlesSha256": "62034177db66727d9941eac054c602d095bc5687f616b222001abb5fd91ce8d8",
+  "notes": [
+    "14 corner scan/adoption/conversion checks run on disposable copies and rolled back; production geometry preserved.",
+    "Toolbar preference persistence and startup rendering tested with an in-memory native-toolbar adapter. The running production bars are not rebuilt; a restart is required.",
+    "The existing 1.1.9-beta handle placement/calibration implementation is unchanged; this update changes toolbar wiring only."
+  ],
+  "installedVerification": {
+    "unassociatedOperations": 0,
+    "doors": "2.9.40",
+    "passed": true,
+    "nativeDialogVerified": true,
+    "installedCornerScanJointHoles": 38,
+    "files": 74,
+    "handles": "1.1.10-beta"
+  }
+}

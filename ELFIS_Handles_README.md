@@ -1,4 +1,4 @@
-# ELFIS Handles 1.1.9-beta — wersja testowa
+# ELFIS Handles 1.1.10-beta — wersja testowa
 
 > **BETA — Poprawiono import i montaż uchwytów standardowych. Ustaw punkty mocowania i sprawdź rezultat na froncie testowym przed użyciem produkcyjnym.**
 
@@ -98,7 +98,7 @@ Pierwsze uruchomienie Dodaj ustawia Block Key Bar Handle (jeśli jest zaimportow
 Toolbar: **ELFIS — Handle Tools**. Fix duplicate legacy library icon during a live update; retain the same Handles Library window.
 
 
-## 1.1.9-beta — Automatyczna długość
+## 1.1.10-beta — Automatyczna długość
 
 Import podpowiada długość z geometrii SKP, a kalibracja przelicza ją wzdłuż osi śrub. Edycja pokazuje wartość Auto i uzupełnia pole długości; zapisz, aby ją przyjąć. Ręczna korekta zostaje zachowana przy kolejnej kalibracji. Wpisz ponownie wartość Auto, aby wrócić do automatyki. Rozstaw śrub pozostaje osobnym wymiarem. Wcześniej wstawione uchwyty zachowują zapisane dane zamówienia do ponownego zastosowania lub podmiany.
 
@@ -110,7 +110,7 @@ Tap Ctrl to toggle vertical/horizontal, Shift to mirror left/right, Alt to mirro
 Edge corners use the configured distance from corner to handle end. Edge midpoints centre the pull (top/bottom retain the configured centre shift). All eight perimeter positions are available in the library. Previously saved side-pull positions keep their old top-offset behaviour until explicitly changed with shortcuts or a position button. Rear fixing, calibration and standard frame/custom offsets are retained. Preview and placement share the same rules.
 
 
-## 1.1.9-beta — Side pull offset from centre
+## 1.1.10-beta — Side pull offset from centre
 
 For a rear-fixing edge pull on a side, set Side: offset from centre in millimetres: zero centres, positive moves up, negative moves down. Editing this field selects the same side in vertical mounting, centred plus the entered distance. The origin remains on the rear fixing plane; the pull never changes sides or flips merely because the offset changes. Bounds checks prevent the pull extending past the door.
 

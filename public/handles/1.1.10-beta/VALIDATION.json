@@ -1,0 +1,15 @@
+{
+  "version": "1.1.10-beta",
+  "sha256": "62034177db66727d9941eac054c602d095bc5687f616b222001abb5fd91ce8d8",
+  "passed": true,
+  "toolbarTests": {
+    "passed": true,
+    "checkCount": 18
+  },
+  "uiTests": {
+    "passed": true,
+    "checkCount": 15
+  },
+  "geometryChanges": false,
+  "note": "Placement and calibration geometry unchanged from 1.1.9-beta; toolbar layout integration tested."
+}

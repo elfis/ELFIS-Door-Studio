@@ -1,6 +1,8 @@
+require_relative './elfis_menu'
 # encoding: UTF-8
 require 'sketchup.rb'
 require 'json'
+require File.join(__dir__,'elfis_bastille_podmien_front','toolbar_layout.rb')
 require File.join(__dir__,'elfis_bastille_podmien_front','i18n.rb')
 require File.join(__dir__,'elfis_bastille_podmien_front','engine.rb')
 require File.join(__dir__,'elfis_bastille_podmien_front','library.rb')
@@ -11,6 +13,7 @@ require File.join(__dir__,'elfis_bastille_podmien_front','order_pdf.rb')
 require File.join(__dir__,'elfis_bastille_podmien_front','feedback.rb')
 require File.join(__dir__,'elfis_bastille_podmien_front','shelf_pins.rb')
 require File.join(__dir__,'elfis_bastille_podmien_front','carcass_joinery.rb')
+require File.join(__dir__,'elfis_bastille_podmien_front','carcass_joinery_v2.rb')
 require File.join(__dir__,'elfis_bastille_podmien_front','studio_settings.rb')
 require File.join(__dir__,'elfis_bastille_podmien_front','drilling_editor.rb')
 require File.join(__dir__,'elfis_bastille_podmien_front','drilling_refresh.rb')
@@ -18,6 +21,8 @@ require File.join(__dir__,'elfis_bastille_podmien_front','hanger_cutouts.rb')
 require File.join(__dir__,'elfis_bastille_podmien_front','hinge_drilling.rb')
 require File.join(__dir__,'elfis_bastille_podmien_front','drawer_drilling.rb')
 require File.join(__dir__,'elfis_bastille_podmien_front','shelf_spacing.rb')
+require File.join(__dir__,'elfis_bastille_podmien_front','shelf_spacing_v2.rb')
+require File.join(__dir__,'elfis_bastille_podmien_front','front_association_repair.rb')
 
 module Elfis
   module BastillePodmienFront
@@ -194,6 +199,10 @@ module Elfis
         name=next_door_name(model,p,info[:height],info[:width],instance) if change_name
         definition=build_door_definition(model,p,info[:width],info[:height])
         replacement=owner.add_instance(definition,info[:placement])
+        # All profile tools use this entry point. Keep machining ownership,
+        # saved layouts and calibrated hardware metadata before stamping the
+        # new profile, whose geometry attributes must take precedence.
+        copy_instance_properties(instance,replacement)
         replacement.layer=instance.layer
         replacement.material=instance.material
         replacement.hidden=instance.hidden?
@@ -208,7 +217,16 @@ module Elfis
         preserve_nested_entities(instance,replacement)
         adopt_native_door_axes(replacement)
         # Do not change the source definition: other instances remain intact.
-        instance.erase!
+        if instance.is_a?(Sketchup::ComponentInstance)
+          temporary=replacement
+          instance.definition=temporary.definition
+          instance.transformation=temporary.transformation
+          copy_instance_properties(temporary,instance)
+          temporary.erase!
+          replacement=instance
+        else
+          instance.erase!
+        end
         if change_name
           if original_definition.valid? && original_definition.instances.empty?
             original_definition.name="#{original_definition_name} [unused #{SecureRandom.uuid}]"
@@ -415,20 +433,19 @@ module Elfis
       @command.large_icon=icon
     end
     unless file_loaded?(__FILE__)
-      UI.menu('Extensions').add_item(@command)
+      ElfisMenu.category('Doors').add_item(@command)
       file_loaded(__FILE__)
     end
     unless @toolbar
-      @toolbar=UI::Toolbar.new('ELFIS — Doors')
+      @toolbar=Elfis::ToolbarLayout::Builder.new(:doors,'ELFIS — Doors')
       @toolbar.add_item(@command)
-      @toolbar.get_last_state==-1 ? @toolbar.show : @toolbar.restore
     end
     unless @library_command
       @library_command=UI::Command.new('ELFIS — Biblioteka profili drzwi') { show_library }
       @library_command.tooltip=Elfis::BastillePodmienFront.l('Wybierz profil, dodaj przekrój lub utwórz drzwi','Choose a profile, add a cross-section or create a door')
       @library_command.small_icon=File.join(__dir__,'elfis_bastille_podmien_front','library.svg')
       @library_command.large_icon=@library_command.small_icon
-      UI.menu('Extensions').add_item(@library_command)
+      ElfisMenu.category('Doors').add_item(@library_command)
       @toolbar.add_item(@library_command)
     end
     install_naming_menu
@@ -444,7 +461,9 @@ module Elfis
     Elfis::DrawerDrilling.install
     Elfis::ShelfPins.install
     Elfis::ShelfSpacing.install
+    Elfis::ShelfSpacingV2.install
     Elfis::CarcassJoinery.install
+    Elfis::CarcassJoineryV2.install
     Elfis::HangerCutouts.install
     Elfis::DrillingRefresh.install
     unless @settings_separator_added
@@ -452,5 +471,6 @@ module Elfis
       @settings_separator_added=true
     end
     Elfis::StudioSettings.install
+    @toolbar.build if @toolbar.is_a?(Elfis::ToolbarLayout::Builder)
   end
 end

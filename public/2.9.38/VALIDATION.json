@@ -1,0 +1,473 @@
+{
+  "version": "2.9.38",
+  "passed": true,
+  "sha256": "20c6c9c6bde1617df697c1fbe839a2c82e2ad076802328cf661b56ad9516199d",
+  "tests": {
+    "hanger_layout_2938_native_results.json": {
+      "passed": true,
+      "checks": [
+        "Actual corner cabinet: existing one/two notch arrangement recognized read-only",
+        "Actual corner back routing contours and notches recognized",
+        "Actual corner back routing contours and notches recognized",
+        "Perpendicular back receives a single selected through-notch",
+        "Single selected corner stored on its own back",
+        "Other corner stays solid",
+        "Other back retains both corners",
+        "Refresh preserves two-plus-one without creating missing corner",
+        "Attribute-free legacy single notch recognized by Refresh",
+        "Legacy adoption saves existing single-corner layout",
+        "Removing right corner preserves left corner and its metadata",
+        "Legacy single notch removed and closed without requiring attributes",
+        "Rotated mirrored scaled corner accepts selected side",
+        "Scaled corner refresh layout remains single",
+        "Actual cabinet disposable copy: Refresh preserves original three cutouts",
+        "Production corner cabinet metadata untouched by copy Refresh",
+        "Ctrl cycles both to left",
+        "Held Ctrl repeat does not skip positions",
+        "Next Ctrl selects right",
+        "Viewport Both button updates selection without editing geometry",
+        "Viewport panel draws without errors"
+      ]
+    },
+    "hanger_removal_2925_native_results.json": {
+      "passed": true,
+      "checks": [
+        "Removal fills both notches and removes exactly two L routing groups",
+        "Both corners are solid again with no matching routing vectors",
+        "Repaired back has a closed shell with no loose internal edges",
+        "Repaired volume equals the original rectangular panel",
+        "Coplanar repair seams are merged back into six panel faces",
+        "Exterior, interior and edge materials extend over the filled corners",
+        "Component material and unrelated drilling remain unchanged",
+        "Removed hanger metadata is cleared from the repaired back",
+        "Repeated removal is harmless on a rectangular back",
+        "Removing from a cabinet copy preserves the other copy and its CNC contours",
+        "Shared vector tag remains available for other cabinets",
+        "Rotated mirrored cabinet is restored without changing the other panel",
+        "Scaled mirrored cabinet repairs its physical cutouts into the original closed panel",
+        "Locked routing stops removal before filling any corner",
+        "Matching legacy Kamar loops can be removed and their cutouts filled",
+        "Holding Alt enters removal mode and consumes the menu accelerator",
+        "Alt key repeat does not toggle back to adding",
+        "Releasing Alt immediately restores adding mode",
+        "Mouse-event Alt flags also select removal mode"
+      ]
+    },
+    "refresh_2930_native_results.json": {
+      "passed": true,
+      "checks": [
+        "Cabinet selection discovers joint sources, shelf, front and back",
+        "One back can refresh screw rows and Kamar routing together",
+        "One batch regenerates all circular drilling and repairs a missing Kamar contour",
+        "Refresh leaves exactly one complete set of circles and routing",
+        "Front cup heights update after moving the front",
+        "Side mounting plates follow the moved front cup axes",
+        "Other cabinet instance retains its original drilling and its missing contour state",
+        "Repeated complete refresh does not multiply operations",
+        "Invalid hinge destination prevents every removal in the batch"
+      ]
+    },
+    "existing_2929_native_results.json": {
+      "passed": true,
+      "checks": [
+        "Central panel saves the same hinge preferences used by the tool",
+        "Older settings callers preserve hinge preferences",
+        "Invalid hinge defaults rejected before saving",
+        "Recognizes imported front/side hinge circles at actual 120/90 mm offsets",
+        "Cup, front fixing and side plate roles stay separate",
+        "Recognizes both imported Kamar L contours as routing operations",
+        "Adopts hinge circles and Kamar contours in the same conversion",
+        "Adopted drilling and routing rescan with ELFIS ownership",
+        "Other cabinet copy keeps imported unowned operations",
+        "Adopted front and side circles are associated with one front",
+        "Changes front cup/fixing depths independently of side plates",
+        "Changes side plate depths and machining tags",
+        "Parameter conversion preserves all actual circle centres",
+        "Parameter conversion retains Kamar L geometry",
+        "Kamar template changes are rejected before mutation",
+        "Alt removal can remove adopted front and side hinge drilling",
+        "Kamar Alt removal clears adopted contours and fills both notches",
+        "Other cabinet copy retains all ten circles and both contours"
+      ]
+    }
+  },
+  "ui": {
+    "passed": true,
+    "checks": [
+      "Installed modules reloaded into the running SketchUp 2026 session",
+      "Kamar viewport panel visibly shows Left, Right and Both, with Both selected",
+      "Console confirms active version 2.9.38; production cabinet geometry was not changed"
+    ],
+    "note": "Button hit testing, Ctrl cycling and drawing exercised by native tests. No production back was clicked to apply."
+  },
+  "installation": {
+    "passed": true,
+    "plugins": "<SketchUp Plugins>",
+    "files": [
+      {
+        "match": true,
+        "sha256": "0B4CB6F7886281279A1B51B10B803ED14C29137D240A79B6C8E066CB6B7F4562",
+        "file": "elfis_bastille_podmien_front.rb"
+      },
+      {
+        "match": true,
+        "sha256": "3AB8859328943FC7415AD65CEEA23222B40359119B9DBCDED24E341E53738313",
+        "file": "elfis_handles.rb"
+      },
+      {
+        "match": true,
+        "sha256": "878CE82D163DADACA54E4F63183D1486EAE90F15E34565D4E591267A9B20DA22",
+        "file": "elfis_tag_toolbar.rb"
+      },
+      {
+        "match": true,
+        "sha256": "67261CFB0E3C31933C395866C4BB779E0FE961AA0CB23576DA44B0B9AA5B092C",
+        "file": "elfis_bastille_podmien_front\\bastille.json"
+      },
+      {
+        "match": true,
+        "sha256": "75AADAC230DEEAE8BFA935828703ADEB3991394D406AA7C07C7C154DC7A09317",
+        "file": "elfis_bastille_podmien_front\\carcass_joinery.rb"
+      },
+      {
+        "match": true,
+        "sha256": "0F7428378F709356352148F790AA736FDB0D4F04EAA3624928089E332E2D8FDD",
+        "file": "elfis_bastille_podmien_front\\carcass_joinery.svg"
+      },
+      {
+        "match": true,
+        "sha256": "40DA35702C1E7E171F06BCC1D381D0DC35E190509177963242D47A7D2D1E4156",
+        "file": "elfis_bastille_podmien_front\\carcass_joinery_layout.rb"
+      },
+      {
+        "match": true,
+        "sha256": "6897087CCF2E87ED6B6DB08EAC5A07272E8BA2E490D5EB99478DBE18CABC5123",
+        "file": "elfis_bastille_podmien_front\\carcass_joinery_remove.svg"
+      },
+      {
+        "match": true,
+        "sha256": "A431B9A30FBCF724F3D1F95D5A08EE21C64D77D4788E95755BB8C2E398D26868",
+        "file": "elfis_bastille_podmien_front\\carcass_joinery_settings.html"
+      },
+      {
+        "match": true,
+        "sha256": "9277D3F0B6639789AEB8484E4746ED3F6AD541B062733A894EC4ADF588673E10",
+        "file": "elfis_bastille_podmien_front\\door_complete.wav"
+      },
+      {
+        "match": true,
+        "sha256": "CC5BAC005174BC1B76A238FA406AB6D924CC40D788772EABEC38E731A7AB7857",
+        "file": "elfis_bastille_podmien_front\\drawer_drilling.rb"
+      },
+      {
+        "match": true,
+        "sha256": "545489453FB64DDB035E580903D13883CE962094A560D438F8A9A7EB50A74317",
+        "file": "elfis_bastille_podmien_front\\drawer_drilling.svg"
+      },
+      {
+        "match": true,
+        "sha256": "9D320F20E597C3C1A25764136B70440DE6E4312A5B1132564111062FA647DE3A",
+        "file": "elfis_bastille_podmien_front\\drilling_editor.rb"
+      },
+      {
+        "match": true,
+        "sha256": "C449A3C680202B99C01875DC67B3C855BCA238EC4646C00DA1EFB8D868267CD1",
+        "file": "elfis_bastille_podmien_front\\drilling_refresh.rb"
+      },
+      {
+        "match": true,
+        "sha256": "F19F10EF82F75B60273360B1E31360AC1CA12A1C7EA324AA6C44ED5DADC6BB77",
+        "file": "elfis_bastille_podmien_front\\drilling_refresh.svg"
+      },
+      {
+        "match": true,
+        "sha256": "A8DB4551D9A9B2CC3992DE161D00076B9DA8754D6F14AFFFC40360CC0F182020",
+        "file": "elfis_bastille_podmien_front\\drilling_tool_modifiers.rb"
+      },
+      {
+        "match": true,
+        "sha256": "491EBA8E4689B881B12624EBBE31CDB74B6BB7EA0C62D1FA161E2FC675B2B951",
+        "file": "elfis_bastille_podmien_front\\engine.rb"
+      },
+      {
+        "match": true,
+        "sha256": "EAD85F5185C93D05E51FC65992EB24842FE010B26E578BA12C84C13130D60D91",
+        "file": "elfis_bastille_podmien_front\\families.rb"
+      },
+      {
+        "match": true,
+        "sha256": "220B59F73DAB1CEB0623431B25D11628E8061FF06ADF49439229BE3EF2B0F79D",
+        "file": "elfis_bastille_podmien_front\\feedback.rb"
+      },
+      {
+        "match": true,
+        "sha256": "C6175D53D6910F109314824DC42A991E8DEC38460510739AB3E5C47E6C97D70C",
+        "file": "elfis_bastille_podmien_front\\hanger_cutouts.rb"
+      },
+      {
+        "match": true,
+        "sha256": "C9AB5B37AC84CE7C62A55DD0B41B473BAB08BDEDA50CD4F32A94D656B895FE09",
+        "file": "elfis_bastille_podmien_front\\hanger_cutouts.svg"
+      },
+      {
+        "match": true,
+        "sha256": "82F7B207FEFF0930BDA22B5E5951027E6A66848F2FE6C23C843D391382B71540",
+        "file": "elfis_bastille_podmien_front\\hinge_drilling.rb"
+      },
+      {
+        "match": true,
+        "sha256": "8F7F9D4B6BB314AF211E9B6C970774593F6A751A0D864C9BEAB9761705E3D0CE",
+        "file": "elfis_bastille_podmien_front\\hinge_drilling.svg"
+      },
+      {
+        "match": true,
+        "sha256": "D083CE3FBFD1E7F8587E862F46D5159B5AFD0EA5902A36F8E553348E8FCA3304",
+        "file": "elfis_bastille_podmien_front\\hinge_tool_panel.rb"
+      },
+      {
+        "match": true,
+        "sha256": "2F137E48EDFB26C06BED41B67C5F065027BF4FC13989BF74671D63FD779A3802",
+        "file": "elfis_bastille_podmien_front\\i18n.rb"
+      },
+      {
+        "match": true,
+        "sha256": "426141C3DDBA76A2DB3AE5E88262280D24D9872B5416409647A33D259B9FB668",
+        "file": "elfis_bastille_podmien_front\\jpull.rb"
+      },
+      {
+        "match": true,
+        "sha256": "B1BDA32ACB7FF2F68BF04B51096E98E32A3EC0FCDA28F9732A57E30CEDDE7151",
+        "file": "elfis_bastille_podmien_front\\library.en.html"
+      },
+      {
+        "match": true,
+        "sha256": "23884572E11CA0AD60C43294150FC11AFDE06CA26E121AC3FF08C0F02543D3A1",
+        "file": "elfis_bastille_podmien_front\\library.html"
+      },
+      {
+        "match": true,
+        "sha256": "DFF40EBF236A204B23B48F8EDD7C72B725A74D641856400ACA5905529CD5CBC7",
+        "file": "elfis_bastille_podmien_front\\library.rb"
+      },
+      {
+        "match": true,
+        "sha256": "D9AA9FE581A3EC0C48B9ECBC460B001B05CD249C0697D4F5D65BE9EB90A49961",
+        "file": "elfis_bastille_podmien_front\\library.svg"
+      },
+      {
+        "match": true,
+        "sha256": "A00B6070CDB80687F14788C5D6ADE215D53F2B7DD065FBC26A27E56F0EE06552",
+        "file": "elfis_bastille_podmien_front\\onepiece.rb"
+      },
+      {
+        "match": true,
+        "sha256": "2CEB2FB5CA785ACDA4AB8DDF3C527BE75A0105747E820CDAB4AA5FD05F5C071A",
+        "file": "elfis_bastille_podmien_front\\order_controls.js"
+      },
+      {
+        "match": true,
+        "sha256": "28B645151F7F2271AD2AE883B924445537DF1CDB6A6C6483AD8FC3460DEC0547",
+        "file": "elfis_bastille_podmien_front\\order_list.en.html"
+      },
+      {
+        "match": true,
+        "sha256": "DBA27BFDA15D726AE690DED87516732C4300AFEACD61559564A8A67959610FD6",
+        "file": "elfis_bastille_podmien_front\\order_list.html"
+      },
+      {
+        "match": true,
+        "sha256": "D6ECFD8C692DF1A427418924E433EA33946ABE6E39E082B7B6745E2BAFC5E9D9",
+        "file": "elfis_bastille_podmien_front\\order_list.rb"
+      },
+      {
+        "match": true,
+        "sha256": "FEB4088D7904D33D137597622A0794E0A260642E44EFD14512E15D5CA2C03EAB",
+        "file": "elfis_bastille_podmien_front\\order_list.svg"
+      },
+      {
+        "match": true,
+        "sha256": "E5D7235F0C3D9E4E2994FF15C12A59E958A54FECAD7BDEC4122D2F1C770AD17F",
+        "file": "elfis_bastille_podmien_front\\order_pdf.rb"
+      },
+      {
+        "match": true,
+        "sha256": "716C9D9EF5905C2543BBED067F539D6F3E7C4C0468D99FDA4B1AF9EB21A66AC3",
+        "file": "elfis_bastille_podmien_front\\order_stock.rb"
+      },
+      {
+        "match": true,
+        "sha256": "6758457AEFB1C336003A2EADCDE98F0C68ECF390A679B3860309485AF6EC1E45",
+        "file": "elfis_bastille_podmien_front\\outline.rb"
+      },
+      {
+        "match": true,
+        "sha256": "3F8B38AE99EA551D8BCC88AB2656DA3AD9A59DD5C02516B5A4D484CF9EC88335",
+        "file": "elfis_bastille_podmien_front\\performance.rb"
+      },
+      {
+        "match": true,
+        "sha256": "1783CED714E1D406379232C4632A2C8378C13DE730E1525BD58FFCF23587BEEE",
+        "file": "elfis_bastille_podmien_front\\podmien.svg"
+      },
+      {
+        "match": true,
+        "sha256": "F367C95AB2BCB7E22BE9B5BE61519E5E69A054DB719DCC13D29CC765B37FCBB1",
+        "file": "elfis_bastille_podmien_front\\shelf_pins.rb"
+      },
+      {
+        "match": true,
+        "sha256": "9FAA4E0BFC7AB2B685599FF6E59CC1E34D3F9CD41829E17C38241A36121350DB",
+        "file": "elfis_bastille_podmien_front\\shelf_pins.svg"
+      },
+      {
+        "match": true,
+        "sha256": "A1CAAF1F5960DC333B96CB2550B3E20292DEF5528B6AB11308802AFA998E4DAB",
+        "file": "elfis_bastille_podmien_front\\shelf_pins_remove.svg"
+      },
+      {
+        "match": true,
+        "sha256": "3A5469ADD4D09B300867171EF9BEE41D7CB465F60E210E7261B38F92A75236FE",
+        "file": "elfis_bastille_podmien_front\\shelf_pins_settings.html"
+      },
+      {
+        "match": true,
+        "sha256": "15CB8B1B28FAECC6C54834CC3D2357AE308805B7A11DF6D381F47CA2E8A6F157",
+        "file": "elfis_bastille_podmien_front\\shelf_spacing.rb"
+      },
+      {
+        "match": true,
+        "sha256": "C00A1F10F4BA1DF8F878C52BFED592B3B9AAD1045C901317C66EB9A0398F94D2",
+        "file": "elfis_bastille_podmien_front\\shelf_spacing.svg"
+      },
+      {
+        "match": true,
+        "sha256": "246D627960BBC8CA2DF645EF09560662782CEFFC3C69DC29674D04F95F91C9C1",
+        "file": "elfis_bastille_podmien_front\\shelf_spacing_layout.rb"
+      },
+      {
+        "match": true,
+        "sha256": "FF816333B78A453186FA48B26A5A291CEA26FCAD2290A2E6BE079BB75B726B63",
+        "file": "elfis_bastille_podmien_front\\shelf_spacing_tool.rb"
+      },
+      {
+        "match": true,
+        "sha256": "AABC5457CB6D2F0A78208A222581313DB45A01BB0BB5686C1DD4F0CA2E148CD3",
+        "file": "elfis_bastille_podmien_front\\slab_materials.rb"
+      },
+      {
+        "match": true,
+        "sha256": "B2F3C5CCB134667153119F5D8521E014466228D2C5E5E4F3BE13D2BFA3CD1CD3",
+        "file": "elfis_bastille_podmien_front\\studio_settings.html"
+      },
+      {
+        "match": true,
+        "sha256": "CDAA61115FFC36304F17BC4CCDA225B00B1E3D758B517CFD0D562E6C8CCE2818",
+        "file": "elfis_bastille_podmien_front\\studio_settings.rb"
+      },
+      {
+        "match": true,
+        "sha256": "5ED737EC52B7F28A9D6D4CEDCB922269AD0F4313CA9C40D4A5996937BFF24E7A",
+        "file": "elfis_bastille_podmien_front\\studio_settings.svg"
+      },
+      {
+        "match": true,
+        "sha256": "FCAE267D7C1469F39C4E894ADFB00F4FB4643778821DC14ED9D25C764B9F222C",
+        "file": "elfis_bastille_podmien_front\\translations.en.json"
+      },
+      {
+        "match": true,
+        "sha256": "262F21F1355D57E610CF8C02CD4A5DCAB050E2415EDD369C6E92B00D355B4F0E",
+        "file": "elfis_bastille_podmien_front\\docs\\changelog.html"
+      },
+      {
+        "match": true,
+        "sha256": "65F0FCCC3381633D4D7D65CC0A8114EDB88FA3C94B6DDC277C30FC97F1F023AB",
+        "file": "elfis_bastille_podmien_front\\docs\\CHANGELOG.md"
+      },
+      {
+        "match": true,
+        "sha256": "E46D6FC9E734CFB169CDF0D162A4E1ED4BD81B938C0E18031FD04DAECE7095A7",
+        "file": "elfis_bastille_podmien_front\\docs\\guide.en.html"
+      },
+      {
+        "match": true,
+        "sha256": "E567298A7DED431F65D59C9FE4FB23F5EF7F70C7BCE1179F35DF5D7A534B363F",
+        "file": "elfis_bastille_podmien_front\\docs\\guide.pl.html"
+      },
+      {
+        "match": true,
+        "sha256": "F2087D6ECC9B925E94C2D6293490E44854B8E91A28819AA0FAB4E4900A9AD8AB",
+        "file": "elfis_bastille_podmien_front\\docs\\README.md"
+      },
+      {
+        "match": true,
+        "sha256": "221A3A4FCEA8E0D33642FE721F14AD3AE3700C317491AF8226DF8546C21BBF98",
+        "file": "elfis_bastille_podmien_front\\docs\\RELEASE_ARCHIVES.json"
+      },
+      {
+        "match": true,
+        "sha256": "0DCA8B4E21EAEA49EBBDA9E2E2149F14E0BB35833DB934B0B9ACCB254AC74379",
+        "file": "elfis_bastille_podmien_front\\docs\\roadmap.html"
+      },
+      {
+        "match": true,
+        "sha256": "37B507D7CF0F6854EA10B1BA3AF50EAD538BE0FC2C834BB8FAF6828570C5EA6E",
+        "file": "elfis_bastille_podmien_front\\docs\\ROADMAP.md"
+      },
+      {
+        "match": true,
+        "sha256": "A81B5B3379B4F1F818C0634F6E9A076FFFF954F39DB69D3538C7C4C3BAB5FF58",
+        "file": "elfis_bastille_podmien_front\\docs\\USER_GUIDE.en.md"
+      },
+      {
+        "match": true,
+        "sha256": "D752047B49678B48D4D7752B4DA79F3F944E67AC0C8DD0820B1F99AEC9750E95",
+        "file": "elfis_bastille_podmien_front\\docs\\USER_GUIDE.pl.md"
+      },
+      {
+        "match": true,
+        "sha256": "3791160833C27E322FA740064D0C5942B3AF208B44B4C4ABF5A6DD481E8DCC62",
+        "file": "elfis_handles\\calibration.rb"
+      },
+      {
+        "match": true,
+        "sha256": "B6199FA572A2336C924A4E3ACA02A667B12F8AE15BA8F3DB3F25130862F519D3",
+        "file": "elfis_handles\\handle.svg"
+      },
+      {
+        "match": true,
+        "sha256": "F9A9A21CE3A05E0114BD3658DD38225C2CF120A81A95716A5A7C7D5898FE1ABC",
+        "file": "elfis_handles\\handle_add.svg"
+      },
+      {
+        "match": true,
+        "sha256": "B30B76EAF443524AEAD492F82488EE81C7162CBDF1A9F24674E2D30595EA3D5F",
+        "file": "elfis_handles\\handle_remove.svg"
+      },
+      {
+        "match": true,
+        "sha256": "52B84E952584AB3945EFC010A59A3EF9A4BEF6CD69C35CFFA65BA6634087D86C",
+        "file": "elfis_handles\\library.html"
+      },
+      {
+        "match": true,
+        "sha256": "1B750224CD9504820CF0FF58E2B29F349C5B42B7FBA0295B641225A5D7916F54",
+        "file": "elfis_handles\\main.rb"
+      },
+      {
+        "match": true,
+        "sha256": "412170FCAB924789F2BAB40F402066390AECA31F60D72F4F4CC9F0476ABFC4DB",
+        "file": "elfis_handles\\docs\\SHORTCUTS.md"
+      }
+    ],
+    "doors": "2.9.38",
+    "handles": "1.1.9-beta",
+    "backup": "<workspace>\\Backups\\SketchUp2026_before_install_20261114_022137_908"
+  },
+  "limits": [
+    "Supported fixed Kamar template only; ambiguous or nonstandard geometry is rejected.",
+    "Each back is clicked and configured separately; Refresh preserves its recorded or recognized layout.",
+    "Corner shelf arrangement, through-back shelf pins, corner joinery and hinge patterns are not implemented by this release.",
+    "Native fixture operations were rolled back. Production model geometry was not edited."
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "version": "1.1.8-beta",
+  "sha256": "700cdb198e3167eae71de077cf161f62f05cbac69dd496053387766f4ba1c472",
+  "shortcuts": [
+    "Standard Ctrl rotates without changing the selected corner",
+    "Shift mirrors left/right",
+    "Alt mirrors top/bottom independently of orientation",
+    "Tab moves horizontal corner to its edge centre",
+    "Tab restores the remembered corner",
+    "Holding a key toggles once and key release keeps the choice",
+    "Keyboard choice overrides preserved placement only after an explicit key press",
+    "Placement basis remains a rigid rotation",
+    "Rear/front fixing plane remains correct",
+    "standard: all eight perimeter positions are reachable",
+    "Placement basis remains a rigid rotation",
+    "Rear/front fixing plane remains correct",
+    "edge: all eight perimeter positions are reachable",
+    "Edge Ctrl rotates top-centre mounting to right-centre mounting",
+    "Edge Tab restores top-right corner on the side edge",
+    "Edge Alt reaches bottom-right side placement",
+    "Edge Shift reaches bottom-left side placement",
+    "Previously saved side-pull positions retain the old top-end offset"
+  ],
+  "preview": "28 standard/edge states matched native SketchUp placement exactly",
+  "ui": "Existing Handles UI regression passed with edge-corner controls enabled",
+  "geometry_scope": "Placement transforms and key callbacks tested in SketchUp 2026; no user model geometry changed",
+  "installed": {
+    "version": "1.1.8-beta",
+    "source": [
+      "<SketchUp Plugins>/elfis_handles/main.rb",
+      222
+    ],
+    "keyboard": [
+      "<SketchUp Plugins>/elfis_handles/main.rb",
+      601
+    ]
+  },
+  "shortcut_check_count": 18
+}

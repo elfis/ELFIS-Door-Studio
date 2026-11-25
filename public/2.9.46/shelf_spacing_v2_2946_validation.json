@@ -1,0 +1,37 @@
+{
+  "rectangular": {
+    "passed": true,
+    "count": 17,
+    "checks": [
+      "Imported-style fixtures contain no ELFIS attributes",
+      "Geometry identifies three shelves",
+      "Existing shelf-pin circles associate without adoption",
+      "Original version retains its adoption requirement",
+      "V2 applies mixed clear-opening dimensions",
+      "All 36 imported holes refreshed without duplication",
+      "Unrelated circle in a mixed drilling container preserved",
+      "Shared cabinet copy geometry untouched",
+      "No ELFIS attributes written after rearrangement",
+      "Template shelf retains its material",
+      "Increasing count creates a shelf and its drilling",
+      "New shelf also has no ELFIS attributes",
+      "Reducing count removes obsolete holes",
+      "Two shelves reduce to one without adoption",
+      "Removing final shelf clears its drilling",
+      "Session template restores shelves without saved attributes",
+      "Stale preview rejected"
+    ]
+  },
+  "corner": {
+    "passed": true,
+    "count": 6,
+    "checks": [
+      "Corner geometry recognized without attributes",
+      "Side and through-back rows associated geometrically",
+      "Added corner shelf retains opt-in through-back drilling",
+      "Count zero clears corner side and back drilling",
+      "Restoring shelves retains through-back pattern in session memory",
+      "Corner operations write no ELFIS attributes"
+    ]
+  }
+}

@@ -1,12 +1,5 @@
 # Roadmap / Plan rozwoju
 
-## Development hold — OpenCutList 8.0
-
-**Development status:** New feature development is on hold until **OpenCutList 8.0**. Many planned features depend on or are intended to work with OpenCutList; their design will be reviewed against that release before development resumes. The features documented below are already implemented. No OpenCutList 8.0 compatibility is claimed in advance.
-
-**PL:** Dodawanie nowych funkcji jest wstrzymane do wydania OpenCutList 8.0. Większość planowanych funkcji ma współpracować z OpenCutList, dlatego ich zakres zostanie ponownie oceniony po tej wersji. Poniższe pomysły nie są obietnicą terminu wdrożenia.
-
-
 Current versions: Doors **2.9.20**, Handles **1.1.9-beta**. The sections below distinguish implemented work from future ideas; no delivery dates are promised.
 
 ## Implemented / Gotowe

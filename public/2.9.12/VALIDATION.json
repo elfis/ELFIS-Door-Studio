@@ -1,0 +1,13 @@
+{
+  "version": "2.9.12",
+  "sha256": "b70950b13d128861e0c4bb1c9793dbe5efb2c6c0fe2aa5e88842760f842e3424",
+  "activation": {
+    "version": "2.9.12",
+    "source": [
+      "<SketchUp Plugins>/elfis_bastille_podmien_front.rb",
+      169
+    ],
+    "obsolete_callback_call": false
+  },
+  "validation": "All shipped Ruby sources scanned for the obsolete callback; loaded installed replace method bytecode confirms no remaining call. Model geometry unchanged during validation."
+}

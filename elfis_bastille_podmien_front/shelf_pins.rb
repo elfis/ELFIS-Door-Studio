@@ -1,3 +1,4 @@
+require_relative '../elfis_menu'
 # encoding: UTF-8
 # Shelf support vectors. No solid cutting and no automatic geometry observers.
 require 'securerandom'
@@ -452,7 +453,7 @@ module Elfis
       @command=UI::Command.new('ELFIS — Shelf Pin Rows / Podpórki półek') { activate }
       @command.tooltip=l('Wiercenia pod podpórki półek — kliknij lub zaznacz półki','Shelf pin rows — click or select shelves')
       @command.small_icon=File.join(__dir__,'shelf_pins.svg');@command.large_icon=@command.small_icon
-      UI.menu('Extensions').add_item(@command)
+      ElfisMenu.category('Drilling').add_item(@command)
       toolbar=BastillePodmienFront.instance_variable_get(:@toolbar)
       toolbar.add_item(@command) if toolbar
       end
@@ -460,7 +461,7 @@ module Elfis
         @remove_command=UI::Command.new('ELFIS — Remove Shelf Pins / Usuń podpórki półek') { activate(remove:true) }
         @remove_command.tooltip=l('Usuń wiercenia ELFIS z klikniętej lub zaznaczonych półek','Remove ELFIS drilling from clicked or selected shelves')
         @remove_command.small_icon=File.join(__dir__,'shelf_pins_remove.svg');@remove_command.large_icon=@remove_command.small_icon
-        UI.menu('Extensions').add_item(@remove_command)
+        ElfisMenu.category('Drilling').add_item(@remove_command)
       end
       @command.tooltip=l('Podpórki: klik dodaje · Alt usuwa · Ctrl aktualizuje po przesunięciu półki','Shelf pins: click adds · Alt removes · Ctrl updates after moving a shelf')
     end

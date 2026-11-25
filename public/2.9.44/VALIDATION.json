@@ -1,0 +1,173 @@
+{
+  "toolbar": {
+    "passed": true,
+    "checks": [
+      "All three ELFIS toolbars have separate defaults",
+      "Settings ends the default door toolbar",
+      "Order, visibility, enabled bars and custom separators survive preference round-trip",
+      "Hidden icon is omitted without deleting its command",
+      "Visible command order follows the saved order",
+      "Leading, trailing and adjacent separators are normalized",
+      "Startup builder applies the saved visible sequence",
+      "Repeated build does not duplicate a toolbar",
+      "Disabled whole toolbar stays hidden at startup",
+      "All icons hidden does not display an empty bar",
+      "New commands merge into older saved layouts",
+      "Duplicate command IDs are rejected",
+      "Unknown command IDs are rejected",
+      "Damaged preference recovers the default layout",
+      "Each command has English and Polish labels",
+      "Every actual Doors command resolves to a stable settings ID",
+      "Actual Settings command stays last in the default startup layout",
+      "Actual handle toolbar commands resolve to the shared layout IDs"
+    ]
+  },
+  "date": "2026-11-17",
+  "modelGeometryChanged": false,
+  "version": "2.9.44",
+  "activation": {
+    "version": "2.9.44",
+    "legacy_command": true,
+    "v2_command": true,
+    "same_toolbar": true,
+    "legacy_preserved": true,
+    "toolbar_visible": true,
+    "migration_adjacent": true,
+    "command_source": [
+      "<SketchUp Plugins>/elfis_bastille_podmien_front/carcass_joinery_v2.rb",
+      191
+    ]
+  },
+  "native": {
+    "ok": true,
+    "checks": [
+      "Original tool still requires its back datum",
+      "Cabinet base: spindle datum follows the source front without a back",
+      "Top cross member: spindle datum follows the source front without a back",
+      "Fixed shelf: spindle datum follows the source front without a back",
+      "Inward axis correction remains 0.2 mm",
+      "Shift reversal starts 31 mm from the opposite source edge",
+      "Door/front reference identifies reversed cabinets without a back",
+      "2.0 uses the existing machining tag and ownership dictionary",
+      "Refresh dispatches 2.0 sources to the new planner",
+      "Front direction is saved on the source for Refresh",
+      "Refresh moves owned 2.0 holes with the source and leaves no duplicates",
+      "Existing drilling scanner recognizes and associates 2.0 holes",
+      "Shared cabinet copies are isolated without changing twin drilling",
+      "Original removal tool can remove 2.0 drilling",
+      "Removal preserves the other cabinet copy",
+      "Saved direction survives rotation, reflection and scale",
+      "With an ordinary back reference both versions produce the same holes",
+      "Explicit original-tool application restores legacy Refresh routing",
+      "Locked panels rejected before drilling",
+      "Shift first keydown reverses the front",
+      "Holding Shift does not repeatedly reverse the front",
+      "Second Shift press reverses back",
+      "2.0 retains Alt removal shortcut",
+      "2.0 retains Ctrl Refresh shortcut"
+    ]
+  },
+  "installation": {
+    "version": "2.9.44",
+    "backup": "<workspace>\\Backups\\SketchUp2026_before_joinery_v2_20261117_203323",
+    "files": [
+      {
+        "sha256": "A202609F1860E48AC109362280615E80428C4A571C7445031EAAA80E5B40F753",
+        "file": "elfis_bastille_podmien_front.rb",
+        "match": true
+      },
+      {
+        "sha256": "DAFF2E803A7289DF0AB4FCBE8F7CE0AD1B7F0F36DD250C8279A11D384C0AB7A3",
+        "file": "elfis_bastille_podmien_front\\carcass_joinery.rb",
+        "match": true
+      },
+      {
+        "sha256": "4C8529CFC431C3FF0BE926E1B0EB686AD3B6273A2C10ADC521052152E6ECB181",
+        "file": "elfis_bastille_podmien_front\\carcass_joinery_v2.rb",
+        "match": true
+      },
+      {
+        "sha256": "9A46638C248F3D1812B850F8B395A4AA8B2FD0E109CE329847DBE0E9F4F08043",
+        "file": "elfis_bastille_podmien_front\\carcass_joinery_v2.svg",
+        "match": true
+      },
+      {
+        "sha256": "643279A9B9E33A6053AB35DD0466AA7AC20F65F2BCD49C9D3BF47BFDA304D00A",
+        "file": "elfis_bastille_podmien_front\\drilling_refresh.rb",
+        "match": true
+      },
+      {
+        "sha256": "C31A8C63C9B01A68F9A4D3BB061C4F31B0D3CEDD54BF0D6BD161B2ECF51DDED2",
+        "file": "elfis_bastille_podmien_front\\studio_settings.rb",
+        "match": true
+      },
+      {
+        "sha256": "E1EADD75A542C7FF08F17D6818E34DB818BC3F223347B0F5668029E2A29A46B3",
+        "file": "elfis_bastille_podmien_front\\toolbar_layout.rb",
+        "match": true
+      },
+      {
+        "sha256": "147E4B5B81D781A3F9FC5952B19A9A68B91CFC687F09F12207F2D7191F1E45D1",
+        "file": "elfis_bastille_podmien_front\\engine.rb",
+        "match": true
+      },
+      {
+        "sha256": "C1DAD9195171E116F76090951B8055CF9E6EEC23C683A239E4F16487E9B1AA55",
+        "file": "elfis_bastille_podmien_front\\i18n.rb",
+        "match": true
+      },
+      {
+        "sha256": "91E7AEF43D328893DF527EB301E2F42134E600DBA36DE0090955DD6E87F6DF4B",
+        "file": "elfis_bastille_podmien_front\\docs\\changelog.html",
+        "match": true
+      },
+      {
+        "sha256": "1E9C66145B3DDAC1B8E290F07FD3A63704F1E10332FC57C2DC217350E57A54B8",
+        "file": "elfis_bastille_podmien_front\\docs\\CHANGELOG.md",
+        "match": true
+      },
+      {
+        "sha256": "8F73E26D2EB018FDCEE1B5E7D4843F3099C8F99F9012C13F65CEBFB84A0D3ECE",
+        "file": "elfis_bastille_podmien_front\\docs\\guide.en.html",
+        "match": true
+      },
+      {
+        "sha256": "CA962BB05398DB2B05EC5B9A72BB53A7299D7E0A82A77703455085577BFA41B2",
+        "file": "elfis_bastille_podmien_front\\docs\\guide.pl.html",
+        "match": true
+      },
+      {
+        "sha256": "D84D39DD293245DEB7AFA687BCF3241976C8AB7EC9884EAB90A680C7F003D41A",
+        "file": "elfis_bastille_podmien_front\\docs\\README.md",
+        "match": true
+      },
+      {
+        "sha256": "221A3A4FCEA8E0D33642FE721F14AD3AE3700C317491AF8226DF8546C21BBF98",
+        "file": "elfis_bastille_podmien_front\\docs\\RELEASE_ARCHIVES.json",
+        "match": true
+      },
+      {
+        "sha256": "8FCC643F28FE05594DBE5959448446EB8084715AB6EB16FDE955FAE88FBCB476",
+        "file": "elfis_bastille_podmien_front\\docs\\roadmap.html",
+        "match": true
+      },
+      {
+        "sha256": "37B507D7CF0F6854EA10B1BA3AF50EAD538BE0FC2C834BB8FAF6828570C5EA6E",
+        "file": "elfis_bastille_podmien_front\\docs\\ROADMAP.md",
+        "match": true
+      },
+      {
+        "sha256": "A63CEB4EE47CFC381EF100C7049A51C082E884667F2C7BBDB451992D18739406",
+        "file": "elfis_bastille_podmien_front\\docs\\USER_GUIDE.en.md",
+        "match": true
+      },
+      {
+        "sha256": "20F493E59C4C95F31509C93F795AE850FAD9DBCC2BC2D4DDA50422FB7599AF58",
+        "file": "elfis_bastille_podmien_front\\docs\\USER_GUIDE.pl.md",
+        "match": true
+      }
+    ],
+    "passed": true
+  },
+  "limitations": "No front/back: verify the panel-axis direction in preview and reverse with Shift if needed. Corner cabinets retain the existing contact-edge planner."
+}

@@ -1,0 +1,36 @@
+{
+  "version": "3.0.1-beta",
+  "native": {
+    "passed": true,
+    "checks": [
+      "Finish is stored as a native SKM outside the installed plugin",
+      "Full serialized V-Ray graph is retained in the saved snapshot",
+      "Native SKM round-trip preserves V-Ray attribute values",
+      "Native round-trip preserves SketchUp colour",
+      "Explicit finish is applied to the replacement occurrence",
+      "Other shared source occurrences keep their original materials",
+      "Slab narrow ABS edges retain their original material",
+      "Broad and chamfer faces inherit the component finish with both sides Default",
+      "Plain finishes are marked without grain",
+      "Different front occurrences retain independent V/H settings",
+      "V keeps the finish only on the outer component",
+      "V aligns inherited texture axes with the requested physical grain",
+      "H keeps the finish only on the outer component",
+      "H aligns inherited texture axes with the requested physical grain",
+      "Repeated V/H changes keep the original physical dimensions",
+      "Repeated V/H changes do not accumulate axis rotations",
+      "Keep existing also moves old broad-face colour to the component",
+      "Keep existing preserves each front finish and grain during replacement",
+      "Order consolidation separates otherwise equal V and H fronts",
+      "Clipboard export contains the V/H column",
+      "Order PDF builds with the added V/H column",
+      "Built-in profile palette survives saving and reloading the profile database",
+      "A finish outside the profile palette is rejected before changing fronts",
+      "Actual model V-Ray material saves successfully without changing its settings"
+    ],
+    "version": "3.0.1-beta"
+  },
+  "visual": "SketchUp inherited V/H comparison inspected; broad faces Default",
+  "vray_render": "not validated",
+  "sha256": "062dc5c5cef61ecc0cdb8bf2ec3684cf242e939f3af3545a3eb7b998d6b6a43d"
+}

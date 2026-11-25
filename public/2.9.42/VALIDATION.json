@@ -1,0 +1,28 @@
+{
+  "version": "2.9.42",
+  "ui": {
+    "ok": true,
+    "checks": 8
+  },
+  "limitations": "Circular D..._DEPTH... vectors only; physical solid holes and untagged geometry excluded",
+  "installation": "74 files SHA256 verified",
+  "preserved": "Production model, other instances, faces and routing",
+  "native": {
+    "ok": true,
+    "checks": [
+      "All Doors Ruby files compile",
+      "Hidden, imported and mixed-container circles found; face boundaries excluded",
+      "All three drilling circles removed",
+      "Selected cabinet contains no supported drilling",
+      "Other cabinet instance is unchanged",
+      "Old source association removed so Refresh cannot recreate it",
+      "Other instance source association preserved",
+      "Panel face preserved",
+      "Routing vectors and Kamar settings preserved",
+      "Non-drilling edge in mixed operation container preserved",
+      "Repeated reset is a no-op",
+      "Single Undo restores drilling and associations",
+      "Locked preflight rejected before mutation"
+    ]
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "passed": true,
+  "count": 10,
+  "checks": [
+    "Both tag rows render",
+    "Tag names rendered safely as text",
+    "Click sends the selected ID",
+    "Multiple choices retained",
+    "Search includes folder names",
+    "Clear also removes filtered-out selections",
+    "Escape clears highlights",
+    "Refresh invokes model callback",
+    "No JavaScript errors",
+    "No horizontal overflow"
+  ]
+}

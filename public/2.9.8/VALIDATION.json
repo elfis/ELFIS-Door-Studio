@@ -1,0 +1,7 @@
+{
+  "version": "2.9.8",
+  "sha256": "59bc7388e7d1e6c49238bf6197e6c7a04442dc0d7d4216903c45ab8528ac1f10",
+  "audio": "Removed playback calls, controls, callbacks and packaged WAV",
+  "browser": "EN/PL language and behavioural regressions passed",
+  "pdf": "Unchanged from visually verified 2.9.7 print-friendly renderer"
+}

@@ -4,8 +4,8 @@ from io import BytesIO
 
 root = Path(__file__).resolve().parent
 entry = root / 'elfis_bastille_podmien_front.rb'
-files = [entry, root / 'elfis_tag_toolbar.rb'] + sorted(p for p in (root / 'elfis_bastille_podmien_front').rglob('*') if p.is_file() and p.name != 'door_complete.wav')
-target = root / 'ELFIS_Profile_Library_2.9.39.rbz'
+files = [entry, root / 'elfis_tag_toolbar.rb', root / 'elfis_menu.rb'] + sorted(p for p in (root / 'elfis_bastille_podmien_front').rglob('*') if p.is_file() and p.name != 'door_complete.wav')
+target = root / 'ELFIS_Profile_Library_2.9.46.rbz'
 buffer = BytesIO()
 with ZipFile(buffer, 'w', ZIP_DEFLATED) as package:
     for file in files:
@@ -27,3 +27,5 @@ with ZipFile(target) as package:
     assert 'elfis_bastille_podmien_front/order_list.svg' in package.namelist()
     assert 'elfis_bastille_podmien_front/families.rb' in package.namelist()
 print(f'{target.name}: {len(files)} files, {target.stat().st_size} bytes, verified')
+
+

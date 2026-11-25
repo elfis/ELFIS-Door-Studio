@@ -1,10 +1,11 @@
+require_relative '../elfis_menu'
 # encoding: UTF-8
 require 'json'
 module Elfis
   module BastillePodmienFront
     extend self
-    remove_const(:VERSION) if const_defined?(:VERSION,false) && const_get(:VERSION)!='2.9.39'
-    VERSION='2.9.39' unless const_defined?(:VERSION,false)
+    remove_const(:VERSION) if const_defined?(:VERSION,false) && const_get(:VERSION)!='2.9.46'
+    VERSION='2.9.46' unless const_defined?(:VERSION,false)
 
     def language
       return @language if @language
@@ -65,7 +66,7 @@ module Elfis
     def install_public_help
       return if @help_command
       @help_command=UI::Command.new('ELFIS — Documentation / Dokumentacja') { show_public_help }
-      UI.menu('Extensions').add_item(@help_command)
+      ElfisMenu.category('Help & integration').add_item(@help_command)
     end
 
     def show_public_help
@@ -78,3 +79,5 @@ module Elfis
     end
   end
 end
+
+

@@ -1,0 +1,1 @@
+ELFIS Door Studio 2.9.41: Existing drilling depths display at the nearest 0.5 mm, with one decimal. Geometry and stored machining parameters are unchanged. Install and reopen Default settings to refresh the display.

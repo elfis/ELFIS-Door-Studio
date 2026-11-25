@@ -1,3 +1,4 @@
+require_relative '../elfis_menu'
 # encoding: UTF-8
 require 'json'
 require 'securerandom'
@@ -107,7 +108,7 @@ module Elfis
 
     def install_naming_menu
       return if @naming_menu
-      @naming_menu=UI.menu('Extensions').add_submenu('ELFIS — Door Naming / Nazwy drzwi')
+      @naming_menu=ElfisMenu.category('Settings').add_submenu('Door Naming / Nazwy drzwi')
       @rename_command=UI::Command.new(l('Zmień nazwy drzwi','Rename doors')) { set_naming_mode(true) }
       @keep_names_command=UI::Command.new(l('Pozostaw nazwy drzwi','Keep original door names')) { set_naming_mode(false) }
       @rename_command.set_validation_proc { rename_doors? ? MF_CHECKED : MF_UNCHECKED }

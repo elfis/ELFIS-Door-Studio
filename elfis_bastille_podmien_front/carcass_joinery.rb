@@ -1,3 +1,4 @@
+require_relative '../elfis_menu'
 # encoding: UTF-8
 require 'json'
 require 'securerandom'
@@ -254,6 +255,8 @@ module Elfis
           siblings=source_path.length>1 ? source_path[-2].definition.entities : model.active_entities
           owner=SecureRandom.uuid if siblings.any? { |e| instance?(e) && e!=source && e.get_attribute(DICT,'owner_key')==owner }
           source.set_attribute(DICT,'owner_key',owner)
+          # Explicit use of the original tool restores its original planner.
+          %w[planner_version front_axis_v2 front_reference_v2].each { |key|source.delete_attribute(DICT,key) }
           receivers.each do |side_spec,holes|
             side_path=BastillePodmienFront.unique_path(resolve.call(side_spec));side=side_path.last
             side.make_unique if side.definition.instances.length>1
@@ -441,14 +444,14 @@ module Elfis
       @command=UI::Command.new('ELFIS — Dowels and Screws / Kołki i śruby') { activate }
       @command.tooltip=l('Wiercenia w bokach: wieńce, półki stałe i plecy','Side-panel drilling: rails, fixed shelves and backs')
       @command.small_icon=File.join(__dir__,'carcass_joinery.svg');@command.large_icon=@command.small_icon
-      UI.menu('Extensions').add_item(@command)
+      ElfisMenu.category('Drilling').add_item(@command)
       toolbar=BastillePodmienFront.instance_variable_get(:@toolbar);toolbar.add_item(@command) if toolbar
       end
       unless @remove_command
         @remove_command=UI::Command.new('ELFIS — Remove Dowels and Screws / Usuń kołki i śruby') { activate(remove:true) }
         @remove_command.tooltip=l('Usuń wiercenia kołków i śrub z klikniętego lub zaznaczonych paneli','Remove dowel and screw drilling from clicked or selected panels')
         @remove_command.small_icon=File.join(__dir__,'carcass_joinery_remove.svg');@remove_command.large_icon=@remove_command.small_icon
-        UI.menu('Extensions').add_item(@remove_command)
+        ElfisMenu.category('Drilling').add_item(@remove_command)
       end
       @command.tooltip=l('Kołki i śruby: klik dodaje · Alt usuwa · Ctrl aktualizuje po przesunięciu panelu','Dowels and screws: click adds · Alt removes · Ctrl updates after moving a panel')
     end

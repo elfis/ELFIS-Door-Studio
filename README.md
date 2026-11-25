@@ -10,10 +10,17 @@ Designed to support workflows with **Blum Online Configurator, ABF2 and OpenCutL
 
 | Module | Version | Installer | Documentation |
 | --- | --- | --- | --- |
-| Doors and cabinet tools | **2.9.39** | [Download RBZ](public/2.9.39/ELFIS_Profile_Library_2.9.39.rbz) · [SHA-256](public/2.9.39/ELFIS_Profile_Library_2.9.39.sha256) | [English](elfis_bastille_podmien_front/docs/USER_GUIDE.en.md) / [Polski](elfis_bastille_podmien_front/docs/USER_GUIDE.pl.md) |
-| Handles — optional, requires Doors | **1.1.9-beta** | [Download RBZ](public/handles/1.1.9-beta/ELFIS_Handles_1.1.9-beta.rbz) · [SHA-256](public/handles/1.1.9-beta/ELFIS_Handles_1.1.9-beta.sha256) | [English](ELFIS_Handles_README.en.md) / [Polski](ELFIS_Handles_README.md) |
+| Doors and cabinet tools | **2.9.46** | [Download RBZ](public/2.9.46/ELFIS_Profile_Library_2.9.46.rbz) · [SHA-256](public/2.9.46/ELFIS_Profile_Library_2.9.46.sha256) | [Release notes](public/2.9.46/README.md) · [English](elfis_bastille_podmien_front/docs/USER_GUIDE.en.md) · [Polski](elfis_bastille_podmien_front/docs/USER_GUIDE.pl.md) |
+| Door Configurator and finishes | **3.0.1-beta** | [Download RBZ](public/3.0.1-beta/ELFIS_Profile_Library_3.0.1-beta.rbz) · [SHA-256](public/3.0.1-beta/ELFIS_Profile_Library_3.0.1-beta.sha256) | [Release notes](public/3.0.1-beta/README.md) · [English](public/3.0.1-beta/docs/USER_GUIDE.en.md) · [Polski](public/3.0.1-beta/docs/USER_GUIDE.pl.md) |
+| Handles | **1.1.10-beta** | [Download RBZ](public/handles/1.1.10-beta/ELFIS_Handles_1.1.10-beta.rbz) · [SHA-256](public/handles/1.1.10-beta/ELFIS_Handles_1.1.10-beta.sha256) | [Release notes](public/handles/1.1.10-beta/README.md) · [English](ELFIS_Handles_README.en.md) · [Polski](ELFIS_Handles_README.md) |
+| Cabinet Studio | **3.1.0** | [Download RBZ](public/CabinetStudio/3.1.0/ELFIS_Cabinet_Studio_3.1.0.rbz) · [SHA-256](public/CabinetStudio/3.1.0/ELFIS_Cabinet_Studio_3.1.0.sha256) | [Notes](public/CabinetStudio/README.md) |
+| Drilling, Edge & Tag Highlight | **1.3.1** | [Download RBZ](public/DrillingHighlight/1.3.1/ELFIS_Drilling_Highlight_1.3.1.rbz) · [SHA-256](public/DrillingHighlight/1.3.1/ELFIS_Drilling_Highlight_1.3.1.sha256) | [Release notes](public/DrillingHighlight/1.3.1/README.md) |
+| Cabinet Elevation / Widok Zabudowy | **0.1.44 beta** | [Download RBZ](public/elevation-beta/ELFIS_Widok_Zabudowy_0.1.44_beta.rbz) · [SHA-256](public/elevation-beta/ELFIS_Widok_Zabudowy_0.1.44_beta.sha256) | [Release notes](public/elevation-beta/README.md) |
+| Hinge Hardware Sync | **0.1.2 test** | [Download RBZ](public/hinge-hardware-sync/0.1.2-test/ELFIS_Hinge_Hardware_Sync_0.1.2_TEST_code_only.rbz) · [SHA-256](public/hinge-hardware-sync/0.1.2-test/ELFIS_Hinge_Hardware_Sync_0.1.2_TEST_code_only.sha256) | [Release notes](public/hinge-hardware-sync/0.1.2-test/README.md) |
 
-Install Doors first, then Handles if required: **Extensions → Extension Manager → Install Extension**. Fully close and restart SketchUp after updating. Enable the ELFIS toolbars under **View → Toolbars**. The Doors installer includes cabinet machining tools; Handles has a separate installer and contains no manufacturer handle models.
+Install RBZ packages from **Extensions → Extension Manager → Install Extension** and restart SketchUp. Enable toolbars under **View → Toolbars**. Install Doors 2.9.46 before Cabinet Studio. The Doors 3.0 beta uses the same extension files as 2.9 and focuses on front finishes. Use the 2.9 series for cabinet machining tools and back up your extension settings before switching series. Handles is an optional add-on.
+
+[Installer archive](INSTALLER_ARCHIVES.json) · [Tag Toolbar](public/TagToolbar) · [Cabinet Preview test builds](public/cabinet-preview) · [Upper Front Positioning test builds](public/upper-front-positioning) · [Legacy front tools](public/legacy)
 
 Tested in **SketchUp Pro 2026 on Windows**. Other SketchUp versions and macOS have not been verified. Handles remains beta: calibrate fixing points and check a test front before production use.
 
@@ -42,13 +49,13 @@ Tested in **SketchUp Pro 2026 on Windows**. Other SketchUp versions and macOS ha
 
 ## What changed since the previous GitHub release?
 
-Doors **2.9.15–2.9.39** adds cabinet drilling, central defaults and visibility tools, imported-operation adoption, common refresh, hinge viewport controls, TANDEMBOX reference drilling, shelf arrangement and L-corner support. It also fixes the source datum for dowels/screws and cleans supports belonging to deleted shelves. [Version-by-version changes](CHANGELOG.md).
+Doors **2.9.40–2.9.46** adds configurable toolbars, cabinet drilling cleanup, Dowels and Screws 2.0 and Arrange Shelves 2.0. The separate **3.0.1-beta** adds component-level finishes and grain controls. [Version-by-version changes](CHANGELOG.md).
 
-Handles **1.1.5–1.1.9-beta** adds direct add/remove/library toolbar tools, automatic length measurement, expanded position shortcuts and a signed offset from the centre for side-mounted rear-fixed pulls.
+Handles **1.1.10-beta** adds shared toolbar preferences for ordering and hiding the Add, Remove and Library buttons.
 
 ## Validation and machining limits
 
-The Doors 2.9.39 validation record contains **248 passing native checks**, including 88 corner-cabinet checks on disposable copies. Two historical harnesses relying on absent/changed production fixtures are excluded and documented separately. This is not certification of arbitrary cabinets or every manufacturer's drilling pattern. Review all generated vectors, tags, depths and clearances before machining. Follow the fitting manufacturer's current technical documentation.
+The historical Doors 2.9.39 validation record contains **248 passing native checks**, including 88 corner-cabinet checks on disposable copies. Two historical harnesses relying on absent/changed production fixtures are excluded and documented separately. This is not certification of arbitrary cabinets or every manufacturer's drilling pattern. Review all generated vectors, tags, depths and clearances before machining. Follow the fitting manufacturer's current technical documentation.
 
 No manufacturer hardware models, hinge/drawer opening animation, collision physics, V-Ray colour library or automatic plinth geometry generator are bundled. Shelf arrangement supports the documented upright single-bay geometry; arbitrary skewed intersections and ambiguous panel layouts are rejected.
 

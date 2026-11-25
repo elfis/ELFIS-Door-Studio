@@ -1,0 +1,50 @@
+{
+  "passed": true,
+  "checks": [
+    "Seven adjustable shelves found in three actual cabinets; fixed shelves and cross members excluded",
+    "wiszaca: twelve planned circles",
+    "wiszaca: planned centres match the existing production vectors",
+    "wiszaca: twelve planned circles",
+    "wiszaca: planned centres match the existing production vectors",
+    "wiszaca: twelve planned circles",
+    "wiszaca: planned centres match the existing production vectors",
+    "stojaca: twelve planned circles",
+    "stojaca: planned centres match the existing production vectors",
+    "wysoka: twelve planned circles",
+    "wysoka: planned centres match the existing production vectors",
+    "wysoka: twelve planned circles",
+    "wysoka: planned centres match the existing production vectors",
+    "wysoka: twelve planned circles",
+    "wysoka: planned centres match the existing production vectors",
+    "Actual cabinets: 84 positions reused or refreshed without increasing the hole count",
+    "Rotated, mirrored and nonuniformly scaled cabinet creates twelve holes",
+    "Every hole has its own nested group",
+    "Group tags, circle tags, names and vector-only geometry match the inspected convention",
+    "Hole diameter stays physical under nonuniform cabinet scale",
+    "Shared cabinet copy remains untouched",
+    "Reapplying updates owned holes without multiplying groups",
+    "Independent top/bottom counts place additional rows only on the requested side",
+    "Zero additional rows gives four centre holes and refreshes previous groups",
+    "Drilling tag preserves selected diameter and depth precision",
+    "Through drilling is rejected for blind shelf supports"
+  ],
+  "version": "2.9.10",
+  "sha256": "fc4516ce4f80f69540fad8ce26f86e2334e8078707dd969ad827126a6c75e832",
+  "activation": {
+    "passed": true,
+    "checks": [
+      "Icon activates tool immediately using defaults/saved settings",
+      "Settings command is available from the tool right-click menu"
+    ]
+  },
+  "installed": {
+    "version": "2.9.10",
+    "source": [
+      "<SketchUp Plugins>/elfis_bastille_podmien_front/shelf_pins.rb",
+      265
+    ],
+    "settings_visible": true
+  },
+  "browser": "EN/PL live tag, decimal precision, extra-hole counts and save payload passed",
+  "native_ui": "Settings window opened from installed files; top/bottom controls and D5.0_DEPTH12.0 preview verified"
+}

@@ -1,6 +1,10 @@
-# ELFIS Door Profile Library — 2.9.39
+# ELFIS Door Profile Library — 2.9.46
 
 Create and restyle cabinet fronts from reusable cross-sections, then prepare a consolidated order list from the model.
+
+**Arrange Shelves 2.0:** an independent shelf-layout tool under **Extensions → ELFIS → Cabinet tools**, also available through the 2.0 shelf icon on the Doors toolbar. It works with recognizable imported shelf-pin vectors without adopting them and writes no new ELFIS attributes. Clear openings are measured from the bottom, with shelf and rail thicknesses deducted. Existing drilling patterns, including through-back rows, follow Apply. The original Arrange Shelves remains available.
+
+V2 keeps its shelf template in session memory only. If all shelves are removed and the model is reopened, insert a template shelf to establish the geometry again. Use V2 Apply for its drilling updates; ownership-based global Refresh does not track these unowned holes.
 
 ELFIS Door Studio is a SketchUp plugin for creating and replacing cabinet fronts, placing handles, preparing drilling vectors and compiling order lists. It is designed to support workflows with **Blum Online Configurator, ABF2 and OpenCutList**.
 
@@ -11,7 +15,7 @@ The interface defaults to **English**. Choose **English / Polski** in the profil
 ## Install or update
 
 1. In SketchUp, choose **Extensions → Extension Manager → Install Extension**.
-2. Select `ELFIS_Profile_Library_2.9.39.rbz` and restart SketchUp.
+2. Select `ELFIS_Profile_Library_2.9.46.rbz` and restart SketchUp.
 3. Enable the ELFIS toolbar through **View → Toolbars** if it is hidden.
 
 This updates the existing door-replacement/profile-library extension. The older “Drzwi z profilu” generator is a separate extension and is not required.
@@ -38,3 +42,5 @@ Custom cross-sections and settings are stored in `%APPDATA%\ELFIS\DoorProfileLib
 RBZ release archives are kept separately; a code rollback does not automatically roll back or overwrite the user's profile data. Older versions may not understand newer profile types.
 
 This package has been prepared for public testing. Publishing, licensing and distribution terms remain the author's decision; preparing the package does not publish it.
+
+

@@ -1,0 +1,108 @@
+{
+  "version": "2.9.18",
+  "date": "2026-11-13",
+  "passed": true,
+  "archive": "ELFIS_Profile_Library_2.9.18.rbz",
+  "sha256": "7d85a184256ea10ede07a9787babbfba3c6444e3c29e35b27a6dde8e0aad2d62",
+  "tests": {
+    "native": {
+      "passed": true,
+      "checks": [
+        "Comma-separated tags saved and normalized",
+        "Room defaults to named group",
+        "Actual hardware defaults preserved",
+        "Overlapping back/side tags rejected without partial preference writes",
+        "Room resolves nested named groups case-insensitively",
+        "Room status follows group visibility",
+        "Visibility button resolves multiple configured tags",
+        "Visibility status includes every configured tag",
+        "Joinery supports custom side, rail and back tags",
+        "Shelf pins support separate custom shelf and side tags",
+        "Configured operation tag used by both tools",
+        "Imported dowels, screws, back screws and pins recognized geometrically",
+        "Adopt existing drilling without resizing",
+        "All adopted groups receive correct ownership",
+        "Unselected shared cabinet copy remains unadopted",
+        "Diameter and depth update all selected supported drilling types",
+        "Measured circles and depth tags agree after editing",
+        "Every physical circle centre preserved under mirror and rotation",
+        "Other copy keeps original diameter and depth",
+        "Converted joinery supports click removal",
+        "Converted shelf pins support original removal tool",
+        "Changed geometry between scan and apply is rejected"
+      ]
+    },
+    "interface": {
+      "passed": true,
+      "results": [
+        {
+          "language": "en",
+          "passed": true,
+          "checks": [
+            "five tabs",
+            "defaults payload",
+            "multiple tags",
+            "21 spindles",
+            "reuse setting",
+            "Room group",
+            "real scan rows",
+            "escaped model names",
+            "conversion selection and parameters",
+            "error handling",
+            "360px layout"
+          ]
+        },
+        {
+          "language": "pl",
+          "passed": true,
+          "checks": [
+            "five tabs",
+            "defaults payload",
+            "multiple tags",
+            "21 spindles",
+            "reuse setting",
+            "Room group",
+            "real scan rows",
+            "escaped model names",
+            "conversion selection and parameters",
+            "error handling",
+            "360px layout"
+          ]
+        }
+      ]
+    },
+    "rubyAndFilename": {
+      "passed": true,
+      "checks": [
+        "Filename: \"Kitchen\" / \"\"",
+        "Filename: \"Żółta kuchnia\" / \"\"",
+        "Filename: \"Untitled\" / \"\"",
+        "Filename: \"Bez tytułu\" / \"\"",
+        "Filename: \"\" / \"\"",
+        "Filename: \"\" / \"C:\\\\Projects\\\\Project.skp\"",
+        "Filename: \"A:B/C*D?E|F<test>\" / \"\"",
+        "Filename: \"Project.skp\" / \"\"",
+        "Filename: \"Project...  \" / \"\"",
+        "Long project name bounded",
+        "Save dialog uses suggested filename",
+        "Production Ruby compiles"
+      ]
+    }
+  },
+  "installation": {
+    "passed": true,
+    "version": "2.9.18",
+    "verifiedFiles": 57,
+    "backup": "<workspace>\\Backups\\SketchUp2026_before_install_20261113_075917_133"
+  },
+  "nativeInterface": {
+    "passed": true,
+    "checks": [
+      "Installed module loaded in SketchUp 2026",
+      "Five Polish tabs displayed",
+      "Room uses named group room",
+      "Hardware target list preserved",
+      "Gear toolbar button reopens central settings"
+    ]
+  }
+}

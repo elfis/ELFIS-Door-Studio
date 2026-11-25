@@ -1,3 +1,4 @@
+require_relative '../elfis_menu'
 # encoding: UTF-8
 require 'securerandom'
 module Elfis
@@ -197,7 +198,7 @@ module Elfis
       @command=UI::Command.new('ELFIS — TANDEMBOX Drilling / Wiercenia szuflad') { activate }
       @command.tooltip=l('TANDEMBOX M/D 500: klik dodaje lub przejmuje; Alt usuwa; Ctrl aktualizuje; prawy klik: ustawienia','TANDEMBOX M/D 500: click adds or adopts; Alt removes; Ctrl updates; right-click: settings')
       @command.small_icon=File.join(__dir__,'drawer_drilling.svg');@command.large_icon=@command.small_icon
-      UI.menu('Extensions').add_item(@command);toolbar=BastillePodmienFront.instance_variable_get(:@toolbar);toolbar.add_item(@command) if toolbar
+      ElfisMenu.category('Drilling').add_item(@command);toolbar=BastillePodmienFront.instance_variable_get(:@toolbar);toolbar.add_item(@command) if toolbar
     end
   end
 end

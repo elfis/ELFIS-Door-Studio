@@ -2,6 +2,48 @@
 
 This history is reconstructed from preserved RBZ packages, instructions, release notes and test reports. Older development dates were not consistently recorded, so none are invented. Version numbers belong to the named extension line; the first profile generator and the later replacement tool originally had separate version sequences.
 
+## 2.9.46 — Imported shelf-pin pattern recognition
+
+- Arrange Shelves 2.0 recognizes a complete imported shelf-pin grid displaced vertically by up to half the configured pitch. Every circle must match its receiving panel, XY position, diameter, depth and normal; incomplete or conflicting matches are rejected.
+- Apply re-anchors the matched grid to the configured below-shelf datum, rather than retaining an old offset left after moving shelves manually. No adoption or new ownership attributes are required.
+- The affected unit in Final had two full patterns displaced by 6 and 12 mm. Tests on rolled-back copies confirmed 2→1 (12 holes) and 2→3 (36 holes), with zero residual datum offset.
+- 23 rectangular/corner fixture checks also passed, including a direct 2→1 regression and preserving unrelated vectors in mixed drilling groups. The production unit was not rearranged.
+
+## 2.9.45 — Arrange Shelves 2.0 and grouped menus
+
+- Independent Arrange Shelves 2.0 command with a labelled icon next to the original command. The original shelf tool is retained.
+- No mandatory drilling adoption and no new ELFIS ownership/template attributes. Existing shelf-pin circles are associated geometrically; matching holes follow the layout, including adding and deleting shelves.
+- Preserves each matched pattern's diameter, depth, row offsets and through-back drilling. Mixed vector groups retain unrelated circles. Shared cabinet copies are isolated without temporary path attributes.
+- Templates, including through-back patterns, are kept only in session memory. After saving/reopening a cabinet with zero shelves, add a template shelf before using V2. Use V2 Apply to rearrange and refresh its unowned drilling; it is not registered with the ownership-based global Refresh tool.
+- Fixed shelf joinery, locked or ambiguous matching and stale previews are rejected. No background geometry updates.
+- ELFIS extension commands are grouped under Extensions → ELFIS by function; native menu changes take effect after restart.
+- 22 native fixture checks passed, covering rectangular and L-corner cabinets, mixed vectors, copied cabinets, count changes, zero/restoration and absence of new ELFIS attributes. Production geometry was left unchanged.
+
+## 2.9.44 — Dowels and Screws 2.0
+
+- Separate 2.0 command and labelled icon on the Doors toolbar. Original command remains available.
+- Front panel establishes the front datum when present; a back panel is optional. With neither reference, preview a direction based on panel axes and press Shift to reverse it. Direction is saved in source-local coordinates.
+- Existing machining tags, owner IDs, source-edge offsets, 32 mm spindle pattern and 0.2 mm inward correction remain compatible. Alt removes and Ctrl refreshes. Shared cabinet copies remain isolated.
+- Refresh chooses the planner recorded on each source. Applying the original command explicitly restores legacy planning for that source. Existing drilling scan and removal recognize both versions.
+- 24 native SketchUp checks cover absent backs, top/base/fixed shelves, reversed doors, saved direction, scaling/reflection, Refresh, scanning, copied instances, locks and keyboard modifiers. Tests used disposable geometry and were rolled back.
+
+## 2.9.42 — Clear cabinet drilling
+
+- Default settings → Existing drilling: Remove all drilling in the currently selected cabinet(s), with a counted confirmation and one Undo.
+- Includes hidden and imported circular D…_DEPTH… drilling vectors without requiring ELFIS source associations. Mixed operation containers retain other edges.
+- Isolates shared component copies, rejects locked targets before changes, and clears source ownership so Refresh does not restore the old drilling pattern. Routing, Kamar cutouts and panel faces remain. Physical holes in solid geometry and untagged circles are outside this vector reset.
+
+## 2.9.41 — Clean drilling depth display
+
+- Display Existing drilling depths rounded to the nearest 0.5 mm with one decimal (18.00000000003489 → 18.0). This is display formatting only; source values, vectors, associations and parameter conversion retain their original precision.
+
+## 2.9.40 — Toolbar preferences and imported corner drilling
+
+- Add a central Toolbars tab for Doors, Handles and Visibility: persistent order, per-icon and whole-bar visibility, draggable rows, arrows, custom separators, preview and per-bar restore. Apply at next SketchUp startup without duplicate live toolbars. Menu access to settings remains available.
+- Merge newly introduced commands into older saved layouts and recover defaults from damaged preferences.
+- Fix corner Existing drilling candidates to use real perpendicular receiver plans. Associate legacy back screws from actual cut-end contacts independently of default margins/spacing; preserve centres on adoption/conversion and reject locked or ambiguous sources.
+- Handles 1.1.10-beta supports the shared toolbar layout; handle geometry and positioning rules are unchanged.
+
 ## 2.9.39 — L corner cabinet machining and shelf arrangement
 
 - Detect actual shelf/rail edge contacts with perpendicular receivers; retain complete rounded L shelf outlines in arrangement previews and cloning.

@@ -1,3 +1,4 @@
+require_relative '../elfis_menu'
 # encoding: UTF-8
 module Elfis
   module BastillePodmienFront
@@ -680,7 +681,7 @@ module Elfis
       @order_command.status_bar_text=Elfis::BastillePodmienFront.l('Otwórz i odśwież zestawienie frontów z projektu. Kopiowanie tabeli do schowka.','Open and refresh the project order list. Copy the table to the clipboard.')
       @order_command.small_icon=File.join(__dir__,'order_list.svg')
       @order_command.large_icon=@order_command.small_icon
-      UI.menu('Extensions').add_item(@order_command)
+      ElfisMenu.category('Orders').add_item(@order_command)
       @toolbar.add_item(@order_command)
     end
   end

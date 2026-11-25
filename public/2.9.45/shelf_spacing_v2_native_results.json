@@ -1,0 +1,22 @@
+{
+  "passed": true,
+  "count": 16,
+  "checks": [
+    "Imported-style fixtures contain no ELFIS attributes",
+    "Geometry identifies three shelves",
+    "Existing shelf-pin circles associate without adoption",
+    "Original version retains its adoption requirement",
+    "V2 applies mixed clear-opening dimensions",
+    "All 36 imported holes refreshed without duplication",
+    "Unrelated circle in a mixed drilling container preserved",
+    "Shared cabinet copy geometry untouched",
+    "No ELFIS attributes written after rearrangement",
+    "Template shelf retains its material",
+    "Increasing count creates a shelf and its drilling",
+    "New shelf also has no ELFIS attributes",
+    "Reducing count removes obsolete holes",
+    "Removing final shelf clears its drilling",
+    "Session template restores shelves without saved attributes",
+    "Stale preview rejected"
+  ]
+}

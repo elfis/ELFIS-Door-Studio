@@ -1,3 +1,4 @@
+require_relative '../elfis_menu'
 # encoding: UTF-8
 require 'json'
 require 'base64'
@@ -85,9 +86,9 @@ module Elfis
       fallback
     end
     def visibility_button(id);visibility.find { |b| b[:id]==id.to_s };end
-    def defaults;{pins:ShelfPins.defaults,joints:CarcassJoinery.defaults,hinges:HingeDrilling.defaults,drawers:DrawerDrilling.defaults,tags:TAG_DEFAULTS,visibility:VISIBILITY_DEFAULTS};end
+    def defaults;{pins:ShelfPins.defaults,joints:CarcassJoinery.defaults,hinges:HingeDrilling.defaults,drawers:DrawerDrilling.defaults,tags:TAG_DEFAULTS,visibility:VISIBILITY_DEFAULTS,toolbars:ToolbarLayout.defaults,toolbar_catalog:ToolbarLayout.catalog,toolbar_defaults:ToolbarLayout.defaults};end
     def data
-      {pins:ShelfPins.settings,joints:CarcassJoinery.settings,hinges:HingeDrilling.settings,drawers:DrawerDrilling.settings,tags:tag_config,visibility:visibility,language:BastillePodmienFront.language}
+      {pins:ShelfPins.settings,joints:CarcassJoinery.settings,hinges:HingeDrilling.settings,drawers:DrawerDrilling.settings,tags:tag_config,visibility:visibility,toolbars:ToolbarLayout.settings,toolbar_catalog:ToolbarLayout.catalog,toolbar_defaults:ToolbarLayout.defaults,language:BastillePodmienFront.language}
     end
     def validate(input)
       pins=ShelfPins.validate(input.fetch(:pins));pins[:reuse]=input[:pins][:reuse]==true
@@ -107,7 +108,8 @@ module Elfis
         raise 'Invalid visibility mode.' unless %w[tag group].include?(row[:mode])
         v.merge(mode:row[:mode],names:list)
       end
-      {pins:pins,joints:joints,hinges:hinges,drawers:drawers,tags:tags,visibility:vis}
+      toolbars=ToolbarLayout.validate(input.fetch(:toolbars,ToolbarLayout.settings))
+      {pins:pins,joints:joints,hinges:hinges,drawers:drawers,tags:tags,visibility:vis,toolbars:toolbars}
     end
     def save(input)
       c=validate(input)
@@ -118,13 +120,14 @@ module Elfis
       c[:hinges].each { |k,v| Sketchup.write_default(HingeDrilling::PREF,k.to_s,v) }
       c[:drawers].each { |k,v| Sketchup.write_default(DrawerDrilling::PREF,k.to_s,v) }
       write_json_setting('tags',c[:tags]);write_json_setting('visibility',c[:visibility])
+      ToolbarLayout.save(c[:toolbars])
       @tags=c[:tags];@visibility=c[:visibility]
       ELFIS_TagToolbar.refresh if defined?(ELFIS_TagToolbar)
       model=Sketchup.active_model;tool=model.tools.active_tool if model.tools.respond_to?(:active_tool)
       if tool.is_a?(DrawerDrilling::Tool);tool.update_settings(c[:drawers])
       elsif tool.is_a?(HingeDrilling::Tool);tool.update_settings(c[:hinges])
       elsif tool.instance_of?(ShelfPins::Tool);tool.update_settings(c[:pins])
-      elsif tool.instance_of?(CarcassJoinery::Tool);tool.update_settings(c[:joints]);end
+      elsif tool.instance_of?(CarcassJoinery::Tool) || (defined?(CarcassJoineryV2) && tool.instance_of?(CarcassJoineryV2::Tool));tool.update_settings(c[:joints]);end
       data
     end
     def show(tab='joints')
@@ -142,6 +145,10 @@ module Elfis
           when 'save';dialog.execute_script("savedSettings(#{JSON.generate(save(request[:data]))})")
           when 'scan'
             @scan=DrillingEditor.scan;dialog.execute_script("setDrillings(#{JSON.generate(DrillingEditor.public_rows(@scan))})")
+          when 'remove_all_drilling'
+            result=DrillingEditor.remove_all
+            @scan=nil
+            dialog.execute_script("drillingResetFinished(#{JSON.generate(result)})")
           when 'convert'
             raise l('Najpierw rozpoznaj wiercenia.','Scan drilling first.') unless @scan
             result=DrillingEditor.apply(@scan,request[:ids],request[:parameters],update:request[:update]==true)
@@ -157,7 +164,7 @@ module Elfis
       @command=UI::Command.new('ELFIS — Default settings / Ustawienia domyślne') { show }
       @command.tooltip=l('Domyślne wiercenia, tagi, widoczność i istniejące otwory','Default drilling, tags, visibility and existing holes')
       @command.small_icon=File.join(__dir__,'studio_settings.svg');@command.large_icon=@command.small_icon
-      UI.menu('Extensions').add_item(@command)
+      ElfisMenu.category('Settings').add_item(@command)
       toolbar=BastillePodmienFront.instance_variable_get(:@toolbar);toolbar.add_item(@command) if toolbar
     end
   end

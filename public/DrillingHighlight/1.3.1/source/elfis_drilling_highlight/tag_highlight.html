@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="pl"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ELFIS — Podświetlanie tagów</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font:13px 'Segoe UI',sans-serif;color:#243746;background:#f5f7f9;display:flex;flex-direction:column;height:100vh}header{padding:18px 16px 12px;background:white;border-bottom:1px solid #dbe2e8}h1{font-size:18px;margin:0 0 5px}p{margin:0;color:#61717f;line-height:1.5}input[type=search]{width:100%;margin-top:12px;padding:9px;border:1px solid #c7d2da;border-radius:5px;font:inherit}main{overflow:auto;flex:1;padding:8px}label{display:flex;align-items:center;gap:10px;padding:10px;border-radius:5px;cursor:pointer;border:1px solid transparent}label:hover{background:#eaf0f5}label.checked{background:#fff4d6;border-color:#efcd77}input[type=checkbox]{accent-color:#b97800;width:16px;height:16px;flex-shrink:0}.name{display:block;overflow-wrap:anywhere}.folder{display:block;color:#73818d;font-size:11px;margin-top:2px}.hidden{font-size:11px;color:#73818d;margin-left:auto}footer{padding:12px 16px;border-top:1px solid #dbe2e8;background:white}button{padding:8px 12px;font:inherit;border:1px solid #c7d2da;border-radius:5px;background:white;color:#243746;cursor:pointer}button:hover{background:#eef3f6}.actions{display:flex;gap:8px;margin-bottom:8px}#status{font-size:12px;color:#61717f;line-height:1.5}.empty{padding:16px}
+</style>
+<header><h1>Podświetlanie tagów</h1><p>Zaznacz tagi — ich widoczne elementy otrzymają złoty obrys. Zaznaczenie modelu pozostaje bez zmian.</p><input id="search" type="search" placeholder="Szukaj tagu lub folderu…" aria-label="Szukaj tagu lub folderu"></header>
+<main id="list"></main>
+<footer><div class="actions"><button id="clear">Wyczyść</button><button id="refresh">Odśwież listę</button></div><div id="status" role="status">Zamknięcie okna usuwa podświetlenie. Materiały i geometria nie są zmieniane.</div></footer>
+<script>
+let tags=[];const chosen=new Set();
+function send(){if(window.sketchup)sketchup.highlight(JSON.stringify([...chosen]));}
+function render(){const list=document.getElementById('list');list.replaceChildren();const query=document.getElementById('search').value.toLocaleLowerCase();
+ for(const tag of tags){if(!(tag.name+' '+tag.folder).toLocaleLowerCase().includes(query))continue;
+ const row=document.createElement('label');row.className=chosen.has(tag.id)?'checked':'';
+ const checkbox=document.createElement('input');checkbox.type='checkbox';checkbox.checked=chosen.has(tag.id);
+ checkbox.addEventListener('change',()=>{if(checkbox.checked)chosen.add(tag.id);else chosen.delete(tag.id);row.classList.toggle('checked',checkbox.checked);send();});
+ const text=document.createElement('span'),name=document.createElement('span');name.className='name';name.textContent=tag.name;text.append(name);
+ if(tag.folder){const folder=document.createElement('span');folder.className='folder';folder.textContent=tag.folder;text.append(folder);}
+ row.append(checkbox,text);if(!tag.visible){const hidden=document.createElement('span');hidden.className='hidden';hidden.textContent='ukryty';row.append(hidden);}list.append(row);}
+ if(!list.childElementCount){const empty=document.createElement('p');empty.className='empty';empty.textContent='Brak pasujących tagów.';list.append(empty);}}
+window.setTags=function(data){tags=data;chosen.clear();for(const tag of data)if(tag.selected)chosen.add(tag.id);render();};
+window.setStatus=function(data){document.getElementById('status').textContent=data.tags?`Tagi: ${data.tags} · elementy: ${data.parts} · linie: ${data.lines}. Ukryte elementy nie są podświetlane.`:'Podświetlenie wyłączone. Materiały i geometria bez zmian.';};
+document.getElementById('search').addEventListener('input',render);
+document.getElementById('clear').addEventListener('click',()=>{chosen.clear();render();send();});
+document.getElementById('refresh').addEventListener('click',()=>{if(window.sketchup)sketchup.refresh();});
+document.addEventListener('keydown',event=>{if(event.key==='Escape'){chosen.clear();render();send();}});
+if(window.sketchup)sketchup.ready();
+</script></html>

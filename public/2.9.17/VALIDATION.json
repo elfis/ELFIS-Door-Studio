@@ -1,0 +1,44 @@
+{
+  "version": "2.9.17",
+  "joinery_removal_2917_results": {
+    "passed": true,
+    "checks": [
+      "Fixture contains 50 owned vectors",
+      "Moved base still finds its drilling association",
+      "Base removal deletes only its 20 vectors",
+      "Populated shared cabinet twin retains all 50 vectors",
+      "Repeated removal is harmless",
+      "Batch removal deletes shelf and back associations",
+      "Imported matching-name drilling survives",
+      "Shelf-pin drilling survives",
+      "All sequential removals preserve other cabinet copy",
+      "Locked drilling group blocks removal without partial edits",
+      "Removal tool click routes exactly the hovered panel",
+      "Removal discovery works inside cabinet edit context"
+    ]
+  },
+  "order_filename_2917_results": {
+    "passed": true,
+    "checks": [
+      "Filename: \"Kitchen\" / \"\"",
+      "Filename: \"Żółta kuchnia\" / \"\"",
+      "Filename: \"Untitled\" / \"\"",
+      "Filename: \"Bez tytułu\" / \"\"",
+      "Filename: \"\" / \"\"",
+      "Filename: \"\" / \"C:\\\\Projects\\\\Project.skp\"",
+      "Filename: \"A:B/C*D?E|F<test>\" / \"\"",
+      "Filename: \"Project.skp\" / \"\"",
+      "Filename: \"Project...  \" / \"\"",
+      "Long project name bounded",
+      "Save dialog uses suggested filename",
+      "Production Ruby compiles"
+    ]
+  },
+  "model_changes": "Native tests used disposable geometry inside a rolled-back operation; original project unchanged.",
+  "live_activation": {
+    "passed": true,
+    "version": "2.9.17",
+    "remove_icon": true,
+    "pdf_name": "Final_Doors_2026-11-13.pdf"
+  }
+}

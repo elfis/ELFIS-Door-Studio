@@ -8,7 +8,7 @@ module Elfis
   module Handles
     extend self
     remove_const(:VERSION) if const_defined?(:VERSION,false)
-    VERSION = '1.1.9-beta'
+    VERSION = '1.1.10-beta'
     DICT = 'ElfisHandles'
     POSITIONS = %w[tl tc tr ml mr bl bc br].freeze
     remove_const(:DEFAULTS) if const_defined?(:DEFAULTS,false)
@@ -706,11 +706,13 @@ module Elfis
     require File.join(__dir__,'calibration.rb')
 
     def install_toolbar
-      return if @toolbar_layout=='quick-tools-1'
+      return if @toolbar_layout=='configurable-tools-1'
       @toolbar.hide if @toolbar
       # A distinct native name avoids merging with the legacy one-button bar
       # when updating code inside an already running SketchUp session.
-      @toolbar=UI::Toolbar.new('ELFIS — Handle Tools')
+      layout_file=File.join(__dir__,'..','elfis_bastille_podmien_front','toolbar_layout.rb')
+      require layout_file if File.file?(layout_file)
+      @toolbar=defined?(Elfis::ToolbarLayout) ? Elfis::ToolbarLayout::Builder.new(:handles,'ELFIS — Handle Tools') : UI::Toolbar.new('ELFIS — Handle Tools')
       @toolbar_commands=[
         ['ELFIS — Add Handle','Dodaj uchwyt','Add handle','handle_add.svg',proc { start_placement }],
         ['ELFIS — Remove Handle','Usuń uchwyt','Remove handle','handle_remove.svg',proc { start_removal }],
@@ -723,8 +725,8 @@ module Elfis
         @toolbar.add_item(command)
         command
       end
-      @toolbar_layout='quick-tools-1'
-      @toolbar.restore
+      @toolbar_layout='configurable-tools-1'
+      @toolbar.respond_to?(:build) ? @toolbar.build : @toolbar.restore
     end
 
     install_toolbar

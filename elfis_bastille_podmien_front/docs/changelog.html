@@ -1,5 +1,30 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ELFIS — CHANGELOG</title><style>body{max-width:1080px;margin:28px auto;padding:0 26px;color:#213b3d;background:#f4f5f2;font:15px/1.6 Segoe UI,sans-serif}h1,h2,h3{line-height:1.25}h2{margin-top:36px}table{border-collapse:collapse;width:100%;background:#fff}td,th{border:1px solid #cbd7d0;padding:9px 12px;text-align:left;vertical-align:top}th{background:#e7eee9}code{background:#e5e9e5;padding:2px 4px;overflow-wrap:anywhere}a{color:#185c76}nav{position:sticky;top:0;background:#fff;padding:12px;border-bottom:2px solid #285b59;z-index:1}nav a{margin-right:18px}@media print{nav{position:static}body{max-width:none;background:white}tr{break-inside:avoid}thead{display:table-header-group}}</style></head><body><nav><strong>ELFIS 2.9.39</strong> · <a href="guide.en.html">English</a><a href="guide.pl.html">Polski</a><a href="changelog.html">Changelog</a><a href="roadmap.html">Roadmap / Plany</a></nav><h1>Changelog</h1>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ELFIS — CHANGELOG</title><style>body{max-width:1080px;margin:28px auto;padding:0 26px;color:#213b3d;background:#f4f5f2;font:15px/1.6 Segoe UI,sans-serif}h1,h2,h3{line-height:1.25}h2{margin-top:36px}table{border-collapse:collapse;width:100%;background:#fff}td,th{border:1px solid #cbd7d0;padding:9px 12px;text-align:left;vertical-align:top}th{background:#e7eee9}code{background:#e5e9e5;padding:2px 4px;overflow-wrap:anywhere}a{color:#185c76}nav{position:sticky;top:0;background:#fff;padding:12px;border-bottom:2px solid #285b59;z-index:1}nav a{margin-right:18px}@media print{nav{position:static}body{max-width:none;background:white}tr{break-inside:avoid}thead{display:table-header-group}}</style></head><body><nav><strong>ELFIS 2.9.44</strong> · <a href="guide.en.html">English</a><a href="guide.pl.html">Polski</a><a href="changelog.html">Changelog</a><a href="roadmap.html">Roadmap / Plany</a></nav><h1>Changelog</h1>
 <p>This history is reconstructed from preserved RBZ packages, instructions, release notes and test reports. Older development dates were not consistently recorded, so none are invented. Version numbers belong to the named extension line; the first profile generator and the later replacement tool originally had separate version sequences.</p>
+<h2>2.9.44 — Dowels and Screws 2.0</h2>
+<ul>
+<li>Separate 2.0 command and labelled icon on the Doors toolbar. Original command remains available.</li>
+<li>Front panel establishes the front datum when present; a back panel is optional. With neither reference, preview a direction based on panel axes and press Shift to reverse it. Direction is saved in source-local coordinates.</li>
+<li>Existing machining tags, owner IDs, source-edge offsets, 32 mm spindle pattern and 0.2 mm inward correction remain compatible. Alt removes and Ctrl refreshes. Shared cabinet copies remain isolated.</li>
+<li>Refresh chooses the planner recorded on each source. Applying the original command explicitly restores legacy planning for that source. Existing drilling scan and removal recognize both versions.</li>
+<li>24 native SketchUp checks cover absent backs, top/base/fixed shelves, reversed doors, saved direction, scaling/reflection, Refresh, scanning, copied instances, locks and keyboard modifiers. Tests used disposable geometry and were rolled back.</li>
+</ul>
+<h2>2.9.42 — Clear cabinet drilling</h2>
+<ul>
+<li>Default settings → Existing drilling: Remove all drilling in the currently selected cabinet(s), with a counted confirmation and one Undo.</li>
+<li>Includes hidden and imported circular D…_DEPTH… drilling vectors without requiring ELFIS source associations. Mixed operation containers retain other edges.</li>
+<li>Isolates shared component copies, rejects locked targets before changes, and clears source ownership so Refresh does not restore the old drilling pattern. Routing, Kamar cutouts and panel faces remain. Physical holes in solid geometry and untagged circles are outside this vector reset.</li>
+</ul>
+<h2>2.9.41 — Clean drilling depth display</h2>
+<ul>
+<li>Display Existing drilling depths rounded to the nearest 0.5 mm with one decimal (18.00000000003489 → 18.0). This is display formatting only; source values, vectors, associations and parameter conversion retain their original precision.</li>
+</ul>
+<h2>2.9.40 — Toolbar preferences and imported corner drilling</h2>
+<ul>
+<li>Add a central Toolbars tab for Doors, Handles and Visibility: persistent order, per-icon and whole-bar visibility, draggable rows, arrows, custom separators, preview and per-bar restore. Apply at next SketchUp startup without duplicate live toolbars. Menu access to settings remains available.</li>
+<li>Merge newly introduced commands into older saved layouts and recover defaults from damaged preferences.</li>
+<li>Fix corner Existing drilling candidates to use real perpendicular receiver plans. Associate legacy back screws from actual cut-end contacts independently of default margins/spacing; preserve centres on adoption/conversion and reject locked or ambiguous sources.</li>
+<li>Handles 1.1.10-beta supports the shared toolbar layout; handle geometry and positioning rules are unchanged.</li>
+</ul>
 <h2>2.9.39 — L corner cabinet machining and shelf arrangement</h2>
 <ul>
 <li>Detect actual shelf/rail edge contacts with perpendicular receivers; retain complete rounded L shelf outlines in arrangement previews and cloning.</li>

@@ -1,0 +1,35 @@
+{
+  "passed": true,
+  "checks": [
+    "Rotated, mirrored and nonuniformly scaled cabinet creates twelve holes",
+    "Every hole has its own nested group",
+    "Group tags, circle tags, names and vector-only geometry match the inspected convention",
+    "Hole diameter stays physical under nonuniform cabinet scale",
+    "Shared cabinet copy remains untouched",
+    "Reapplying updates owned holes without multiplying groups",
+    "Independent top/bottom counts place additional rows only on the requested side",
+    "Zero additional rows gives four centre holes and refreshes previous groups",
+    "Drilling tag preserves selected diameter and depth precision",
+    "Through drilling is rejected for blind shelf supports",
+    "Click removal finds owned vectors even after moving the shelf",
+    "Removing one shelf preserves the other shelf drilling",
+    "Other shelf association survives cabinet Make Unique after the first removal",
+    "Imported or unmarked drilling is preserved",
+    "Removing drilling from one shared cabinet preserves all vectors in the other copy",
+    "Repeated removal reports zero without deleting unrelated geometry",
+    "Selected-shelf batch removes only the two selected shelves in one operation"
+  ],
+  "version": "2.9.11",
+  "sha256": "ec0a763f7b05f9336e00146b29f454d5739612206ab3ac2d01e6fee51ddba9e6",
+  "activation": {
+    "version": "2.9.11",
+    "source": [
+      "<SketchUp Plugins>/elfis_bastille_podmien_front/shelf_pins.rb",
+      322
+    ],
+    "remove_command": true
+  },
+  "ui": "Native removal toolbar icon clicked; status confirms click-to-remove mode active",
+  "browser": "EN/PL shelf settings and exact tag preview regression passed",
+  "limitations": "Only ELFIS-owned drilling groups; imported/unmarked drilling is preserved. Older externally restructured copies may lack recoverable ownership."
+}

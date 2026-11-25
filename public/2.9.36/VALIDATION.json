@@ -1,0 +1,664 @@
+{
+  "version": "2.9.36",
+  "passed": true,
+  "sha256": "c07e8c74051daeb808a4087b392d4b63921d06c52a2ab5ffafc760fd7c08a1ae",
+  "tests": {
+    "hinge_panel_2936_ui_results.json": {
+      "passed": true,
+      "application": "SketchUp 2026",
+      "checks": [
+        "Viewport panel visually verified in the open model",
+        "Native plus button changes preview from two to three hinges",
+        "Native mouse wheel over count changes preview from three to four",
+        "Panel and numbered model labels show all intermediate positions",
+        "No front clicked during live UI preview; no drilling applied"
+      ]
+    },
+    "hinge_panel_2936_native_results.json": {
+      "passed": true,
+      "checks": [
+        "Hover starts with two hinges and ten CNC circles",
+        "Moving into panel retains the preview front",
+        "Plus button updates count and preview without applying",
+        "Panel controls do not create model drilling",
+        "Panel shows all three axes measured from front bottom",
+        "Preview labels intermediate cup position in model",
+        "Wheel over hovered front adds one hinge",
+        "Wheel over count control removes one hinge",
+        "Wheel over top offset adjusts its distance by 1 mm",
+        "Bottom offset plus adjusts preview distance",
+        "Side controls change the receiving side in preview",
+        "Clicking front applies the preview layout",
+        "Quick layout is stored on source front",
+        "Reducing count replaces old owned drilling instead of leaving a third hinge",
+        "Minus button cannot go below two hinges",
+        "Wheel count stops at supported maximum ten",
+        "Invalid offsets keep the last valid preview/settings",
+        "Reopening tool reads stored per-front layout",
+        "Auto update preserves the right-hand side established by existing cups",
+        "Refresh preserves the saved front layout after movement",
+        "Quick adjustments do not overwrite global defaults",
+        "Wheel away from a front/panel falls through to normal zoom",
+        "Removal modifier cannot change count through panel"
+      ]
+    },
+    "joinery_datum_2935_native_results.json": {
+      "passed": true,
+      "checks": [
+        "Bottom recessed 0.5 mm — every spindle is measured from source front",
+        "Bottom recessed 0.5 mm — every spindle is measured from source front",
+        "31 mm from base front is 31.5 mm from side front",
+        "Bottom inward correction remains 0.2 mm",
+        "Short top rail recessed 10 mm — every spindle is measured from source front",
+        "Short top rail recessed 10 mm — every spindle is measured from source front",
+        "Fixed shelf recessed 10 mm — every spindle is measured from source front",
+        "Fixed shelf recessed 10 mm — every spindle is measured from source front",
+        "Refresh replaces the entire old owned pattern without duplicates",
+        "After moving base to 10 mm, Refresh moves first side axis to 41 mm",
+        "Rotated, reflected and scaled base — every spindle is measured from source front",
+        "Rotated, reflected and scaled base — every spindle is measured from source front",
+        "Updating a cabinet copy preserves its twin drilling",
+        "Reversed front recessed 0.5 mm — every spindle is measured from source front",
+        "Reversed front recessed 0.5 mm — every spindle is measured from source front",
+        "Reversed front gives 31.5 mm from actual side front"
+      ]
+    },
+    "orphan_pins_2934_native_results.json": {
+      "passed": true,
+      "checks": [
+        "Live source shelves keep all associated pin circles",
+        "Hidden source is still a live shelf",
+        "Deleted shelf creates orphan pin rows only in its cabinet",
+        "Other cabinet copy with a live matching owner is preserved",
+        "Selecting a side alone is not treated as proof that its shelf was deleted",
+        "Nearest cabinet scope prevents a neighbouring copy from hiding orphan rows",
+        "Refresh removes orphan rows and regenerates surviving shelf rows in one batch",
+        "No orphan rows remain and live shelf count is unchanged",
+        "Refreshing original occurrence isolates its shared nested copy",
+        "Deleted final shelf leaves no source paths",
+        "Final shelf drilling is recognized without a live source",
+        "Locked orphan group prevents any deletion",
+        "Refresh hover finds and previews an orphan-only cabinet through its side",
+        "Refresh cleans an orphan-only cabinet without recreating deleted shelves",
+        "Unmarked imported/manual geometry is untouched",
+        "Repeated orphan cleanup is harmless",
+        "Renamed or retagged live source is retained by ownership",
+        "Open editing context never deletes unknown outside-scope drilling"
+      ]
+    },
+    "drawers_2933_native_results.json": {
+      "passed": true,
+      "checks": [
+        "Each M/D plan has the correct number of front and side holes",
+        "Each M/D plan has the correct number of front and side holes",
+        "Each M/D plan has the correct number of front and side holes",
+        "Existing drilling recognizes all 34 owned drawer circles",
+        "Unowned reference-like drilling is recognized with front association",
+        "Insertion adopts matching imported holes without duplicates",
+        "Adoption leaves other cabinet copies unowned and unchanged",
+        "Stored per-front variants survive Auto selection",
+        "A drawer front owns its front and both runner drilling sets",
+        "Refresh drilling regenerates a moved D drawer",
+        "Runner rows follow the front after movement",
+        "Manual overlay overrides automatic cabinet-base detection",
+        "Updates M drawer under rotated/reflected cabinet",
+        "Alt removes only the selected drawer front/side groups",
+        "Removing M preserves neighbouring D drawer drilling",
+        "D gallery drilling is rejected on a 140 mm front before mutation",
+        "Invalid moved front keeps all old drawer drilling intact",
+        "Unverified runner lengths are rejected"
+      ]
+    },
+    "refresh_2930_native_results.json": {
+      "passed": true,
+      "checks": [
+        "Cabinet selection discovers joint sources, shelf, front and back",
+        "One back can refresh screw rows and Kamar routing together",
+        "One batch regenerates all circular drilling and repairs a missing Kamar contour",
+        "Refresh leaves exactly one complete set of circles and routing",
+        "Front cup heights update after moving the front",
+        "Side mounting plates follow the moved front cup axes",
+        "Other cabinet instance retains its original drilling and its missing contour state",
+        "Repeated complete refresh does not multiply operations",
+        "Invalid hinge destination prevents every removal in the batch"
+      ]
+    },
+    "existing_2929_native_results.json": {
+      "passed": true,
+      "checks": [
+        "Central panel saves the same hinge preferences used by the tool",
+        "Older settings callers preserve hinge preferences",
+        "Invalid hinge defaults rejected before saving",
+        "Recognizes imported front/side hinge circles at actual 120/90 mm offsets",
+        "Cup, front fixing and side plate roles stay separate",
+        "Recognizes both imported Kamar L contours as routing operations",
+        "Adopts hinge circles and Kamar contours in the same conversion",
+        "Adopted drilling and routing rescan with ELFIS ownership",
+        "Other cabinet copy keeps imported unowned operations",
+        "Adopted front and side circles are associated with one front",
+        "Changes front cup/fixing depths independently of side plates",
+        "Changes side plate depths and machining tags",
+        "Parameter conversion preserves all actual circle centres",
+        "Parameter conversion retains Kamar L geometry",
+        "Kamar template changes are rejected before mutation",
+        "Alt removal can remove adopted front and side hinge drilling",
+        "Kamar Alt removal clears adopted contours and fills both notches",
+        "Other cabinet copy retains all ten circles and both contours"
+      ]
+    },
+    "studio_settings_ui_results.json": {
+      "passed": true,
+      "results": [
+        {
+          "language": "en",
+          "passed": true,
+          "checks": [
+            "seven tabs including hinges and drawers",
+            "defaults payload",
+            "multiple tags",
+            "21 spindles",
+            "reuse setting",
+            "Room seven-tag defaults",
+            "real scan rows",
+            "escaped model names",
+            "conversion selection and parameters",
+            "error handling",
+            "360px layout"
+          ]
+        },
+        {
+          "language": "pl",
+          "passed": true,
+          "checks": [
+            "seven tabs including hinges and drawers",
+            "defaults payload",
+            "multiple tags",
+            "21 spindles",
+            "reuse setting",
+            "Room seven-tag defaults",
+            "real scan rows",
+            "escaped model names",
+            "conversion selection and parameters",
+            "error handling",
+            "360px layout"
+          ]
+        }
+      ]
+    },
+    "hinge_drilling_2927_native_results.json": {
+      "passed": true,
+      "checks": 28,
+      "details": [
+        "Front bottom +1 mm: cup axes at 101 and 616 mm from cabinet bottom",
+        "Plate axes 37 mm from the actual side front",
+        "Plate holes ±16 mm from actual cup heights",
+        "Creates ten associated circles for two hinges",
+        "Front owns drilling in both the front and the side",
+        "Repeated addition does not duplicate existing drilling",
+        "Ctrl update replaces both front and side drilling after the front moves",
+        "Update leaves exactly ten associated groups",
+        "Alt removes front and side groups together",
+        "Intermediate hinge is evenly spaced",
+        "Reflected and rotated cabinet produces all hinge holes",
+        "Writes world-correct drilling under reflected and rotated parents",
+        "Other cabinet copy keeps its panel occurrences",
+        "Other copy retains its drilling when clicked copy is cleared",
+        "Only the clicked cabinet copy loses the drilling",
+        "Nonuniform parent scale preserves 100 mm physical offsets",
+        "Scaled assembly accepts physically circular drilling",
+        "Scaled front cup vectors measure 35 mm in world units",
+        "Works from inside the cabinet editing context",
+        "Adds holes inside an open unique cabinet",
+        "Hovering a nested front finds its drilling plan",
+        "Holding Alt gives a red removal preview",
+        "Holding Ctrl gives a green update preview",
+        "Releasing modifiers returns to add mode",
+        "Real click handler adds drilling to the nested front and side",
+        "Real Alt-click handler removes the associated drilling",
+        "Oversized offsets rejected before drilling",
+        "Locked fronts rejected before mutation"
+      ]
+    },
+    "drilling_modifiers_2926_native_results.json": {
+      "passed": true,
+      "checks": [
+        "Shelf-pin tool defaults to adding",
+        "Normal shelf click adds associated drilling through the real click handler",
+        "Holding Ctrl activates shelf-pin refresh",
+        "Ctrl replaces the cached add preview with a pin refresh plan without pointer movement",
+        "Refresh preview is green",
+        "Ctrl click removes old shelf holes and recreates the complete row layout",
+        "Old shelf drilling positions are absent after Ctrl refresh",
+        "Ctrl refresh does not move the shelf itself",
+        "Shelf Ctrl refresh preserves joinery drilling from another source",
+        "Releasing Ctrl restores adding mode",
+        "Holding Alt displays old shelf drilling in red",
+        "Alt click removes shelf-pin drilling only",
+        "Releasing Alt restores adding mode",
+        "Holding Ctrl in the dowel tool selects joint drilling refresh",
+        "Ctrl click updates moved rail dowels and screws, removing their old positions",
+        "Joint refresh preserves the moved panel transformation",
+        "Alt takes priority when Alt and Ctrl are both held",
+        "Releasing Alt while Ctrl remains held restores refresh",
+        "Alt click removes associated dowels and screws",
+        "Joint tool returns to adding after Alt release",
+        "Explicit pin refresh supports dual-owned panels without touching their dowels",
+        "Explicit joint refresh preserves pins on the same panel",
+        "Ctrl does not silently adopt unassociated imported drilling",
+        "Key repeat does not repeatedly recalculate the preview",
+        "Tool deactivation clears held modifier state",
+        "Existing dedicated removal tool retains its base removal mode",
+        "Standalone refresh tool does not inherit Alt removal behaviour",
+        "Hanger tool does not inherit Ctrl drilling refresh"
+      ]
+    },
+    "drilling_refresh_2920_native_results.json": {
+      "passed": true,
+      "checks": [
+        "Recessed back screws automatically follow back thickness centre",
+        "Grouped imported circles include bottom dowels, screws, back screws and shelf pins",
+        "All twenty bottom-panel drilling circles recognized",
+        "Mixed-source multi-circle groups adopt without losing other circles",
+        "Adoption isolates the other cabinet instance",
+        "One refresh removes old joint and pin holes and creates both new layouts: {:removed=>32, :created=>32, :panels=>2, :orphans=>0}",
+        "Refresh leaves no duplicate holes and preserves back screws",
+        "Old source positions contain no retained owned holes",
+        "Unselected cabinet retains all original imported circles",
+        "Repeated refresh does not multiply drilling",
+        "Invalid destination is rejected before old drilling is removed"
+      ]
+    },
+    "hanger_removal_2925_native_results.json": {
+      "passed": true,
+      "checks": [
+        "Removal fills both notches and removes exactly two L routing groups",
+        "Both corners are solid again with no matching routing vectors",
+        "Repaired back has a closed shell with no loose internal edges",
+        "Repaired volume equals the original rectangular panel",
+        "Coplanar repair seams are merged back into six panel faces",
+        "Exterior, interior and edge materials extend over the filled corners",
+        "Component material and unrelated drilling remain unchanged",
+        "Removed hanger metadata is cleared from the repaired back",
+        "Repeated removal is harmless on a rectangular back",
+        "Removing from a cabinet copy preserves the other copy and its CNC contours",
+        "Shared vector tag remains available for other cabinets",
+        "Rotated mirrored cabinet is restored without changing the other panel",
+        "Scaled mirrored cabinet repairs its physical cutouts into the original closed panel",
+        "Locked routing stops removal before filling any corner",
+        "Matching legacy Kamar loops can be removed and their cutouts filled",
+        "Holding Alt enters removal mode and consumes the menu accelerator",
+        "Alt key repeat does not toggle back to adding",
+        "Releasing Alt immediately restores adding mode",
+        "Mouse-event Alt flags also select removal mode"
+      ]
+    },
+    "order_filename_2917_results.json": {
+      "passed": true,
+      "checks": [
+        "Filename: \"Kitchen\" / \"\"",
+        "Filename: \"Żółta kuchnia\" / \"\"",
+        "Filename: \"Untitled\" / \"\"",
+        "Filename: \"Bez tytułu\" / \"\"",
+        "Filename: \"\" / \"\"",
+        "Filename: \"\" / \"C:\\\\Projects\\\\Project.skp\"",
+        "Filename: \"A:B/C*D?E|F<test>\" / \"\"",
+        "Filename: \"Project.skp\" / \"\"",
+        "Filename: \"Project...  \" / \"\"",
+        "Long project name bounded",
+        "Save dialog uses suggested filename",
+        "Production Ruby compiles"
+      ]
+    }
+  },
+  "installation": {
+    "files": [
+      {
+        "sha256": "69AD896DC7358E943557D22F571274B6FA19D7E24CE2F4989F7835B40A0A0449",
+        "file": "elfis_bastille_podmien_front.rb",
+        "match": true
+      },
+      {
+        "sha256": "3AB8859328943FC7415AD65CEEA23222B40359119B9DBCDED24E341E53738313",
+        "file": "elfis_handles.rb",
+        "match": true
+      },
+      {
+        "sha256": "878CE82D163DADACA54E4F63183D1486EAE90F15E34565D4E591267A9B20DA22",
+        "file": "elfis_tag_toolbar.rb",
+        "match": true
+      },
+      {
+        "sha256": "67261CFB0E3C31933C395866C4BB779E0FE961AA0CB23576DA44B0B9AA5B092C",
+        "file": "elfis_bastille_podmien_front\\bastille.json",
+        "match": true
+      },
+      {
+        "sha256": "40DA35702C1E7E171F06BCC1D381D0DC35E190509177963242D47A7D2D1E4156",
+        "file": "elfis_bastille_podmien_front\\carcass_joinery_layout.rb",
+        "match": true
+      },
+      {
+        "sha256": "6897087CCF2E87ED6B6DB08EAC5A07272E8BA2E490D5EB99478DBE18CABC5123",
+        "file": "elfis_bastille_podmien_front\\carcass_joinery_remove.svg",
+        "match": true
+      },
+      {
+        "sha256": "A431B9A30FBCF724F3D1F95D5A08EE21C64D77D4788E95755BB8C2E398D26868",
+        "file": "elfis_bastille_podmien_front\\carcass_joinery_settings.html",
+        "match": true
+      },
+      {
+        "sha256": "75AADAC230DEEAE8BFA935828703ADEB3991394D406AA7C07C7C154DC7A09317",
+        "file": "elfis_bastille_podmien_front\\carcass_joinery.rb",
+        "match": true
+      },
+      {
+        "sha256": "0F7428378F709356352148F790AA736FDB0D4F04EAA3624928089E332E2D8FDD",
+        "file": "elfis_bastille_podmien_front\\carcass_joinery.svg",
+        "match": true
+      },
+      {
+        "sha256": "9277D3F0B6639789AEB8484E4746ED3F6AD541B062733A894EC4ADF588673E10",
+        "file": "elfis_bastille_podmien_front\\door_complete.wav",
+        "match": true
+      },
+      {
+        "sha256": "CC5BAC005174BC1B76A238FA406AB6D924CC40D788772EABEC38E731A7AB7857",
+        "file": "elfis_bastille_podmien_front\\drawer_drilling.rb",
+        "match": true
+      },
+      {
+        "sha256": "545489453FB64DDB035E580903D13883CE962094A560D438F8A9A7EB50A74317",
+        "file": "elfis_bastille_podmien_front\\drawer_drilling.svg",
+        "match": true
+      },
+      {
+        "sha256": "9D320F20E597C3C1A25764136B70440DE6E4312A5B1132564111062FA647DE3A",
+        "file": "elfis_bastille_podmien_front\\drilling_editor.rb",
+        "match": true
+      },
+      {
+        "sha256": "4CD024965734C10CF2BC7078ACA1E323F6252DE2A8A5ED397F0807544D5839BD",
+        "file": "elfis_bastille_podmien_front\\drilling_refresh.rb",
+        "match": true
+      },
+      {
+        "sha256": "F19F10EF82F75B60273360B1E31360AC1CA12A1C7EA324AA6C44ED5DADC6BB77",
+        "file": "elfis_bastille_podmien_front\\drilling_refresh.svg",
+        "match": true
+      },
+      {
+        "sha256": "A8DB4551D9A9B2CC3992DE161D00076B9DA8754D6F14AFFFC40360CC0F182020",
+        "file": "elfis_bastille_podmien_front\\drilling_tool_modifiers.rb",
+        "match": true
+      },
+      {
+        "sha256": "7238003BDE67E685ECF2895E0EA3E09F4F3896835F1F367631619A1F0DF5F5A5",
+        "file": "elfis_bastille_podmien_front\\engine.rb",
+        "match": true
+      },
+      {
+        "sha256": "EAD85F5185C93D05E51FC65992EB24842FE010B26E578BA12C84C13130D60D91",
+        "file": "elfis_bastille_podmien_front\\families.rb",
+        "match": true
+      },
+      {
+        "sha256": "220B59F73DAB1CEB0623431B25D11628E8061FF06ADF49439229BE3EF2B0F79D",
+        "file": "elfis_bastille_podmien_front\\feedback.rb",
+        "match": true
+      },
+      {
+        "sha256": "39B191A678CC87D5083D602F8D2C4C87BF3DCBA63AF519E34235F34B9C895E19",
+        "file": "elfis_bastille_podmien_front\\hanger_cutouts.rb",
+        "match": true
+      },
+      {
+        "sha256": "C9AB5B37AC84CE7C62A55DD0B41B473BAB08BDEDA50CD4F32A94D656B895FE09",
+        "file": "elfis_bastille_podmien_front\\hanger_cutouts.svg",
+        "match": true
+      },
+      {
+        "sha256": "82F7B207FEFF0930BDA22B5E5951027E6A66848F2FE6C23C843D391382B71540",
+        "file": "elfis_bastille_podmien_front\\hinge_drilling.rb",
+        "match": true
+      },
+      {
+        "sha256": "8F7F9D4B6BB314AF211E9B6C970774593F6A751A0D864C9BEAB9761705E3D0CE",
+        "file": "elfis_bastille_podmien_front\\hinge_drilling.svg",
+        "match": true
+      },
+      {
+        "sha256": "D083CE3FBFD1E7F8587E862F46D5159B5AFD0EA5902A36F8E553348E8FCA3304",
+        "file": "elfis_bastille_podmien_front\\hinge_tool_panel.rb",
+        "match": true
+      },
+      {
+        "sha256": "0CB0003226662A203AF9583B34C6885D2E1E38167D3FF86CEEBBDC7FF3AC8E48",
+        "file": "elfis_bastille_podmien_front\\i18n.rb",
+        "match": true
+      },
+      {
+        "sha256": "426141C3DDBA76A2DB3AE5E88262280D24D9872B5416409647A33D259B9FB668",
+        "file": "elfis_bastille_podmien_front\\jpull.rb",
+        "match": true
+      },
+      {
+        "sha256": "B1BDA32ACB7FF2F68BF04B51096E98E32A3EC0FCDA28F9732A57E30CEDDE7151",
+        "file": "elfis_bastille_podmien_front\\library.en.html",
+        "match": true
+      },
+      {
+        "sha256": "23884572E11CA0AD60C43294150FC11AFDE06CA26E121AC3FF08C0F02543D3A1",
+        "file": "elfis_bastille_podmien_front\\library.html",
+        "match": true
+      },
+      {
+        "sha256": "DFF40EBF236A204B23B48F8EDD7C72B725A74D641856400ACA5905529CD5CBC7",
+        "file": "elfis_bastille_podmien_front\\library.rb",
+        "match": true
+      },
+      {
+        "sha256": "D9AA9FE581A3EC0C48B9ECBC460B001B05CD249C0697D4F5D65BE9EB90A49961",
+        "file": "elfis_bastille_podmien_front\\library.svg",
+        "match": true
+      },
+      {
+        "sha256": "A00B6070CDB80687F14788C5D6ADE215D53F2B7DD065FBC26A27E56F0EE06552",
+        "file": "elfis_bastille_podmien_front\\onepiece.rb",
+        "match": true
+      },
+      {
+        "sha256": "2CEB2FB5CA785ACDA4AB8DDF3C527BE75A0105747E820CDAB4AA5FD05F5C071A",
+        "file": "elfis_bastille_podmien_front\\order_controls.js",
+        "match": true
+      },
+      {
+        "sha256": "28B645151F7F2271AD2AE883B924445537DF1CDB6A6C6483AD8FC3460DEC0547",
+        "file": "elfis_bastille_podmien_front\\order_list.en.html",
+        "match": true
+      },
+      {
+        "sha256": "DBA27BFDA15D726AE690DED87516732C4300AFEACD61559564A8A67959610FD6",
+        "file": "elfis_bastille_podmien_front\\order_list.html",
+        "match": true
+      },
+      {
+        "sha256": "D6ECFD8C692DF1A427418924E433EA33946ABE6E39E082B7B6745E2BAFC5E9D9",
+        "file": "elfis_bastille_podmien_front\\order_list.rb",
+        "match": true
+      },
+      {
+        "sha256": "FEB4088D7904D33D137597622A0794E0A260642E44EFD14512E15D5CA2C03EAB",
+        "file": "elfis_bastille_podmien_front\\order_list.svg",
+        "match": true
+      },
+      {
+        "sha256": "E5D7235F0C3D9E4E2994FF15C12A59E958A54FECAD7BDEC4122D2F1C770AD17F",
+        "file": "elfis_bastille_podmien_front\\order_pdf.rb",
+        "match": true
+      },
+      {
+        "sha256": "716C9D9EF5905C2543BBED067F539D6F3E7C4C0468D99FDA4B1AF9EB21A66AC3",
+        "file": "elfis_bastille_podmien_front\\order_stock.rb",
+        "match": true
+      },
+      {
+        "sha256": "6758457AEFB1C336003A2EADCDE98F0C68ECF390A679B3860309485AF6EC1E45",
+        "file": "elfis_bastille_podmien_front\\outline.rb",
+        "match": true
+      },
+      {
+        "sha256": "3F8B38AE99EA551D8BCC88AB2656DA3AD9A59DD5C02516B5A4D484CF9EC88335",
+        "file": "elfis_bastille_podmien_front\\performance.rb",
+        "match": true
+      },
+      {
+        "sha256": "1783CED714E1D406379232C4632A2C8378C13DE730E1525BD58FFCF23587BEEE",
+        "file": "elfis_bastille_podmien_front\\podmien.svg",
+        "match": true
+      },
+      {
+        "sha256": "A1CAAF1F5960DC333B96CB2550B3E20292DEF5528B6AB11308802AFA998E4DAB",
+        "file": "elfis_bastille_podmien_front\\shelf_pins_remove.svg",
+        "match": true
+      },
+      {
+        "sha256": "3A5469ADD4D09B300867171EF9BEE41D7CB465F60E210E7261B38F92A75236FE",
+        "file": "elfis_bastille_podmien_front\\shelf_pins_settings.html",
+        "match": true
+      },
+      {
+        "sha256": "F367C95AB2BCB7E22BE9B5BE61519E5E69A054DB719DCC13D29CC765B37FCBB1",
+        "file": "elfis_bastille_podmien_front\\shelf_pins.rb",
+        "match": true
+      },
+      {
+        "sha256": "9FAA4E0BFC7AB2B685599FF6E59CC1E34D3F9CD41829E17C38241A36121350DB",
+        "file": "elfis_bastille_podmien_front\\shelf_pins.svg",
+        "match": true
+      },
+      {
+        "sha256": "AABC5457CB6D2F0A78208A222581313DB45A01BB0BB5686C1DD4F0CA2E148CD3",
+        "file": "elfis_bastille_podmien_front\\slab_materials.rb",
+        "match": true
+      },
+      {
+        "sha256": "B2F3C5CCB134667153119F5D8521E014466228D2C5E5E4F3BE13D2BFA3CD1CD3",
+        "file": "elfis_bastille_podmien_front\\studio_settings.html",
+        "match": true
+      },
+      {
+        "sha256": "CDAA61115FFC36304F17BC4CCDA225B00B1E3D758B517CFD0D562E6C8CCE2818",
+        "file": "elfis_bastille_podmien_front\\studio_settings.rb",
+        "match": true
+      },
+      {
+        "sha256": "5ED737EC52B7F28A9D6D4CEDCB922269AD0F4313CA9C40D4A5996937BFF24E7A",
+        "file": "elfis_bastille_podmien_front\\studio_settings.svg",
+        "match": true
+      },
+      {
+        "sha256": "FCAE267D7C1469F39C4E894ADFB00F4FB4643778821DC14ED9D25C764B9F222C",
+        "file": "elfis_bastille_podmien_front\\translations.en.json",
+        "match": true
+      },
+      {
+        "sha256": "0E21BEA60453EF22A62884A7914B28F8AE956EBFE9B04C77D7C9AD9AC65E964F",
+        "file": "elfis_bastille_podmien_front\\docs\\changelog.html",
+        "match": true
+      },
+      {
+        "sha256": "AEE242B36B9027FF4553413A2966D0A1DEDD219D08CF4E39D31577C3259693F0",
+        "file": "elfis_bastille_podmien_front\\docs\\CHANGELOG.md",
+        "match": true
+      },
+      {
+        "sha256": "C6C86C4F79031058B44044124E73613099094866250058C94867D237543F9D7B",
+        "file": "elfis_bastille_podmien_front\\docs\\guide.en.html",
+        "match": true
+      },
+      {
+        "sha256": "093897F000DE75DB385600E2D6F1B7F4F585748E637ECC6DE389B122A7C5580B",
+        "file": "elfis_bastille_podmien_front\\docs\\guide.pl.html",
+        "match": true
+      },
+      {
+        "sha256": "1FE126B8184158C68DB169ED51A05F21287874A36C83C4C25025A1227855065A",
+        "file": "elfis_bastille_podmien_front\\docs\\README.md",
+        "match": true
+      },
+      {
+        "sha256": "221A3A4FCEA8E0D33642FE721F14AD3AE3700C317491AF8226DF8546C21BBF98",
+        "file": "elfis_bastille_podmien_front\\docs\\RELEASE_ARCHIVES.json",
+        "match": true
+      },
+      {
+        "sha256": "DD3203CDA904E912E126E12140A625EEED78735A97F8277221653AEFD3C199F3",
+        "file": "elfis_bastille_podmien_front\\docs\\roadmap.html",
+        "match": true
+      },
+      {
+        "sha256": "37B507D7CF0F6854EA10B1BA3AF50EAD538BE0FC2C834BB8FAF6828570C5EA6E",
+        "file": "elfis_bastille_podmien_front\\docs\\ROADMAP.md",
+        "match": true
+      },
+      {
+        "sha256": "0A00AAB38827B9BD0CBF140C72943AA9F8254BD3CE6EFED412767282CAB01B02",
+        "file": "elfis_bastille_podmien_front\\docs\\USER_GUIDE.en.md",
+        "match": true
+      },
+      {
+        "sha256": "2F7587D3B233211600D62F5E050BFA6BFCF57DBD9D84EE0149B3EA11D9B4CE26",
+        "file": "elfis_bastille_podmien_front\\docs\\USER_GUIDE.pl.md",
+        "match": true
+      },
+      {
+        "sha256": "3791160833C27E322FA740064D0C5942B3AF208B44B4C4ABF5A6DD481E8DCC62",
+        "file": "elfis_handles\\calibration.rb",
+        "match": true
+      },
+      {
+        "sha256": "F9A9A21CE3A05E0114BD3658DD38225C2CF120A81A95716A5A7C7D5898FE1ABC",
+        "file": "elfis_handles\\handle_add.svg",
+        "match": true
+      },
+      {
+        "sha256": "B30B76EAF443524AEAD492F82488EE81C7162CBDF1A9F24674E2D30595EA3D5F",
+        "file": "elfis_handles\\handle_remove.svg",
+        "match": true
+      },
+      {
+        "sha256": "B6199FA572A2336C924A4E3ACA02A667B12F8AE15BA8F3DB3F25130862F519D3",
+        "file": "elfis_handles\\handle.svg",
+        "match": true
+      },
+      {
+        "sha256": "52B84E952584AB3945EFC010A59A3EF9A4BEF6CD69C35CFFA65BA6634087D86C",
+        "file": "elfis_handles\\library.html",
+        "match": true
+      },
+      {
+        "sha256": "1B750224CD9504820CF0FF58E2B29F349C5B42B7FBA0295B641225A5D7916F54",
+        "file": "elfis_handles\\main.rb",
+        "match": true
+      },
+      {
+        "sha256": "412170FCAB924789F2BAB40F402066390AECA31F60D72F4F4CC9F0476ABFC4DB",
+        "file": "elfis_handles\\docs\\SHORTCUTS.md",
+        "match": true
+      }
+    ],
+    "doors": "2.9.36",
+    "handles": "1.1.9-beta",
+    "backup": "<workspace>\\Backups\\SketchUp2026_before_install_20261114_011241_793",
+    "passed": true,
+    "plugins": "<SketchUp Plugins>"
+  },
+  "limits": [
+    "Deleted-shelf cleanup requires positively owned single-circle shelf-pin groups and a cabinet scope with two parallel configured side panels. Unowned/manual/legacy groups remain untouched.",
+    "Imported hinge recognition requires at least two Ø35 cups and the supported Blum fixing/plate pattern in the scanned cabinet.",
+    "Kamar adoption only supports the existing fixed routing template; no arbitrary routing conversion.",
+    "Quick hinge layouts are stored per front; Refresh preserves count/offsets/side while depth settings use current defaults.",
+    "All native fixture mutations are rolled back."
+  ]
+}

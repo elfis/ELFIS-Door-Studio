@@ -1,0 +1,23 @@
+{
+  "passed": true,
+  "count": 16,
+  "checks": [
+    "Tagged group includes its Untagged geometry",
+    "Unselected tags excluded",
+    "Folder and exact tag name shown",
+    "Multiple tags supported",
+    "Shared instances highlighted separately",
+    "Scaled mirrored copy in world coordinates",
+    "Hidden instances excluded",
+    "Hidden tags excluded",
+    "Overlay is enabled with matching lines",
+    "Selection left untouched",
+    "Materials and attributes left untouched",
+    "Move hides cached tag lines",
+    "Leaving Move restores tag lines",
+    "Clear disables and removes cached lines",
+    "Observer detached when disabled",
+    "Stale tag IDs ignored"
+  ],
+  "compiled_menu_files": 23
+}

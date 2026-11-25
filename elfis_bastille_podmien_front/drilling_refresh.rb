@@ -1,3 +1,4 @@
+require_relative '../elfis_menu'
 # encoding: UTF-8
 require 'securerandom'
 module Elfis
@@ -19,11 +20,14 @@ module Elfis
       types
     end
     def kind(path,model=Sketchup.active_model);types=kinds(path,model);types.length>1 ? :mixed : types.first;end
-    def tool_for(type);{pin:ShelfPins,joint:CarcassJoinery,hinge:HingeDrilling,drawer:DrawerDrilling,kamar:HangerCutouts}.fetch(type);end
+    def tool_for(type,path=nil)
+      return CarcassJoineryV2 if type==:joint && path && defined?(CarcassJoineryV2) && path.last.get_attribute(CarcassJoinery::DICT,'planner_version')==2
+      {pin:ShelfPins,joint:CarcassJoinery,hinge:HingeDrilling,drawer:DrawerDrilling,kamar:HangerCutouts}.fetch(type)
+    end
     def settings_for(type,path=nil)
       return path ? HangerCutouts.layout_settings(path) : HangerCutouts.preset if type==:kamar
       return HingeDrilling.layout_settings(path) if type==:hinge && path
-      tool_for(type).settings
+      tool_for(type,path).settings
     end
     def old_groups(path,type,model)
       case type
@@ -37,7 +41,7 @@ module Elfis
       raise 'Unsupported drilling type.' if kind && !%i[pin joint hinge drawer kamar].include?(kind)
       types=kinds(path,model);types&=[kind] if kind
       raise l('Najpierw przejmij istniejące wiercenia w ustawieniach ELFIS lub utwórz je narzędziem ELFIS.','First adopt existing drilling in ELFIS settings or create it with an ELFIS tool.') if types.empty?
-      plans=types.map { |type|tool_for(type).plan(path,settings_for(type,path),model) }
+      plans=types.map { |type|tool_for(type,path).plan(path,settings_for(type,path),model) }
       plans.first.merge(holes:plans.flat_map { |p|p[:holes] },refresh_kind:types.length==1 ? types.first : :mixed,refresh_kinds:types)
     end
     # Only positively owned single-circle shelf-pin groups are candidates. A
@@ -121,7 +125,7 @@ module Elfis
           target=BastillePodmienFront.unique_path(resolve.call(root,ids));target.last.erase!;removed+=1
         end
         specs.each do |root,ids,type|
-          tool=tool_for(type)
+          tool=tool_for(type,resolve.call(root,ids))
           if type==:hinge || type==:drawer
             source=resolve.call(root,ids)
             result=tool.apply([source],settings_for(type,source),model,operation:false,mode: :update)
@@ -229,7 +233,7 @@ module Elfis
       # SketchUp snapshots the command icon when adding a toolbar button.
       # Set both sizes first, including on the very first extension load.
       if new_command
-        UI.menu('Extensions').add_item(@command)
+        ElfisMenu.category('Drilling').add_item(@command)
         toolbar=BastillePodmienFront.instance_variable_get(:@toolbar);toolbar.add_item(@command) if toolbar
       end
     end

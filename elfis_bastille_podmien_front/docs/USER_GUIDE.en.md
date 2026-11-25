@@ -1,6 +1,6 @@
 # ELFIS Door Profile Library — User Guide
 
-Applies to 2.9.39. Dimensions are in millimetres; examples use **height × width**, such as **715 × 596**.
+Applies to 2.9.40. Dimensions are in millimetres; examples use **height × width**, such as **715 × 596**.
 
 ## Start here
 
@@ -420,3 +420,17 @@ The existing **Arrange Shelves**, **Shelf Pin Rows**, **Dowels and Screws**, **H
 - **Refresh:** updates owned corner operations and removes orphaned shelf support groups from both sides and backs when the source shelf has been deleted. Alt removal remains available in the individual tools. Existing Kamar Left / Right / Both cutout layouts are retained.
 
 Each operation can be undone. Locked geometry, unsupported outlines, skewed panels, ambiguous contacts and holes crossing actual panel edges are rejected. No timers, background observers or automatic refresh during orbiting. Corner arrangement requires a single bay with a consistent adjustable-shelf outline and a shelf template (or a retained saved template); fixed internal divisions require selecting a separate compartment. Unrecognized custom drilling still needs review in Existing drilling.
+
+## Toolbar layout and imported corner drilling (2.9.40)
+
+Open **Extensions → ELFIS — Default settings → Toolbars**. Choose Doors and drilling, Handles or Visibility. Drag rows or use ↑/↓ to reorder; uncheck individual icons, add/remove/move separators, or disable a whole toolbar. The preview omits hidden commands and redundant separators. Restore this toolbar resets only that toolbar. **Save default settings**, then fully restart SketchUp: saving does not rebuild a live toolbar. Settings are stored locally, independently of the model, and remain available in Extensions even if their icon is hidden. Handles needs its separate module (1.1.10-beta or later for configurable layout).
+
+Existing drilling now recognizes imported dowel/screw joints in supported L cabinets using actual perpendicular panel contacts. Legacy back-screw rows are associated by the actual back cut-end geometry rather than by today's default spacing. Adoption and parameter conversion preserve centres; locked, ambiguous and non-contact operations remain unavailable. Scan again after installing the fix.
+
+Existing drilling displays depths to the nearest 0.5 mm, with one decimal. This display rounding does not change geometry or saved drilling parameters.
+
+### Clear cabinet drilling
+Select the cabinet(s), then Default settings → Existing drilling → Remove all drilling. Confirm the number of circular drilling vectors to remove. This includes hidden and imported D…_DEPTH… circles with no ELFIS association. Source ownership is cleared so Refresh does not recreate the old pattern. One Ctrl+Z restores the operation. Other cabinet copies, panel geometry, Kamar cutouts and routing are preserved. Untagged circles and actual holes cut into solid geometry are not removed.
+
+### Dowels and Screws 2.0
+A separate icon marked **2.0** is available on the ELFIS Doors toolbar, next to the original tool after restart. Both commands are also in Extensions. Settings and CNC naming are shared. The original tool still uses a back as its datum. The new tool uses a front, then a back, and can work with neither: check the cyan direction indicator and press **Shift** once to reverse the starting edge. **Alt** removes; **Ctrl** refreshes. Distances start at the cross member/fixed shelf itself, including recesses, and the selected direction is saved for Refresh. With ambiguous/no physical references, verify the direction before clicking. Corner cabinets retain their existing contact-edge planner.

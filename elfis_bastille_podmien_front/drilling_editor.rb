@@ -6,6 +6,101 @@ module Elfis
     def l(pl,en);BastillePodmienFront.l(pl,en);end
     def instance?(e);CarcassJoinery.instance?(e);end
     def signature(path);path.map(&:persistent_id).join('/');end
+    # Reset does not require source associations: legacy/imported machining is
+    # recognized by its circular vector geometry and D..._DEPTH... tag/name.
+    # Edges bounding a face are never drilling vectors.
+    def reset_curves(path,model)
+      path.last.definition.entities.grep(Sketchup::Edge).map(&:curve).compact.uniq.select do |curve|
+        curve.is_a?(Sketchup::ArcCurve) && curve.edges.all? { |edge| edge.faces.empty? } && circle(path,model,curve:curve)
+      end
+    end
+    def reset_roots(model)
+      roots=model.selection.select { |e| instance?(e) }
+      raise l('Zaznacz szafkę do usunięcia wierceń.','Select a cabinet to clear its drilling.') if roots.empty?
+      raise l('Otwarta szafka ma wiele kopii. Najpierw Utwórz unikatowy.','The open cabinet has multiple copies. Make it unique first.') if Array(model.active_path).any? { |e| e.definition.instances.length>1 }
+      roots
+    end
+    def reset_plan(roots,model)
+      nodes=[];walk=nil
+      walk=->(path,stack) do
+        entity=path.last
+        raise 'Invalid cabinet selection.' unless entity.valid?
+        raise 'Recursive component definition.' if stack.include?(entity.definition)
+        curves=reset_curves(path,model)
+        owned=[[CarcassJoinery::DICT,'owner_key'],[ShelfPins::DICT,'owner_key'],[HingeDrilling::DICT,'owner'],[DrawerDrilling::DICT,'owner']].any? { |dict,key| entity.get_attribute(dict,key) }
+        raise l('Szafka zawiera zablokowane powiązanie wierceń.','Cabinet contains a locked drilling association.') if owned && (path+Array(model.active_path)).any?(&:locked?)
+        unless curves.empty?
+          raise l('Wiercenia lub ich szafka są zablokowane.','Drilling or its cabinet is locked.') if path.any?(&:locked?) || Array(model.active_path).any?(&:locked?)
+          nodes<<{path:path,count:curves.length}
+        end
+        entity.definition.entities.each { |child| walk.call(path+[child],stack+[entity.definition]) if instance?(child) }
+      end
+      roots.each do |root|
+        raise 'Cabinet is outside the active editing context.' unless model.active_entities.include?(root)
+        walk.call([root],[])
+      end
+      nodes
+    end
+    def remove_all(roots:nil,model:Sketchup.active_model,confirm:true)
+      roots ||= reset_roots(model)
+      # Validate explicit roots too, before cloning or modifying any geometry.
+      raise 'No cabinets selected.' if roots.empty?
+      raise 'Make the open cabinet unique first.' if Array(model.active_path).any? { |e| e.definition.instances.length>1 }
+      nodes=reset_plan(roots,model);count=nodes.sum { |node| node[:count] }
+      return {removed:0,cancelled:false} if count.zero?
+      if confirm
+        question=l("Usunąć wszystkie wiercenia (#{count}) z zaznaczonych szafek?\nTakże importowane i bez powiązań ELFIS. Wycięcia i frezowania pozostaną.\nCałość można cofnąć jednym Ctrl+Z.","Remove all drilling (#{count}) from the selected cabinets?\nIncludes imported and unassociated drilling. Cutouts and routing will remain.\nUndo the entire operation with Ctrl+Z.")
+        return {removed:0,cancelled:true} unless UI.messagebox(question,MB_YESNO)==IDYES
+      end
+      # Build an index tree before make_unique changes descendant identities.
+      trees={}
+      nodes.each do |node|
+        branch=(trees[node[:path].first]||={})
+        node[:path].each_cons(2) { |parent,child| branch=(branch[parent.definition.entities.to_a.index(child)]||={}) }
+        branch[:clear]=true
+      end
+      removed=0
+      model.start_operation(l('ELFIS — Usuń wszystkie wiercenia','ELFIS — Clear cabinet drilling'),true)
+      begin
+        clear=nil
+        clear=->(entity,branch,path) do
+          entity.make_unique if entity.definition.instances.length>1
+          children=entity.definition.entities.to_a
+          branch.each { |index,sub| clear.call(children.fetch(index),sub,path+[children.fetch(index)]) if index.is_a?(Integer) }
+          if branch[:clear]
+            curves=reset_curves(path,model);removed+=curves.length
+            entity.definition.entities.erase_entities(curves.flat_map(&:edges).uniq)
+            entity.erase! if path.length>1 && entity.definition.entities.length.zero?
+          end
+        end
+        trees.each { |root,branch| clear.call(root,branch,[root]) }
+        # Source ownership must also be cleared, otherwise Refresh would
+        # silently recreate the deleted pattern. Preserve Kamar ownership.
+        forget=nil
+        forget=->(entity) do
+          dicts=[[CarcassJoinery::DICT,'owner_key'],[ShelfPins::DICT,'owner_key'],[HingeDrilling::DICT,'owner'],[DrawerDrilling::DICT,'owner']]
+          children=entity.definition.entities.select { |child| instance?(child) }
+          has_owner=dicts.any? { |dict,key| entity.get_attribute(dict,key) }
+          has_descendant=children.any? { |child| reset_owner_tree?(child,[]) }
+          if has_owner || has_descendant
+            entity.make_unique if entity.definition.instances.length>1
+            dicts.each { |dict,key| entity.delete_attribute(dict,key) }
+            entity.definition.entities.each { |child| forget.call(child) if instance?(child) }
+          end
+        end
+        roots.each { |root| forget.call(root) }
+        model.commit_operation
+      rescue Exception
+        model.abort_operation
+        raise
+      end
+      model.active_view.invalidate
+      {removed:removed,cancelled:false}
+    end
+    def reset_owner_tree?(entity,stack)
+      return false if stack.include?(entity.definition)
+      [[CarcassJoinery::DICT,'owner_key'],[ShelfPins::DICT,'owner_key'],[HingeDrilling::DICT,'owner'],[DrawerDrilling::DICT,'owner']].any? { |dict,key| entity.get_attribute(dict,key) } || entity.definition.entities.any? { |child| instance?(child) && reset_owner_tree?(child,stack+[entity.definition]) }
+    end
     def circle(path,model,curve:nil)
       group=path.last;entities=group.definition.entities
       unless curve
@@ -49,7 +144,17 @@ module Elfis
       joints=[];pins=[]
       boards.each do |source|
         if CarcassJoinery.eligible?(source)
-          begin;joints<<CarcassJoinery.frame_for(source,boards);rescue RuntimeError;end
+          begin
+            # Imported corner joints have perpendicular receivers, not the two
+            # parallel sides required by the rectangular frame classifier.
+            joints << if CornerCabinet.corner?(boards,source)
+              CornerCabinet.joint_plan(source[:path],CarcassJoinery.settings,model,source,boards)
+            else
+              CarcassJoinery.frame_for(source,boards)
+            end
+          rescue RuntimeError
+            # Keep unsupported sources visible as unassociated, never guess.
+          end
         end
         if ShelfPins.shelf?(source)
           begin;pins<<ShelfPins.plan(source[:path],ShelfPins.settings,model);rescue RuntimeError;end
@@ -143,6 +248,22 @@ module Elfis
         p[:holes].each do |v|
           next unless v[:panel][:path]==h[:panel][:path] && v[:point].distance(h[:point]).to_mm<0.75 && (v[:diameter]-h[:diameter]).abs<0.3 && v[:normal].dot(h[:normal]).abs>0.999
           found<<{source:p[:shelf],kind:v[:kind],owned:false}
+        end
+        # Legacy back screws may have different margins/spacing (and a slight
+        # off-centre axis) from today's defaults. Associate by the actual back
+        # cut-end contact, not by matching a newly generated screw grid.
+        next unless CarcassJoinery.back?(p[:shelf]) && (h[:diameter]-CarcassJoinery.settings[:screw_diameter]).abs<0.3
+        next unless p[:sides].any? { |_,side,_,_|side[:path]==h[:panel][:path] }
+        next unless h[:normal].dot(p[:width]).abs>0.999
+        q=h[:point].transform(p[:inverse]);sb=p[:bounds]
+        next unless q.y-r>=sb.min.y && q.y+r<=sb.max.y && q.z-r>=sb.min.z && q.z+r<=sb.max.z
+        x=[sb.min.x,sb.max.x].min_by { |edge|(q.x-edge).abs }
+        source_point=Geom::Point3d.new(x,q.y,q.z).transform(p[:frame])
+        begin
+          CarcassJoinery.check_circle(h.merge(panel:p[:shelf],point:source_point,normal:p[:width],tangent:Z_AXIS,depth:0))
+          found<<{source:p[:shelf],kind: :back_screw,owned:false}
+        rescue RuntimeError
+          # A circle inside a back notch must remain unassociated.
         end
       end
       (Array(candidates[:hinges])+Array(candidates[:drawers])).each do |hole|

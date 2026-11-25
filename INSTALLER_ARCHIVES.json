@@ -10,6 +10,21 @@
     "sha256": "cfe95cc19766b99e86815e7ff2d1710a07da38275805b82a628bcd9c351b32e4"
   },
   {
+    "file": "public/2.9.10/ELFIS_Profile_Library_2.9.10.rbz",
+    "bytes": 157481,
+    "sha256": "fc4516ce4f80f69540fad8ce26f86e2334e8078707dd969ad827126a6c75e832"
+  },
+  {
+    "file": "public/2.9.11/ELFIS_Profile_Library_2.9.11.rbz",
+    "bytes": 160906,
+    "sha256": "ec0a763f7b05f9336e00146b29f454d5739612206ab3ac2d01e6fee51ddba9e6"
+  },
+  {
+    "file": "public/2.9.12/ELFIS_Profile_Library_2.9.12.rbz",
+    "bytes": 161194,
+    "sha256": "b70950b13d128861e0c4bb1c9793dbe5efb2c6c0fe2aa5e88842760f842e3424"
+  },
+  {
     "file": "public/2.9.13/ELFIS_Profile_Library_2.9.13.rbz",
     "bytes": 177218,
     "sha256": "d84ae07ac1821b698e5e4f7b7b9968269ce11337e4205f2a004f3cbd2454b839"
@@ -20,9 +35,84 @@
     "sha256": "1ee5a49b408f4bcf5ac3cbc5d15e63314b7f95e65d0fda2bd8dfcc125c182141"
   },
   {
+    "file": "public/2.9.15/ELFIS_Profile_Library_2.9.15.rbz",
+    "bytes": 179322,
+    "sha256": "5cf7acde28e4a864d9c445950a43350587a8fa2a3abf25bdeb787c67e7c0f59e"
+  },
+  {
+    "file": "public/2.9.16/ELFIS_Profile_Library_2.9.16.rbz",
+    "bytes": 194725,
+    "sha256": "94c62ec65f6067d41844d6a518599f3ccf19fa2922c2b19c160c5b8967a0d340"
+  },
+  {
+    "file": "public/2.9.17/ELFIS_Profile_Library_2.9.17.rbz",
+    "bytes": 199517,
+    "sha256": "3c7c8bfdd058c93cd702cfa6109a40bd39d06d50a8d76a647262e34c9819dab3"
+  },
+  {
+    "file": "public/2.9.18/ELFIS_Profile_Library_2.9.18.rbz",
+    "bytes": 223384,
+    "sha256": "7d85a184256ea10ede07a9787babbfba3c6444e3c29e35b27a6dde8e0aad2d62"
+  },
+  {
+    "file": "public/2.9.19/ELFIS_Profile_Library_2.9.19.rbz",
+    "bytes": 224105,
+    "sha256": "97e13cbea35b717e49ae31939d28ca9c528163224d8eecda37720770dcd2eda5"
+  },
+  {
     "file": "public/2.9.2/ELFIS_Profile_Library_2.9.2.rbz",
     "bytes": 123851,
     "sha256": "260a8d76b940a9001f90abf3af26e37f4d45d04f6dd3a2b605314c75d63bb1de"
+  },
+  {
+    "file": "public/2.9.20/ELFIS_Profile_Library_2.9.20.rbz",
+    "bytes": 229791,
+    "sha256": "ca19e4d277506acd49ce75d74f0b44536c70494f66cb70d74dcfca6971c910c8"
+  },
+  {
+    "file": "public/2.9.21/ELFIS_Profile_Library_2.9.21.rbz",
+    "bytes": 232616,
+    "sha256": "d84b43a486a0d6d5108abbb7d32cf7081dc1a3c77e900f5e8fd6ef81dd8a59fc"
+  },
+  {
+    "file": "public/2.9.22/ELFIS_Profile_Library_2.9.22.rbz",
+    "bytes": 233256,
+    "sha256": "bcae0b25dd68d57723ea49148c01bcc59bad1380373aa4d815a0c9ec6537697d"
+  },
+  {
+    "file": "public/2.9.23/ELFIS_Profile_Library_2.9.23.rbz",
+    "bytes": 235623,
+    "sha256": "af68409de85b19ef937a2bd022aeae35a1c6255a822e50fb22bd7cee293a94df"
+  },
+  {
+    "file": "public/2.9.24/ELFIS_Profile_Library_2.9.24.rbz",
+    "bytes": 243697,
+    "sha256": "91e7f2c65274ac85ea875fe1257b130950eaf599a1e35444edfc7b5b8c2af6d4"
+  },
+  {
+    "file": "public/2.9.25/ELFIS_Profile_Library_2.9.25.rbz",
+    "bytes": 246161,
+    "sha256": "2b9d4a2b817c9f2be096f70fdbcbab06e84bea686c7df1d4f5f91bde6679abd7"
+  },
+  {
+    "file": "public/2.9.26/ELFIS_Profile_Library_2.9.26.rbz",
+    "bytes": 249717,
+    "sha256": "9f85bff60cfb518c3db3d16d1bc79e8244671347be94360910b676d7df23d623"
+  },
+  {
+    "file": "public/2.9.27/ELFIS_Profile_Library_2.9.27.rbz",
+    "bytes": 259483,
+    "sha256": "0b6f584a6d87b99e424a61e3fab608946cc5eb32bd4eb8eedf043de522de74ce"
+  },
+  {
+    "file": "public/2.9.28/ELFIS_Profile_Library_2.9.28.rbz",
+    "bytes": 260038,
+    "sha256": "c8a396ea9f8f8b26d13b20d85408aa0532eed482c8d1b4c2f174ee67b040c631"
+  },
+  {
+    "file": "public/2.9.29/ELFIS_Profile_Library_2.9.29.rbz",
+    "bytes": 265431,
+    "sha256": "2af5f04d372e4301811ab49a7292a2bd84625532c1e0ad169bd1fb84ded60bc1"
   },
   {
     "file": "public/2.9.3/ELFIS_Profile_Library_2.9.3.rbz",
@@ -30,19 +120,284 @@
     "sha256": "710c6421553094a6ea25da5ab2c3b88be2fae77276b2bb6c578e3e4ad12da626"
   },
   {
+    "file": "public/2.9.30/ELFIS_Profile_Library_2.9.30.rbz",
+    "bytes": 267314,
+    "sha256": "52aee83ff46357fc4e2c8847237e682cd0c209eaa91904fe255f87ca183e47fb"
+  },
+  {
+    "file": "public/2.9.31/ELFIS_Profile_Library_2.9.31.rbz",
+    "bytes": 267969,
+    "sha256": "6ea2df53a767bc2762a043ac777660b78005b10b87a4df4cbbb95fa2092dc8a6"
+  },
+  {
+    "file": "public/2.9.32/ELFIS_Profile_Library_2.9.32.rbz",
+    "bytes": 268188,
+    "sha256": "e184487c4715c563051064a03a8301bb75c8ae3fdc4b10b16a7ce46541394640"
+  },
+  {
+    "file": "public/2.9.33/ELFIS_Profile_Library_2.9.33.rbz",
+    "bytes": 279339,
+    "sha256": "d4f58e116debd3338464219b628bba7b28b64aa2c8ee4bd4e6b4d3f2b2d97530"
+  },
+  {
+    "file": "public/2.9.34/ELFIS_Profile_Library_2.9.34.rbz",
+    "bytes": 282004,
+    "sha256": "0beb3b9f5054bf66fd6e5306315c59489c2184db069f36b6575976de43848e76"
+  },
+  {
+    "file": "public/2.9.35/ELFIS_Profile_Library_2.9.35.rbz",
+    "bytes": 283612,
+    "sha256": "adb9beff9d3f99ed2fc3584845504214433ebb9fe19d76ea4966c1af2948e79d"
+  },
+  {
+    "file": "public/2.9.36/ELFIS_Profile_Library_2.9.36.rbz",
+    "bytes": 289443,
+    "sha256": "c07e8c74051daeb808a4087b392d4b63921d06c52a2ab5ffafc760fd7c08a1ae"
+  },
+  {
+    "file": "public/2.9.37/ELFIS_Profile_Library_2.9.37.rbz",
+    "bytes": 302405,
+    "sha256": "e2d315d7a8c6bf0c5fca8afdf14bab00457104d7a792f6a1dbdc71c86aed1c12"
+  },
+  {
+    "file": "public/2.9.38/ELFIS_Profile_Library_2.9.38.rbz",
+    "bytes": 306116,
+    "sha256": "20c6c9c6bde1617df697c1fbe839a2c82e2ad076802328cf661b56ad9516199d"
+  },
+  {
     "file": "public/2.9.39/ELFIS_Profile_Library_2.9.39.rbz",
     "bytes": 316330,
     "sha256": "e9ab584d166dc9ee6f0076a58c4f64a84db7f4c3c8eda3ff821c3a64e4503a35"
   },
   {
-    "file": "public/handles/1.0.0/ELFIS_Handles_1.0.0.rbz",
-    "bytes": 12472,
-    "sha256": "e12caac7adbb1291f93b5d614dffb1cbaca1f22116bcb790281091b0863378e3"
+    "file": "public/2.9.4/ELFIS_Profile_Library_2.9.4.rbz",
+    "bytes": 141192,
+    "sha256": "88ab1f3c062bcf1c3c6ea94b110cfb00d4aef458577ffe085aa37a700b21e865"
+  },
+  {
+    "file": "public/2.9.40/ELFIS_Profile_Library_2.9.40.rbz",
+    "bytes": 324270,
+    "sha256": "0c650417411dbf86a81340b53d88d6290da384a8f9cbb56c44821e9e390dfa7f"
+  },
+  {
+    "file": "public/2.9.41/ELFIS_Profile_Library_2.9.41.rbz",
+    "bytes": 324718,
+    "sha256": "3b45994c551f86171948cb2b0ba212ede7763885dfcf019bcb2c5b141cdf7acf"
+  },
+  {
+    "file": "public/2.9.42/ELFIS_Profile_Library_2.9.42.rbz",
+    "bytes": 327303,
+    "sha256": "0b8963cc274327cb5c11c8407c3946edd9d047f2f2807e927e9561809288813c"
+  },
+  {
+    "file": "public/2.9.43/ELFIS_Profile_Library_2.9.43.rbz",
+    "bytes": 329005,
+    "sha256": "2a79759351c02d952222fb4f74486b4f9c127e03ea9faa997bd37c8181654e58"
+  },
+  {
+    "file": "public/2.9.44/ELFIS_Profile_Library_2.9.44.rbz",
+    "bytes": 341707,
+    "sha256": "b5a4fbdc0a2461b405f1173135596ae59ea3fe5cc141a68395f3bde73f6eebbb"
+  },
+  {
+    "file": "public/2.9.45/ELFIS_Profile_Library_2.9.45.rbz",
+    "bytes": 353041,
+    "sha256": "dcf38111a9a576181fb954b5b4253caa1d9f4d8ba2303a65bc31852461d3877d"
+  },
+  {
+    "file": "public/2.9.46/ELFIS_Profile_Library_2.9.46.rbz",
+    "bytes": 353995,
+    "sha256": "4ca9e96786e2e7ffedc853e5271cc963211dc865dbea4f91ab25d1c023377e5f"
+  },
+  {
+    "file": "public/2.9.5/ELFIS_Profile_Library_2.9.5.rbz",
+    "bytes": 143367,
+    "sha256": "02c97b394fc1a1c03e1effc640a5d8c550b827b19d62e775b2abd1d21674c74d"
+  },
+  {
+    "file": "public/2.9.6/ELFIS_Profile_Library_2.9.6.rbz",
+    "bytes": 146605,
+    "sha256": "18f4e2ea0e9fb572f1b2089926cd23fad83b882105b67078484acb0f2e0b0ed8"
+  },
+  {
+    "file": "public/2.9.7/ELFIS_Profile_Library_2.9.7.rbz",
+    "bytes": 156550,
+    "sha256": "b40828ac519c342beb21331374c42e96d6ae239e75a6050f9f41c55a51417d19"
+  },
+  {
+    "file": "public/2.9.8/ELFIS_Profile_Library_2.9.8.rbz",
+    "bytes": 142074,
+    "sha256": "59bc7388e7d1e6c49238bf6197e6c7a04442dc0d7d4216903c45ab8528ac1f10"
+  },
+  {
+    "file": "public/2.9.9/ELFIS_Profile_Library_2.9.9.rbz",
+    "bytes": 153182,
+    "sha256": "7d905880341818ee1409534a48a3e18289af77bd05bcae73df7c145d3106f038"
+  },
+  {
+    "file": "public/3.0.0-beta/ELFIS_Profile_Library_3.0.0-beta.rbz",
+    "bytes": 155124,
+    "sha256": "1ad15fdf81a32832c7c32154559a57099096b1ad47b076c95179ee57f8aec208"
+  },
+  {
+    "file": "public/3.0.1-beta/ELFIS_Profile_Library_3.0.1-beta.rbz",
+    "bytes": 155987,
+    "sha256": "062dc5c5cef61ecc0cdb8bf2ec3684cf242e939f3af3545a3eb7b998d6b6a43d"
+  },
+  {
+    "file": "public/CabinetStudio/0.1.0-test/ELFIS_Cabinet_Studio_0.1.0_TEST.rbz",
+    "bytes": 13070,
+    "sha256": "0eb709bc15d48554a3dabc9a8c8e5db960029e024b8086f95fbebddc06dc85b1"
+  },
+  {
+    "file": "public/CabinetStudio/0.2.0-test/ELFIS_Cabinet_Studio_0.2.0_TEST.rbz",
+    "bytes": 13972,
+    "sha256": "55128f02bc16567850875e8dc786bb1309b565245510748da4c9ac4fda3b397a"
+  },
+  {
+    "file": "public/CabinetStudio/0.2.1-test/ELFIS_Cabinet_Studio_0.2.1_TEST.rbz",
+    "bytes": 14961,
+    "sha256": "1a2a0660df9eb02920dc8eb970d30fe1148fe745ed9d2ec11f90994033daa50f"
+  },
+  {
+    "file": "public/CabinetStudio/3.0.0/ELFIS_Cabinet_Studio_3.0.0.rbz",
+    "bytes": 17405,
+    "sha256": "cdffbca13d0238ef66782fbe4378717fb65a6c600541c448cc4d6832dea7364d"
+  },
+  {
+    "file": "public/CabinetStudio/3.0.1/ELFIS_Cabinet_Studio_3.0.1.rbz",
+    "bytes": 17891,
+    "sha256": "bedc2a1e61ddb9fd773a434ad6c1c44d14684d05fe693e672512cc8a8ecbd10c"
+  },
+  {
+    "file": "public/CabinetStudio/3.0.2/ELFIS_Cabinet_Studio_3.0.2.rbz",
+    "bytes": 18061,
+    "sha256": "4b7324aab7f216ca9e1b6fdebea14d9c065e22123ee8cfd8dedb3ede70ede4a9"
+  },
+  {
+    "file": "public/CabinetStudio/3.1.0/ELFIS_Cabinet_Studio_3.1.0.rbz",
+    "bytes": 14863,
+    "sha256": "c7ad67a7c6665a6b95ec3275c403c69b6bb8d412afd8076936e3d044794f93a5"
+  },
+  {
+    "file": "public/DrillingHighlight/1.1.0/ELFIS_Drilling_Highlight_1.1.0.rbz",
+    "bytes": 2826,
+    "sha256": "6a56ff623405e6563bb5cd0b16479d1e1885e4fa2439f5c5387db15802b2c863"
+  },
+  {
+    "file": "public/DrillingHighlight/1.1.1/ELFIS_Drilling_Highlight_1.1.1.rbz",
+    "bytes": 3364,
+    "sha256": "42cb1f7951813318f523df2e3d80789aa6f471c7a905c9a8813363ae2956bf5b"
+  },
+  {
+    "file": "public/DrillingHighlight/1.2.0/ELFIS_Drilling_Highlight_1.2.0.rbz",
+    "bytes": 4972,
+    "sha256": "410ca2ff4260820e59e0b5f9ceac89656642d3fe4b8ab2c8741655d8604e8e4f"
+  },
+  {
+    "file": "public/DrillingHighlight/1.3.0/ELFIS_Drilling_Highlight_1.3.0.rbz",
+    "bytes": 10072,
+    "sha256": "a77be043301b53fea76bb6c1bdb70e0251b3a6116e63f3d4293bca9b2a3e2444"
+  },
+  {
+    "file": "public/DrillingHighlight/1.3.1/ELFIS_Drilling_Highlight_1.3.1.rbz",
+    "bytes": 10183,
+    "sha256": "86062e4129470950b2815ac1827d1fb4c07ea4bd9d7cd50c639e467b5562b4ba"
+  },
+  {
+    "file": "public/TagToolbar/ELFIS_TagToolbar_1.0.zip",
+    "bytes": 2850,
+    "sha256": "d7dfe1d2622994c3003ef6ee9b318867b376f7a629044b640a996c247dbd83a7"
+  },
+  {
+    "file": "public/TagToolbar/ELFIS_TagToolbar_1.01.zip",
+    "bytes": 3316,
+    "sha256": "addb87bda70f1c1c4ebc44809892a88bdd4b44addd15426c01df0b243ea3f1ee"
+  },
+  {
+    "file": "public/TagToolbar/ELFIS_TagToolbar_1.02.zip",
+    "bytes": 4128,
+    "sha256": "3727194dd1d88dab99b89e87820acff546fe3c75fe5fa79c371f994fee3f24b2"
+  },
+  {
+    "file": "public/cabinet-preview/ELFIS_Cabinet_Preview_0.1.0_TEST.rbz",
+    "bytes": 19033,
+    "sha256": "e247da3332700ad1ecdf0cef1d18906dab92abfc7f5c780cc720655a906a279d"
+  },
+  {
+    "file": "public/cabinet-preview/ELFIS_Cabinet_Preview_0.1.1_TEST.rbz",
+    "bytes": 21417,
+    "sha256": "135c057f9a2cde3fce012c2c18add3e8d5a9524d9417e85cb8533ba7e63bea25"
+  },
+  {
+    "file": "public/cabinet-preview/ELFIS_Cabinet_Preview_0.1.2_TEST.rbz",
+    "bytes": 22107,
+    "sha256": "01244d975ffb4548fdc6e42cd07a78f398a344c01e9c9e702bf51ae3711c8ab3"
+  },
+  {
+    "file": "public/elevation-beta/ELFIS_Widok_Zabudowy_0.1.0_beta.rbz",
+    "bytes": 12360,
+    "sha256": "5cf54561af459ddbf7a349da6ead96cf4b38d18854faf89eb69a1a438a993d6f"
+  },
+  {
+    "file": "public/elevation-beta/ELFIS_Widok_Zabudowy_0.1.1_beta.rbz",
+    "bytes": 13069,
+    "sha256": "781915251ee743e28e466eb9e944c0040a3bc473209d13200ea0ee62d61b55f0"
+  },
+  {
+    "file": "public/elevation-beta/ELFIS_Widok_Zabudowy_0.1.2_beta.rbz",
+    "bytes": 13475,
+    "sha256": "8f806c60a212760f7ee46261f497cd405667d8829d709e9f0a440973eb479b85"
+  },
+  {
+    "file": "public/elevation-beta/ELFIS_Widok_Zabudowy_0.1.3_beta.rbz",
+    "bytes": 14144,
+    "sha256": "442bcdb1978d32c1e764e70594a7ec2cce361a07f2e011588a810373c663d912"
+  },
+  {
+    "file": "public/elevation-beta/ELFIS_Widok_Zabudowy_0.1.44_beta.rbz",
+    "bytes": 26445,
+    "sha256": "3ba6a0ccb45317d6d7258b3f638c52809e59fff3a23073b40dd756758c286931"
+  },
+  {
+    "file": "public/elevation-beta/ELFIS_Widok_Zabudowy_0.1.4_beta.rbz",
+    "bytes": 17101,
+    "sha256": "306d0c67b1ddf2aa095f9b4ad2171391926d8b925ebfaad283129a2a925d903e"
+  },
+  {
+    "file": "public/elevation-beta/ELFIS_Widok_Zabudowy_0.1.5_beta.rbz",
+    "bytes": 17355,
+    "sha256": "5992c64e137b3823f54e61d5db8b5affca5f1b4575b615f90955e31a5c6a407f"
+  },
+  {
+    "file": "public/elevation-beta/ELFIS_Widok_Zabudowy_0.1.6_beta.rbz",
+    "bytes": 17612,
+    "sha256": "31471d6b1488722e4bedbddb877b6896dbc1b5cfa417bd409d5499ff0e305785"
+  },
+  {
+    "file": "public/elevation-beta/ELFIS_Widok_Zabudowy_0.1.7_beta.rbz",
+    "bytes": 17769,
+    "sha256": "1740813d8c91246f9ce52438aff933818f3738d57e4d721db7a937a16315f0cc"
+  },
+  {
+    "file": "public/elevation-beta/ELFIS_Widok_Zabudowy_0.1.8_beta.rbz",
+    "bytes": 17826,
+    "sha256": "1922f38ee6a69968221c3074a58642ab19e3be0e129e6561397cddb67a373e67"
+  },
+  {
+    "file": "public/elevation-beta/ELFIS_Widok_Zabudowy_0.1.9_beta.rbz",
+    "bytes": 19019,
+    "sha256": "e0cb5ed2dc292e0bbf662b43a38f61e5f6bea44e281c2592772438297dcb659a"
   },
   {
     "file": "public/handles/1.0.0-beta/ELFIS_Handles_1.0.0-beta.rbz",
     "bytes": 12627,
     "sha256": "ce699e9b35a81456768cf6ef4a1e5b71135d2952c9dd88c4c369bf1e1df45d89"
+  },
+  {
+    "file": "public/handles/1.0.0/ELFIS_Handles_1.0.0.rbz",
+    "bytes": 12472,
+    "sha256": "e12caac7adbb1291f93b5d614dffb1cbaca1f22116bcb790281091b0863378e3"
   },
   {
     "file": "public/handles/1.1.0-beta/ELFIS_Handles_1.1.0-beta.rbz",
@@ -53,6 +408,11 @@
     "file": "public/handles/1.1.1-beta/ELFIS_Handles_1.1.1-beta.rbz",
     "bytes": 17627,
     "sha256": "f353a93c558ea7c22da4e8e2259a1295b1a98b87701f436a5f371c5dc0af1448"
+  },
+  {
+    "file": "public/handles/1.1.10-beta/ELFIS_Handles_1.1.10-beta.rbz",
+    "bytes": 22944,
+    "sha256": "62034177db66727d9941eac054c602d095bc5687f616b222001abb5fd91ce8d8"
   },
   {
     "file": "public/handles/1.1.2-beta/ELFIS_Handles_1.1.2-beta.rbz",
@@ -70,8 +430,93 @@
     "sha256": "18fb5a0bb95d3404bf9ab675b31dee12d1dd2cd380fe9f7d11ddb301706cc98a"
   },
   {
+    "file": "public/handles/1.1.5-beta/ELFIS_Handles_1.1.5-beta.rbz",
+    "bytes": 19476,
+    "sha256": "fed43291809623d8c006d0fe352567fc7f6599325ea53bc394ab4dc96e258faf"
+  },
+  {
+    "file": "public/handles/1.1.6-beta/ELFIS_Handles_1.1.6-beta.rbz",
+    "bytes": 19565,
+    "sha256": "429b70456dc3ecc4db6d11d5bfafa7c70aad74ed946fd250f2f18fd6c16e6ea1"
+  },
+  {
+    "file": "public/handles/1.1.7-beta/ELFIS_Handles_1.1.7-beta.rbz",
+    "bytes": 20129,
+    "sha256": "35b8a29057a004e83c64a61a7f0ce457da89b932261d4afd78180f349dee5c68"
+  },
+  {
+    "file": "public/handles/1.1.8-beta/ELFIS_Handles_1.1.8-beta.rbz",
+    "bytes": 21849,
+    "sha256": "700cdb198e3167eae71de077cf161f62f05cbac69dd496053387766f4ba1c472"
+  },
+  {
     "file": "public/handles/1.1.9-beta/ELFIS_Handles_1.1.9-beta.rbz",
     "bytes": 22850,
     "sha256": "52716be00f33f55959a97b1dc2e084b10c2e840aa917955130d6e5c1fef089eb"
+  },
+  {
+    "file": "public/hinge-hardware-sync/0.1.2-test/ELFIS_Hinge_Hardware_Sync_0.1.2_TEST_code_only.rbz",
+    "bytes": 8220,
+    "sha256": "220a6c10701d7f1d687b453dbc6051c4b89bf163618e11d5337be6a99b0190df"
+  },
+  {
+    "file": "public/legacy/Drzwi_z_Profilu/ELFIS_Bastille_Podmien_Front_1.0.0.rbz",
+    "bytes": 6643,
+    "sha256": "9abd0c6045bdb734546d135b737f9857af4081841bd8ca3179e4a87c5870cbf1"
+  },
+  {
+    "file": "public/legacy/Drzwi_z_Profilu/ELFIS_Bastille_Podmien_Front_1.1.0.rbz",
+    "bytes": 7143,
+    "sha256": "a18e082c0c4fbe0cd179bca4355868f2de4b4f95cbce608e6264bd6ba4b9f6cc"
+  },
+  {
+    "file": "public/legacy/Drzwi_z_Profilu/ELFIS_Bastille_Podmien_Front_1.2.0.rbz",
+    "bytes": 7577,
+    "sha256": "3291a74febe9e54cf30acc37c9c45cddc20c8046aaae1fc35bb9a8de8a39cecb"
+  },
+  {
+    "file": "public/legacy/Drzwi_z_Profilu/ELFIS_Bastille_Podmien_Front_1.3.0.rbz",
+    "bytes": 7618,
+    "sha256": "53cf3007e932e6677031c9dadd0e0e4a34f76cbd754cd317fd866d53c75f67a0"
+  },
+  {
+    "file": "public/legacy/Drzwi_z_Profilu/ELFIS_Drzwi_z_Profilu_1.0.0.rbz",
+    "bytes": 4569,
+    "sha256": "405b80d68346366305ca7f0a29938483a6c53d4b8520b555ea011c13d04ce77c"
+  },
+  {
+    "file": "public/legacy/Drzwi_z_Profilu/ELFIS_Drzwi_z_Profilu_1.1.0.rbz",
+    "bytes": 5162,
+    "sha256": "6563419ae4f6d2a1feb71411ea203e6a321f8501bb0827ea8cdb4babce43b628"
+  },
+  {
+    "file": "public/upper-front-positioning/ELFIS_Upper_Front_Positioning_0.1.0_TEST.rbz",
+    "bytes": 10245,
+    "sha256": "670eb872aa91ca8640dc5a76246d516c704d6d84e47b303bb8248a42d5de36f2"
+  },
+  {
+    "file": "public/upper-front-positioning/ELFIS_Upper_Front_Positioning_0.1.1_TEST.rbz",
+    "bytes": 11089,
+    "sha256": "580a87271d429f0aa354df39ba14f210ab11982cc959fcccb917cf78cd8d39a2"
+  },
+  {
+    "file": "public/upper-front-positioning/ELFIS_Upper_Front_Positioning_0.1.2_TEST.rbz",
+    "bytes": 18481,
+    "sha256": "4c042ad67034c3f25c094b16fed3eaf399fae46a2b01b70dc01d450ed4680ba9"
+  },
+  {
+    "file": "public/upper-front-positioning/ELFIS_Upper_Front_Positioning_0.1.3_TEST.rbz",
+    "bytes": 18302,
+    "sha256": "0de2d5af7236ebbdcde5665a96ea0f59fa1abca2fd378ef8ce0b400457729024"
+  },
+  {
+    "file": "public/upper-front-positioning/ELFIS_Upper_Front_Positioning_0.1.4_TEST.rbz",
+    "bytes": 12003,
+    "sha256": "858a2351e0dca6ff53347ed01ecb4e50039b4a23875e79a5009f1faa5c0012ae"
+  },
+  {
+    "file": "public/upper-front-positioning/ELFIS_Upper_Front_Positioning_0.1.5_TEST.rbz",
+    "bytes": 11814,
+    "sha256": "6af0bf55f503decedd8f4b710da70c1df48870a22a2ba875e53d0322dd5d9995"
   }
 ]

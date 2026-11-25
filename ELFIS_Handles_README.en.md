@@ -1,10 +1,10 @@
-# ELFIS Handles 1.1.9-beta
+# ELFIS Handles 1.1.10-beta
 
 > **BETA — Standard-handle import and placement have been revised. Calibrate fixing points and check placement on a test front before production use.**
 
 An optional handle module for **ELFIS Door Studio 2.9.1**, with its own toolbar icon and installer. The Handles module remains beta. It uses Door Studio's front measurement and replacement routines; it is not a standalone extension.
 
-[Download ELFIS Handles 1.1.9-beta](https://github.com/elfis/ELFIS-Door-Studio/raw/refs/heads/main/public/handles/1.1.9-beta/ELFIS_Handles_1.1.9-beta.rbz) · [Polska instrukcja](ELFIS_Handles_README.md)
+[Download ELFIS Handles 1.1.10-beta](https://github.com/elfis/ELFIS-Door-Studio/raw/refs/heads/main/public/handles/1.1.10-beta/ELFIS_Handles_1.1.10-beta.rbz) · [Polska instrukcja](ELFIS_Handles_README.md)
 
 ## New in 1.1.4-beta
 
@@ -20,7 +20,7 @@ Choose the **red X** in the handle window, then click front components, includin
 
 ## Install
 
-Install Door Studio first. In SketchUp, choose **Extensions → Extension Manager → Install Extension**, select `ELFIS_Handles_1.1.9-beta.rbz`, and restart SketchUp. Enable **View → Toolbars → ELFIS — Handles** if necessary. The same command is available in the Extensions menu.
+Install Door Studio first. In SketchUp, choose **Extensions → Extension Manager → Install Extension**, select `ELFIS_Handles_1.1.10-beta.rbz`, and restart SketchUp. Enable **View → Toolbars → ELFIS — Handles** if necessary. The same command is available in the Extensions menu.
 
 ## Import a handle
 
@@ -126,7 +126,7 @@ Tap Ctrl to toggle vertical/horizontal, Shift to mirror left/right, Alt to mirro
 Edge corners use the configured distance from corner to handle end. Edge midpoints centre the pull (top/bottom retain the configured centre shift). All eight perimeter positions are available in the library. Previously saved side-pull positions keep their old top-offset behaviour until explicitly changed with shortcuts or a position button. Rear fixing, calibration and standard frame/custom offsets are retained. Preview and placement share the same rules.
 
 
-## 1.1.9-beta — Side pull offset from centre
+## 1.1.10-beta — Side pull offset from centre
 
 For a rear-fixing edge pull on a side, set Side: offset from centre in millimetres: zero centres, positive moves up, negative moves down. Editing this field selects the same side in vertical mounting, centred plus the entered distance. The origin remains on the rear fixing plane; the pull never changes sides or flips merely because the offset changes. Bounds checks prevent the pull extending past the door.
 

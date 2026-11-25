@@ -1,0 +1,16 @@
+{
+  "version": "2.9.45",
+  "files": [
+    "elfis_bastille_podmien_front.rb",
+    "elfis_menu.rb",
+    "elfis_bastille_podmien_front/toolbar_layout.rb",
+    "elfis_bastille_podmien_front/shelf_spacing_v2.rb",
+    "elfis_bastille_podmien_front/shelf_spacing_v2_tool.rb",
+    "elfis_bastille_podmien_front/shelf_spacing_v2.svg",
+    "elfis_bastille_podmien_front/engine.rb",
+    "elfis_bastille_podmien_front/i18n.rb",
+    "elfis_bastille_podmien_front/docs/README.md",
+    "elfis_bastille_podmien_front/docs/CHANGELOG.md"
+  ],
+  "backup": "<workspace>\\Backups\\SketchUp2026_before_2.9.45_20261117_233300"
+}

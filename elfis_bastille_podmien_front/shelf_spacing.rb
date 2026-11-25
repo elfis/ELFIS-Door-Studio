@@ -1,3 +1,4 @@
+require_relative '../elfis_menu'
 # encoding: UTF-8
 require 'json'
 require 'securerandom'
@@ -151,7 +152,7 @@ module Elfis
       @command=UI::Command.new('ELFIS — Arrange Shelves / Rozmieszczenie półek') { activate }
       @command.tooltip=l('Rozmieść półki według prześwitów i proporcji; odśwież podpórki','Arrange shelves using clear openings and ratios; refresh shelf pins')
       @command.small_icon=File.join(__dir__,'shelf_spacing.svg');@command.large_icon=@command.small_icon
-      UI.menu('Extensions').add_item(@command);toolbar=BastillePodmienFront.instance_variable_get(:@toolbar);toolbar.add_item(@command) if toolbar
+      ElfisMenu.category('Cabinet tools').add_item(@command);toolbar=BastillePodmienFront.instance_variable_get(:@toolbar);toolbar.add_item(@command) if toolbar
     end
   end
 end

@@ -1,3 +1,4 @@
+require_relative '../elfis_menu'
 # encoding: UTF-8
 require 'securerandom'
 require 'json'
@@ -258,7 +259,7 @@ module Elfis
       @command=UI::Command.new('ELFIS — Hinge Drilling / Wiercenia zawiasów') { activate }
       @command.tooltip=l('Zawiasy Ø35 + 2 × Ø8 we froncie, Ø5 w boku. Prawy klik: ustawienia.','Hinges: Ø35 + 2 × Ø8 in the front, Ø5 in the side. Right-click: settings.')
       @command.small_icon=File.join(__dir__,'hinge_drilling.svg');@command.large_icon=@command.small_icon
-      UI.menu('Extensions').add_item(@command);toolbar=BastillePodmienFront.instance_variable_get(:@toolbar);toolbar.add_item(@command) if toolbar
+      ElfisMenu.category('Drilling').add_item(@command);toolbar=BastillePodmienFront.instance_variable_get(:@toolbar);toolbar.add_item(@command) if toolbar
     end
   end
 end

@@ -1,0 +1,31 @@
+{
+  "passed": true,
+  "checks": [
+    "OCL type 4 recognized independent of name",
+    "Back-face and ABS name do not create false positives",
+    "Empty selection clears edge data",
+    "Drilling still recognized separately",
+    "Hidden edge face excluded",
+    "Hidden selected root excluded",
+    "Rotated mirrored scaled occurrence transformed once",
+    "Only selected shared occurrence counted",
+    "Shared copies counted per selected occurrence",
+    "Nested instance geometry follows full path",
+    "Serialized numeric type accepted",
+    "Toolbar command enables populated edge overlay",
+    "Edge toggle leaves drilling toggle unchanged",
+    "Move tool temporarily hides cached highlights",
+    "Leaving Move restores edge data",
+    "OCL material edits refresh cached edges",
+    "Disabling detaches material observer"
+  ],
+  "count": 17,
+  "ocl": "7.1.0",
+  "ocl8": "Source schema checked on branch 8.0.0; runtime not tested",
+  "installed_version": "1.2.0",
+  "installed_source": [
+    "<SketchUp Plugins>/elfis_drilling_highlight.rb",
+    55
+  ],
+  "projection_check": "Native screen_coords accepts world coordinates unchanged inside an edit path"
+}

@@ -1,0 +1,40 @@
+{
+  "version": "2.9.15",
+  "ruby": {
+    "passed": true,
+    "ruby": "3.2.4",
+    "checks": [
+      "Library profile supplier overrides old occurrence assignment",
+      "Editing profile supplier is reflected on refresh",
+      "Empty profile supplier uses the library default",
+      "Legacy profile without supplier retains metadata fallback",
+      "Missing library profile retains front metadata",
+      "Missing profile and metadata use ELFIS fallback",
+      "Manual order assignment endpoint removed",
+      "All shipped Ruby syntax compiles in Ruby 3.2"
+    ],
+    "native_ui": "Not used; user requested file-only work."
+  },
+  "ui": {
+    "passed": true,
+    "checks": [
+      "en: assignment field/button absent; source column/filter, row highlight, replacement controls and Escape retained",
+      "pl: assignment field/button absent; source column/filter, row highlight, replacement controls and Escape retained"
+    ]
+  },
+  "order_2913_ui_regression": {
+    "passed": true,
+    "checks": [
+      "en: numeric sort, Shift selection, quantity order/bold, product groups, stock tree, occurrence/group highlighting, Escape, settings payload",
+      "pl: numeric sort, Shift selection, quantity order/bold, product groups, stock tree, occurrence/group highlighting, Escape, settings payload"
+    ]
+  },
+  "plinth_2914_ui_regression": {
+    "passed": true,
+    "checks": [
+      "en: shared offcuts, true part widths, checkbox immediate save, busy state, persisted separate mode, return to mixed mode",
+      "pl: shared offcuts, true part widths, checkbox immediate save, busy state, persisted separate mode, return to mixed mode"
+    ]
+  },
+  "live_sketchup": "Not controlled or reloaded; file-only update requested."
+}

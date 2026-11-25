@@ -1,0 +1,38 @@
+{
+  "version": "2.9.6",
+  "native": {
+    "passed": true,
+    "version": "2.9.6",
+    "checks": [
+      "Direct Finishing-folder tags are included",
+      "Nested Finishing-folder tags are included",
+      "Legacy endpanels tag remains supported",
+      "Tags outside Finishing are excluded",
+      "Numbered Finishing Parts folder is recognised",
+      "Finishing items consolidate by type without duplicate counting",
+      "Untagged/outside-folder products are not added",
+      "Plinth dimensions use its actual physical size",
+      "Generated doors keep correct dimensions with native OpenCutList axes",
+      "Finishing checkbox excludes the whole product section",
+      "Clipboard export uses the Finishing heading",
+      "Complete PDF builds with doors and Finishing",
+      "Consolidated row gives every front its own dimension label",
+      "Overlay places both visible dimension labels on nested fronts",
+      "Label projection uses the complete instance path once",
+      "Label projection uses the complete instance path once",
+      "Dimension labels can be hidden independently of outlines",
+      "Overlapping labels are suppressed"
+    ]
+  },
+  "overlay_draw": {
+    "passed": true,
+    "labels": [
+      "715 \u0102\u2014 596 mm",
+      "715 \u0102\u2014 596 mm"
+    ]
+  },
+  "browser": "EN/PL Finishing heading, checkbox callback, selected highlights, separate copy scope and profile protection passed; existing language/multiselect/filter regression suites passed",
+  "visual": "Two per-occurrence dimension labels inspected in actual SketchUp viewport; EN order window inspected",
+  "pdf": "Complete PDF generated; extracted section and product text verified",
+  "sha256": "18f4e2ea0e9fb572f1b2089926cd23fad83b882105b67078484acb0f2e0b0ed8"
+}

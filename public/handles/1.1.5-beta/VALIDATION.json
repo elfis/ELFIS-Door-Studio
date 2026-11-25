@@ -1,0 +1,18 @@
+{
+  "version": "1.1.5-beta",
+  "native_toolbar": {
+    "passed": true,
+    "checks": [
+      "Initial quick tool selects Block Key Bar, top right, vertical",
+      "Later library choices are retained across tool activations",
+      "Toolbar Add starts the existing click placement tool",
+      "Placement works without opening the library",
+      "Toolbar Remove starts without any imported handle library",
+      "Remove uses the existing front-click removal tool",
+      "Toolbar contains Add, Remove and Handles Library commands",
+      "Repeated setup does not duplicate the toolbar"
+    ],
+    "version": "1.1.5-beta"
+  },
+  "existing_html_regression": "passed EN/PL; same controls and layout"
+}

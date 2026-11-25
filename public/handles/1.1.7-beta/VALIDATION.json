@@ -1,0 +1,22 @@
+{
+  "version": "1.1.7-beta",
+  "native_geometry": {
+    "passed": true,
+    "checks": [
+      "Import suggests total geometry length, not fixing pitch",
+      "Calibrated axes measure rotated nested geometry without inflated bounding-box length",
+      "Nested scale and mirror are included in measured length",
+      "Construction points do not inflate handle length",
+      "Empty models fail with a useful error"
+    ],
+    "version": "1.1.7-beta"
+  },
+  "installed_runtime": {
+    "version": "1.1.7-beta",
+    "source": [
+      "<SketchUp Plugins>/elfis_handles/main.rb",
+      81
+    ]
+  },
+  "native_edit_dialog": "verified measured length 188.006 mm for existing calibrated Block Key Bar Handle; screw pitch stayed 166.40001524748894 mm; dialog cancelled without modifying the record"
+}
